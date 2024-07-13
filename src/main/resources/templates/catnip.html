@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Product List</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .disabled {
+      pointer-events: none;
+      color: gray;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${currentPage.content}">
+      <td th:text="${item.getId()}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <nav>
+    <ul>
+      <li>
+        <a th:href="@{/catnip(page=${currentPage.number - 1})}"
+           th:classappend="${currentPage.number <= 1} ? 'disabled'">Previous
+        </a>
+      </li>
+      <li th:each="pageNumber : ${#numbers.sequence(1, currentPage.totalPages + 1)}">
+        <a th:href="@{/catnip(page=${pageNumber})}" th:text="${pageNumber}"></a>
+      </li>
+      <li>
+        <a th:href="@{/catnip(page=${currentPage.number + 1})}"
+           th:classappend="${currentPage.number >= currentPage.totalPages} ? disabled">Next
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+</body>
+</html>

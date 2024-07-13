@@ -5,3 +5,5 @@ spring:
   datasource:
     hikari:
       schema: prod
+  liquibase:
+    default-schema: prod

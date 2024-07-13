@@ -12,6 +12,8 @@ spring:
   datasource:
     hikari:
       schema: dev
+  liquibase:
+    default-schema: dev
   devtools:
     restart:
       enabled: true

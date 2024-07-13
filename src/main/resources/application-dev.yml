@@ -9,3 +9,5 @@ spring:
     show-sql: true
     properties:
       format_sql: true
+  liquibase:
+    default-schema: dev

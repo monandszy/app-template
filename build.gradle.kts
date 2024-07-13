@@ -1,5 +1,3 @@
-import org.springframework.boot.gradle.tasks.bundling.BootJar
-
 plugins {
    application
    pmd
@@ -7,6 +5,7 @@ plugins {
    checkstyle
    alias(libs.plugins.spring.boot)
    alias(libs.plugins.spring.management)
+   id("com.ryandens.javaagent-test") version "0.5.1"
 }
 
 group = "code"
@@ -16,13 +15,6 @@ application.mainClass = "code.App"
 apply(from = rootProject.file("gradle/util/misc.gradle.kts"))
 apply(from = rootProject.file("gradle/util/git.gradle.kts"))
 apply(from = rootProject.file("gradle/util/docker.gradle.kts"))
-
-java {
-   @Suppress("UnstableApiUsage")
-   consistentResolution {
-      useCompileClasspathVersions()
-   }
-}
 
 repositories {
    mavenCentral()
@@ -44,22 +36,25 @@ dependencies {
 //   testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 //   testImplementation("org.springframework.security:spring-security-test")
 
-   compileOnly(libs.lombok)
-   annotationProcessor(libs.lombok)
    runtimeOnly("org.postgresql:postgresql")
    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
    implementation("org.liquibase:liquibase-core")
-
 //   implementation("org.springframework.modulith:spring-modulith-starter-jpa")
 
-   testImplementation("org.springframework.boot:spring-boot-testcontainers")
-   testImplementation("org.testcontainers:postgresql")
-   testImplementation("org.testcontainers:junit-jupiter")
+   compileOnly(libs.lombok)
+   annotationProcessor(libs.lombok)
+   testImplementation(libs.lombok)
+   testAnnotationProcessor(libs.lombok)
+   implementation(libs.mapstruct)
+   annotationProcessor(libs.bundles.mapstruct.annotation)
+
+   testImplementation(libs.bundles.test.containers)
    testImplementation(libs.junit.jupiter)
    testRuntimeOnly(libs.junit.platform)
    testImplementation(libs.bundles.spring.test)
 
-   "developmentOnly"("org.springframework.boot:spring-boot-devtools")
+   developmentOnly(libs.spring.dev.tools)
+   testJavaagent("net.bytebuddy:byte-buddy-agent:1.14.18")
 }
 
 dependencyManagement {
@@ -77,40 +72,12 @@ tasks {
       enabled = false
    }
 
-   register<Exec>("extractLayers") {
-      dependsOn("bootJar")
-      workingDir = projectDir
-      commandLine(
-         "java",
-         "-Djarmode=layertools",
-         "-jar", "build/libs/${getByName<BootJar>("bootJar").archiveFileName.get()}",
-         "extract",
-         "--destination", "build/extracted"
-      )
-   }
-
-   register("docker") {
-      dependsOn("bootJar")
-      dependsOn(getByName("extractLayers"))
-      doLast {
-         exec {
-            commandLine(
-               "docker",
-               "build",
-               "--build-arg", "EXTRACTED=build/extracted",
-               "-t", "${rootProject.name}/${project.name}:$version",
-               "-q",
-               "."
-            )
-         }
-      }
-   }
-
    test {
       useJUnitPlatform()
       testLogging {
          events("passed", "skipped", "failed")
       }
+//      jvmArgs("-noverify", "-XX:+EnableDynamicAgentLoading", "-Djdk.instrument.traceUsage")
    }
 
    pmd {

@@ -1,6 +1,5 @@
-package code.modules.catnip.data.jpa;
+package code.modules.catnip.data;
 
-import code.modules.catnip.data.entity.CatnipEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

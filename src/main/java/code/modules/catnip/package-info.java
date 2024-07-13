@@ -4,5 +4,5 @@
  * The classes in this package ...
  * </p>
  */
-@org.springframework.modulith.ApplicationModule(displayName = "catModule")
+@org.springframework.modulith.ApplicationModule(displayName = "catnipModule")
 package code.modules.catnip;

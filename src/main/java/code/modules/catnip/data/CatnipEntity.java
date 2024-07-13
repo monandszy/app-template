@@ -1,4 +1,4 @@
-package code.modules.catnip.data.entity;
+package code.modules.catnip.data;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +28,6 @@ public class CatnipEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-  private Long id;
+  private Integer id;
 
 }

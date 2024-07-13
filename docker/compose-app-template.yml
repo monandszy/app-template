@@ -1,7 +1,4 @@
 networks:
-  default:
-    driver: bridge
-    name: prod
   observability:
     external: true
   data:
@@ -11,9 +8,9 @@ services:
     image: project-base/app:${project-version}
     restart: unless-stopped
     environment:
-      - "SPRING_PROFILES_ACTIVE=prod"
+      - "SPRING_PROFILES_ACTIVE=${profile}"
     ports:
-      - "8080:8000"
+      - "8000:8000"
     networks:
       - observability
       - data

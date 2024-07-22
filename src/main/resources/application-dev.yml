@@ -1,7 +1,7 @@
 spring.config.activate.on-profile: dev
 spring:
   application:
-    name: app-dev
+    name: app-template-dev
   datasource:
     hikari:
       schema: dev

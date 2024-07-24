@@ -10,10 +10,10 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/app_data
     username: postgres
     password: postgres
     hikari:
+#      schema: app
       idle-timeout: 10000
       connection-timeout: 20000
       minimum-idle: 10
@@ -22,6 +22,7 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/changelog-root.yaml
+#    default-schema: app
   jpa:
     hibernate:
       ddl-auto: none

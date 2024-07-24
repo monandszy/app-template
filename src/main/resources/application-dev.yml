@@ -3,11 +3,8 @@ spring:
   application:
     name: app-template-dev
   datasource:
-    hikari:
-      schema: dev
+    url: jdbc:postgresql://postgres:5432/app_template_dev
   jpa:
     show-sql: true
     properties:
       format_sql: true
-  liquibase:
-    default-schema: dev

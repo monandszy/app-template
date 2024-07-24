@@ -14,19 +14,14 @@ import java.util.TimeZone;
 
 @Modulithic
 @SpringBootApplication
-public class App extends SpringBootServletInitializer {
+public class TemplateApp extends SpringBootServletInitializer {
 
   public static void main(String[] args) {
-    SpringApplication.run(App.class, args);
+    SpringApplication.run(TemplateApp.class, args);
   }
 
   @PostConstruct
   public void setTimeZone(){
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-  }
-
-  @Bean
-  Clock customClock() {
-    return Clock.system(ZoneOffset.UTC);
   }
 }

@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21.0.3_9-jdk-alpine as build
 VOLUME /tmp
-ARG EXTRACTED=build/dependencies
+ARG EXTRACTED
 COPY ${EXTRACTED}/dependencies/ ./
 COPY ${EXTRACTED}/spring-boot-loader/ ./
 COPY ${EXTRACTED}/snapshot-dependencies/ ./

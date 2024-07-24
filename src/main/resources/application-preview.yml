@@ -1,6 +1,6 @@
 # profile for easier view development with spring dev tools outside of docker
 # TODO implement prometheus push model to be able to switch scraping ip
-spring.config.activate.on-profile: view
+spring.config.activate.on-profile: preview
 
 management:
   zipkin:
@@ -8,12 +8,9 @@ management:
       endpoint: http://localhost:9411/api/v2/spans
 spring:
   application:
-    name: app-template-view
+    name: app-template-preview
   datasource:
-    hikari:
-      schema: dev
-  liquibase:
-    default-schema: dev
+    url: jdbc:postgresql://localhost:5432/app_template_dev
   devtools:
     restart:
       enabled: true

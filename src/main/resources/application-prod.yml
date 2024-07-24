@@ -3,7 +3,4 @@ spring:
   application:
     name: app-template-prod
   datasource:
-    hikari:
-      schema: prod
-  liquibase:
-    default-schema: prod
+    url: jdbc:postgresql://postgres:5432/app_template

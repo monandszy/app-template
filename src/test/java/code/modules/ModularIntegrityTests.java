@@ -3,7 +3,7 @@ package code.modules;
 //import org.springframework.modulith.core.ApplicationModules;
 //import org.springframework.modulith.docs.Documenter;
 
-import code.App;
+import code.TemplateApp;
 import org.junit.jupiter.api.Test;
 import org.springframework.modulith.core.ApplicationModules;
 import org.springframework.modulith.docs.Documenter;
@@ -12,7 +12,7 @@ import org.springframework.modulith.docs.Documenter;
 // https://docs.spring.io/spring-modulith/reference/
 class ModularIntegrityTests {
 //
-  private final ApplicationModules modules = ApplicationModules.of(App.class);
+  private final ApplicationModules modules = ApplicationModules.of(TemplateApp.class);
 //
   @Test
   void test() {

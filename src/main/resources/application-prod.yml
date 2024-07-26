@@ -1,6 +1,6 @@
 spring.config.activate.on-profile: prod
 spring:
   application:
-    name: app-template-prod
+    name: app-template
   datasource:
     url: jdbc:postgresql://postgres:5432/app_template

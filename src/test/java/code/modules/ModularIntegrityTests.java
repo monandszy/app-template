@@ -10,6 +10,7 @@ import org.springframework.modulith.docs.Documenter;
 
 // https://spring.io/projects/spring-modulith
 // https://docs.spring.io/spring-modulith/reference/
+
 class ModularIntegrityTests {
 //
   private final ApplicationModules modules = ApplicationModules.of(TemplateApp.class);

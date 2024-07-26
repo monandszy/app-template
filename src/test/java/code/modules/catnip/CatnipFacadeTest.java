@@ -12,12 +12,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestConstructor;
 
 import java.util.List;
 
 @ApplicationModuleTest
 @ActiveProfiles("test")
 @Import(TestContainersConfig.class)
+//@TestConstructor(autowireMode = AutowireMode.ALL)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class CatnipFacadeTest {
 

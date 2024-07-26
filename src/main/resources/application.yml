@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /
 spring:
+  devtools:
+    add-properties: false
   main:
     banner-mode: off
   modulith:
@@ -35,23 +37,25 @@ management:
   endpoint:
     shutdown:
       enabled: true
-  defaults:
-    metrics:
-      export:
-        enabled: false
-  prometheus:
-    metrics:
-      export:
-        enabled: true
   metrics:
     tags:
       application: ${spring.application.name}
   tracing:
     sampling:
       probability: 1.0
-  zipkin:
-    tracing:
-      endpoint: http://tempo:9411/api/v2/spans
+
+otel.traces.exporter: otlp
+otel.metrics.exporter: otlp
+otel.logs.exporter: otlp
 logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger{36} - %msg%n"
+otel:
+  exporter:
+    otlp:
+      traces:
+        endpoint: http://otel-collector:4318/v1/traces
+      metrics:
+        endpoint: http://otel-collector:4318/v1/metrics
+      logs:
+        endpoint: http://otel-collector:4318/v1/logs

@@ -5,7 +5,7 @@ plugins {
   checkstyle
   alias(libs.plugins.spring.boot)
   alias(libs.plugins.spring.management)
-  id("com.ryandens.javaagent-test") version "0.5.1"
+  alias(libs.plugins.javaagent)
 }
 
 group = "code"
@@ -27,6 +27,7 @@ dependencies {
 
   implementation(libs.bundles.spring.modulith)
   implementation(libs.bundles.observability)
+//  runtimeOnly(libs.modulith.observability) # enable when they fix it...
 //   implementation("org.springframework.boot:spring-boot-configuration-processor")
 
   implementation(libs.bundles.spring.web)
@@ -54,17 +55,20 @@ dependencies {
   testImplementation(libs.bundles.spring.test)
 
   developmentOnly(libs.spring.dev.tools)
-  testJavaagent("net.bytebuddy:byte-buddy-agent:1.14.18")
+  testJavaagent(libs.javaagent.impl)
+
+  implementation (libs.bundles.jmolecules)
 }
 
 dependencyManagement {
   imports {
     mavenBom("org.springframework.modulith:spring-modulith-bom:1.2.1")
+    mavenBom("org.jmolecules:jmolecules-bom:2023.1.4")
+    mavenBom("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.6.0")
   }
 }
 
 tasks {
-
   bootJar {
     archiveFileName = "${project.name}-${version}.${archiveExtension.get()}"
   }
@@ -77,7 +81,6 @@ tasks {
     testLogging {
       events("passed", "skipped", "failed")
     }
-//      jvmArgs("-noverify", "-XX:+EnableDynamicAgentLoading", "-Djdk.instrument.traceUsage")
   }
 
   pmd {

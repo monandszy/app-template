@@ -27,7 +27,7 @@ dependencies {
 
   implementation(libs.bundles.spring.modulith)
   implementation(libs.bundles.observability)
-//  runtimeOnly(libs.modulith.observability) # enable when they fix it...
+  runtimeOnly(libs.modulith.observability)
 //   implementation("org.springframework.boot:spring-boot-configuration-processor")
 
   implementation(libs.bundles.spring.web)

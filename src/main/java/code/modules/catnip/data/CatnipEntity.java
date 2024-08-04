@@ -7,18 +7,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
+import java.util.UUID;
+
+@Data
 @EqualsAndHashCode(of = {"id"})
 @ToString(of = {"id"})
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -28,6 +26,6 @@ public class CatnipEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-  private Integer id;
+  private UUID id;
 
 }

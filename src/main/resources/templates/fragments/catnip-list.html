@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Catnip List</title>
+</head>
+<body>
+<div id="catnip-list" hx-trigger="click from:.pagination-link" hx-target="#catnip-list" th:fragment="list">
+  <div th:each="catnip : ${currentPage.content}">
+    <p th:text="${catnip.id}"></p>
+  </div>
+  <div class="pagination">
+    <button class="pagination-link" th:if="${currentPage.hasPrevious()}"
+            th:attr="hx-get=@{catnip/list(page=${currentPage.number - 1})}">Previous
+    </button>
+    <button class="pagination-link" th:if="${currentPage.hasNext()}"
+            th:attr="hx-get=@{catnip/list(page=${currentPage.number + 1})}">Next
+    </button>
+  </div>
+  <div th:if="${#lists.isEmpty(currentPage.content)}">
+    <p>No catnip available.</p>
+  </div>
+</div>
+
+
+</body>
+</html>

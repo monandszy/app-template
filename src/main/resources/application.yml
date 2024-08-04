@@ -24,7 +24,8 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/changelog-root.yaml
-#    default-schema: app
+    driver-class-name: org.postgresql.Driver
+  #    default-schema: app
   jpa:
     hibernate:
       ddl-auto: none
@@ -34,9 +35,6 @@ management:
     web:
       exposure:
         include: "*"
-  endpoint:
-    shutdown:
-      enabled: true
   metrics:
     tags:
       application: ${spring.application.name}
@@ -47,9 +45,6 @@ management:
 otel.traces.exporter: otlp
 otel.metrics.exporter: otlp
 otel.logs.exporter: otlp
-logging:
-  pattern:
-    console: "%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger{36} - %msg%n"
 otel:
   exporter:
     otlp:
@@ -59,3 +54,6 @@ otel:
         endpoint: http://otel-collector:4318/v1/metrics
       logs:
         endpoint: http://otel-collector:4318/v1/logs
+logging:
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger{36} - %msg%n"

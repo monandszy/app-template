@@ -8,3 +8,7 @@ spring:
     show-sql: true
     properties:
       format_sql: true
+management:
+  endpoint:
+    shutdown:
+      enabled: true

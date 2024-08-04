@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @Slf4j
-class Home {
+class HomePage {
 
   @GetMapping(value = "/")
   String getHome() {

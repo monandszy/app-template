@@ -30,6 +30,7 @@ dependencies {
   runtimeOnly(libs.modulith.observability)
 //   implementation("org.springframework.boot:spring-boot-configuration-processor")
 
+  implementation("org.springframework.boot:spring-boot-starter-validation")
   implementation(libs.bundles.spring.web)
 //   implementation("org.springframework.session:spring-session-core")
 //   implementation("org.springframework.boot:spring-boot-starter-security")
@@ -40,7 +41,7 @@ dependencies {
   runtimeOnly("org.postgresql:postgresql")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.liquibase:liquibase-core")
-//   implementation("org.springframework.modulith:spring-modulith-starter-jpa")
+//  implementation("org.springframework.modulith:spring-modulith-starter-jpa")
 
   compileOnly(libs.lombok)
   annotationProcessor(libs.lombok)
@@ -57,7 +58,7 @@ dependencies {
   developmentOnly(libs.spring.dev.tools)
   testJavaagent(libs.javaagent.impl)
 
-  implementation (libs.bundles.jmolecules)
+  implementation(libs.bundles.jmolecules)
 }
 
 dependencyManagement {

@@ -1,5 +1,6 @@
 package code.modules.catnip.util;
 
+import code.modules.catnip.CatnipCreateDto;
 import code.modules.catnip.CatnipReadDto;
 import code.modules.catnip.data.CatnipEntity;
 import code.modules.catnip.service.Catnip;
@@ -7,13 +8,15 @@ import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@AnnotateWith(value = code.config.Generated.class)
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@AnnotateWith(value = code.configuration.Generated.class)
 public interface CatnipMapper {
-  
-  CatnipEntity modelToEntity(Catnip catnip);
 
-  Catnip entityToModel(CatnipEntity catnipEntity);
+  CatnipEntity domainToEntity(Catnip catnip);
 
-  CatnipReadDto modelToReadDto(Catnip catnip);
+  Catnip entityToDomain(CatnipEntity catnipEntity);
+
+  CatnipReadDto domainToReadDto(Catnip catnip);
+
+  Catnip createDtoToDomain(CatnipCreateDto catnipCreateDto);
 }

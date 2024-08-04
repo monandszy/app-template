@@ -1,4 +1,4 @@
-package code.config;
+package code.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.sql.DataSource;
 
@@ -17,7 +16,7 @@ public class TestContainersConfig {
 
   @Bean
   PostgreSQLContainer<?> postgresqlContainer() {
-    return container;
+    return container.withReuse(true);
   }
 
   @ServiceConnection
@@ -26,11 +25,11 @@ public class TestContainersConfig {
   @Bean
   DataSource dataSource(final PostgreSQLContainer<?> postgresqlContainer) {
     return DataSourceBuilder.create()
-        .type(HikariDataSource.class)
-        .driverClassName(postgresqlContainer.getDriverClassName())
-        .url(postgresqlContainer.getJdbcUrl())
-        .username(postgresqlContainer.getUsername())
-        .password(postgresqlContainer.getPassword())
-        .build();
+      .type(HikariDataSource.class)
+      .driverClassName(postgresqlContainer.getDriverClassName())
+      .url(postgresqlContainer.getJdbcUrl())
+      .username(postgresqlContainer.getUsername())
+      .password(postgresqlContainer.getPassword())
+      .build();
   }
 }

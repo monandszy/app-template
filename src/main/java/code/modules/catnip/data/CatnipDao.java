@@ -6,4 +6,6 @@ import org.springframework.data.domain.PageRequest;
 
 public interface CatnipDao {
   Page<Catnip> getPage(PageRequest pageNumber);
+
+  Catnip create(Catnip catnip);
 }

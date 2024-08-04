@@ -1,4 +1,4 @@
-package code.config;
+package code.configuration;
 
 public abstract class Constants {
 

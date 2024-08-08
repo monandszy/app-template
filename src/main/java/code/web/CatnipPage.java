@@ -1,7 +1,7 @@
 package code.web;
 
 import code.configuration.Constants;
-import code.modules.catnip.CatnipFacade;
+import code.modules.catnip.CatnipQueryFacade;
 import code.modules.catnip.CatnipReadDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/catnip")
 @Slf4j
 class CatnipPage {
-  private CatnipFacade catnipFacade;
+  private CatnipQueryFacade catnipQueryFacade;
 
   @GetMapping
   String index() {
@@ -33,7 +33,7 @@ class CatnipPage {
     Model model
   ) {
     PageRequest pageRequest = PageRequest.of(page, Constants.PAGE_SIZE, Sort.by("id"));
-    Page<CatnipReadDto> catnipPage = catnipFacade.getCatnipPage(pageRequest);
+    Page<CatnipReadDto> catnipPage = catnipQueryFacade.getCatnipPage(pageRequest);
     model.addAttribute("currentPage", catnipPage);
     return "fragments/catnip-list :: list";
   }

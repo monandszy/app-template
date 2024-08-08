@@ -5,6 +5,8 @@ import code.configuration.ContextConfig;
 import code.configuration.FacadeAbstractIT;
 import code.modules.catnip.data.CatnipDao;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -15,12 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Slf4j
 @Import(ContextConfig.CatnipModuleContext.class)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class CatnipFacadeTest extends FacadeAbstractIT {
 
-  private CatnipFacade catnipFacade;
+  private ApplicationContext applicationContext;
+  private CatnipQueryFacade catnipQueryFacade;
+  private CatnipCommandFacade catnipCommandFacade;
   private CatnipDao catnipDao;
+
 
   @Test
   @Transactional
@@ -29,7 +35,7 @@ class CatnipFacadeTest extends FacadeAbstractIT {
     catnipDao.create(TestFixtures.catnip);
     PageRequest pageRequest = PageRequest.of(0, Constants.PAGE_SIZE);
     // when
-    Page<CatnipReadDto> catnipPage = catnipFacade.getCatnipPage(pageRequest);
+    Page<CatnipReadDto> catnipPage = catnipQueryFacade.getCatnipPage(pageRequest);
     // then
     assertThat(catnipPage).isNotNull();
     assertThat(catnipPage.getContent()).isNotEmpty();
@@ -40,23 +46,22 @@ class CatnipFacadeTest extends FacadeAbstractIT {
   @Test
   @Transactional
   void should_create_catnip() {
-    //given
+    // given
     CatnipCreateDto createDto = TestFixtures.catnipCreateDto;
-    //when
-    CatnipReadDto createdCatnip = catnipFacade.createCatnip(createDto);
+    // when
+    CatnipReadDto createdCatnip = catnipCommandFacade.createCatnip(createDto);
     // then
     assertThat(createdCatnip).isNotNull();
     assertThat(createdCatnip.id()).isNotNull();
   }
 
-  private ApplicationContext applicationContext;
-
   @Test
-  public void testBeanInitialization() {
+  @Disabled
+  public void check_initialized_beans() {
     String[] beanNames = applicationContext.getBeanDefinitionNames();
-    System.out.println("Beans initialized in the context:");
+    log.info("Beans initialized in the context:");
     for (String beanName : beanNames) {
-      System.out.println(beanName);
+      log.info(beanName);
     }
   }
 

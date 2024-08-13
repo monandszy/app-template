@@ -27,7 +27,6 @@ class CatnipFacadeTest extends FacadeAbstractIT {
   private CatnipCommandFacade catnipCommandFacade;
   private CatnipDao catnipDao;
 
-
   @Test
   @Transactional
   void should_return_paginated_catnip() {
@@ -64,6 +63,5 @@ class CatnipFacadeTest extends FacadeAbstractIT {
       log.info(beanName);
     }
   }
-
 
 }

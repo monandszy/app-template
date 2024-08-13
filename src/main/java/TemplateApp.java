@@ -8,7 +8,6 @@ import org.springframework.modulith.Modulithic;
 
 import java.util.TimeZone;
 
-
 @Modulithic
 @SpringBootApplication
 public class TemplateApp extends SpringBootServletInitializer {
@@ -18,7 +17,7 @@ public class TemplateApp extends SpringBootServletInitializer {
   }
 
   @PostConstruct
-  public void setTimeZone(){
+  public void setTimeZone() {
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
   }
 }

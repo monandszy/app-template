@@ -10,8 +10,8 @@ spring:
 logging:
   level:
     org:
-#      springframework:
-#        modulith: DEBUG
+      #      springframework:
+      #        modulith: DEBUG
       hibernate:
         orm:
           jdbc:

@@ -8,7 +8,7 @@ networks:
     name: ${default-network}
 services:
   app-template:
-    container_name : app-template
+    container_name: app-template
     image: project-base/${project-name}:${project-version}
     restart: unless-stopped
     environment:

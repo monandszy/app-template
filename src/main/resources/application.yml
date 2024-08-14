@@ -14,8 +14,9 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
+    url: jdbc:postgresql://postgres:5432/postgres
     hikari:
-#      schema: app
+      schema: app
       idle-timeout: 10000
       connection-timeout: 20000
       minimum-idle: 10
@@ -25,7 +26,7 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/changelog-root.yaml
     driver-class-name: org.postgresql.Driver
-#    default-schema: app
+    default-schema: app
   jpa:
     hibernate:
       ddl-auto: none

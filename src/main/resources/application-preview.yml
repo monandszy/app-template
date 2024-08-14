@@ -5,7 +5,7 @@ spring:
   application:
     name: preview
   datasource:
-    url: jdbc:postgresql://localhost:5432/app_template_dev
+    url: jdbc:postgresql://localhost:5432/postgres
   devtools:
     add-properties: true
     restart:

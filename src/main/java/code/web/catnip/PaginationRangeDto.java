@@ -1,4 +1,4 @@
 package code.web.catnip;
 
-public record PaginationRangeDto(Integer start, Integer end) {
+public record PaginationRangeDto(int start, int end) {
 }

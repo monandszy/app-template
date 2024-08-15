@@ -2,8 +2,10 @@ package code.modules.catnip;
 
 import code.configuration.Constants;
 import code.configuration.ContextConfig;
-import code.configuration.FacadeAbstractIT;
+import code.configuration.FacadeAbstract;
 import code.modules.catnip.data.CatnipDao;
+import code.modules.catnip.service.Catnip;
+import code.util.TestFixtures;
 import code.web.catnip.CatnipCreateDto;
 import code.web.catnip.CatnipReadDto;
 import lombok.AllArgsConstructor;
@@ -22,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 @Import(ContextConfig.CatnipModuleContext.class)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-class CatnipFacadeTest extends FacadeAbstractIT {
+class CatnipFacadeTest extends FacadeAbstract {
 
   private ApplicationContext applicationContext;
   private CatnipQueryFacade catnipQueryFacade;
@@ -36,12 +38,31 @@ class CatnipFacadeTest extends FacadeAbstractIT {
     catnipDao.create(TestFixtures.catnip);
     PageRequest pageRequest = PageRequest.of(0, Constants.PAGE_SIZE);
     // when
-    Page<CatnipReadDto> catnipPage = catnipQueryFacade.getCatnipPage(pageRequest, "");
+    Page<CatnipReadDto> catnipPage = catnipQueryFacade.requestCatnipPage(pageRequest);
     // then
     assertThat(catnipPage).isNotNull();
     assertThat(catnipPage.getContent()).isNotEmpty();
+    assertThat(catnipPage.getTotalElements()).isEqualTo(1);
     assertThat(catnipPage.getContent().getFirst().id()).isNotNull();
-    assertThat(catnipPage.getTotalElements()).isGreaterThan(0);
+  }
+
+  @Test
+  @Transactional
+  void should_return_searched_catnip() {
+    // given
+    String query = "field value todo";
+    catnipDao.create(TestFixtures.catnip);
+    Catnip expected = TestFixtures.catnip;  // .withField(value + xxx)
+    catnipDao.create(expected);
+    PageRequest pageRequest = PageRequest.of(0, Constants.PAGE_SIZE);
+    // when
+    Page<CatnipReadDto> catnipPage = catnipQueryFacade.searchCatnip(pageRequest, query);
+    // then
+    assertThat(catnipPage).isNotNull();
+    assertThat(catnipPage.getContent()).isNotEmpty();
+    assertThat(catnipPage.getTotalElements()).isEqualTo(1);
+    assertThat(catnipPage.getContent().getFirst().id()).isNotNull();
+    // field contains query eg. the correct one was returned
   }
 
   @Test
@@ -58,7 +79,7 @@ class CatnipFacadeTest extends FacadeAbstractIT {
 
   @Test
   @Disabled
-  public void check_initialized_beans() {
+  void check_initialized_beans() {
     String[] beanNames = applicationContext.getBeanDefinitionNames();
     log.info("Beans initialized in the context:");
     for (String beanName : beanNames) {

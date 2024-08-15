@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +40,7 @@ public class CatnipPage implements ControllerUtil {
     model.addAttribute("catnipCreateDto", new CatnipCreateDto());
     list(null, null, null, model, session); // adds initial data to model
 
-    List<String> sortOptions = List.of("temp");
+    List<String> sortOptions = List.of();
     model.addAttribute("sortOptions", sortOptions);
     return "catnip";
   }
@@ -59,24 +58,22 @@ public class CatnipPage implements ControllerUtil {
     sort = getOrSetSessionAttr(session, currentSort, sort, "id");
     query = getOrSetSessionAttr(session, currentQuery, query, "");
 
+    PageRequest pageRequest = PageRequest.of(page, Constants.PAGE_SIZE, Sort.by(sort));
     Page<CatnipReadDto> catnipPage;
-    try {
-      PageRequest pageRequest = PageRequest.of(page, Constants.PAGE_SIZE, Sort.by(sort));
-      catnipPage = catnipQueryFacade.getCatnipPage(pageRequest, query);
-    } catch (PropertyReferenceException e) {
-      throw new IllegalArgumentException(e);
-    }
+    if (query.isBlank())
+      catnipPage = catnipQueryFacade.requestCatnipPage(pageRequest);
+    else
+      catnipPage = catnipQueryFacade.searchCatnip(pageRequest, query);
 
     model.addAttribute("newPage", catnipPage);
-    PaginationRangeDto range = getPaginationRange(page, catnipPage.getTotalPages());
+
+    PaginationRangeDto range = getPaginationRange(page, catnipPage.getTotalPages(), Constants.RANGE_SIZE, Constants.RANGE_HALF);
     model.addAttribute("paginationRange", range);
     return "fragments/catnip-list :: catnipList";
   }
 
-  private PaginationRangeDto getPaginationRange(int page, int totalPages) {
+  public PaginationRangeDto getPaginationRange(int page, int totalPages, int rangeSize, int half) {
     int rangeStart, rangeEnd;
-    int rangeSize = Constants.RANGE_SIZE;
-    int half = Constants.RANGE_HALF;
 
     if (totalPages <= rangeSize) {
       rangeStart = 0;

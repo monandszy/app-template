@@ -20,24 +20,28 @@ public class CatnipQueryFacade {
   private CatnipDao catnipDao;
   private CatnipMapper catnipMapper;
 
-  public Page<CatnipReadDto> getCatnipPage(
+  public Page<CatnipReadDto> requestCatnipPage(
+    @NonNull PageRequest pageRequest
+  ) {
+    Page<CatnipReadDto> page = catnipDao.getPage(pageRequest)
+      .map(catnipMapper::domainToReadDto);
+    log.info("Catnip Page: {}", page);
+    return page;
+  }
+
+  public Page<CatnipReadDto> searchCatnip(
     @NonNull PageRequest pageRequest,
     @NonNull String query
   ) {
-    Page<CatnipReadDto> page;
-    if (query.isBlank()) {
-      page = catnipDao.getPage(pageRequest).map(catnipMapper::domainToReadDto);
-    } else {
-      ExampleMatcher matcher = ExampleMatcher.matchingAny();
+    ExampleMatcher matcher = ExampleMatcher.matchingAny();
 //        .withMatcher("id", match -> match.contains().ignoreCase());
-      Catnip probe = Catnip.builder().build();
-      page = catnipDao.search(
-        pageRequest,
-        matcher,
-        probe
-      ).map(catnipMapper::domainToReadDto);
-    }
-    log.info("Catnip Page: {}", page);
+    Catnip probe = Catnip.builder().build();
+    Page<CatnipReadDto> page = catnipDao.search(
+      pageRequest,
+      matcher,
+      probe
+    ).map(catnipMapper::domainToReadDto);
+    log.info("Catnip Search: {}", page);
     return page;
   }
 

@@ -9,5 +9,5 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestContainersConfig.class)
-public class FacadeAbstractIT {
+public class FacadeAbstract {
 }

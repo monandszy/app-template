@@ -1,4 +1,4 @@
-package code.configuration;
+package code.util;
 
 import org.springframework.stereotype.Repository;
 

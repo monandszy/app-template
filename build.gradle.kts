@@ -28,20 +28,21 @@ dependencies {
   implementation(libs.bundles.spring.modulith)
   implementation(libs.bundles.observability)
   runtimeOnly(libs.modulith.observability)
-//   implementation("org.springframework.boot:spring-boot-configuration-processor")
 
   implementation("org.springframework.boot:spring-boot-starter-validation")
   implementation(libs.bundles.spring.web)
+  implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:3.4.1")
+
 //   implementation("org.springframework.session:spring-session-core")
-//   implementation("org.springframework.boot:spring-boot-starter-security")
-//   implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 //   testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-//   testImplementation("org.springframework.security:spring-security-test")
+
+  implementation("org.springframework.boot:spring-boot-starter-security")
+  implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+  testImplementation("org.springframework.security:spring-security-test")
 
   runtimeOnly("org.postgresql:postgresql")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.liquibase:liquibase-core")
-//  implementation("org.springframework.modulith:spring-modulith-starter-jpa")
 
   compileOnly(libs.lombok)
   annotationProcessor(libs.lombok)

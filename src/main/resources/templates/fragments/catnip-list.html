@@ -4,23 +4,45 @@
   <title>Catnip List</title>
 </head>
 <body>
-<div id="catnip-list" hx-trigger="click from:.pagination-link" hx-target="#catnip-list" th:fragment="list">
-  <div th:each="catnip : ${currentPage.content}">
+<div id="catnip-list" th:fragment="catnipList">
+  <div th:each="catnip : ${newPage.content}">
     <p th:text="${catnip.id}"></p>
   </div>
-  <div class="pagination">
-    <button class="pagination-link" th:if="${currentPage.hasPrevious()}"
-            th:attr="hx-get=@{catnip/list(page=${currentPage.number - 1})}">Previous
+
+  <div class="pagination-container">
+    <button class="pagination-button"
+            th:attr="hx-get=@{catnip/list(page=0)}"
+            hx-target="#catnip-list"
+    ><<
     </button>
-    <button class="pagination-link" th:if="${currentPage.hasNext()}"
-            th:attr="hx-get=@{catnip/list(page=${currentPage.number + 1})}">Next
+    <button class="pagination-button"
+            th:attr="hx-get=@{catnip/list(page=${newPage.number - 1})}"
+            hx-target="#catnip-list"
+    ><
+    </button>
+    <span th:each="i : ${#numbers.sequence(paginationRange.start, paginationRange.end)}"
+          th:classappend="${i == newPage.number} ? 'current-page'">
+      <button class="pagination-button"
+              th:attr="hx-get=@{catnip/list(page=${i})}"
+              hx-target="#catnip-list"
+              th:disabled="${i == newPage.number}"
+              th:text="${i + 1}">1</button>
+    </span>
+    <button class="pagination-button"
+            th:attr="hx-get=@{catnip/list(page=${newPage.number + 1})}"
+            hx-target="#catnip-list"
+    >>
+    </button>
+    <button class="pagination-button"
+            th:attr="hx-get=@{catnip/list(page=${newPage.totalPages - 1})}"
+            hx-target="#catnip-list"
+    >>>
     </button>
   </div>
-  <div th:if="${#lists.isEmpty(currentPage.content)}">
-    <p>No catnip available.</p>
+  <div th:if="${#lists.isEmpty(newPage.content)}">
+    <p>No catnip available</p>
   </div>
 </div>
-
 
 </body>
 </html>

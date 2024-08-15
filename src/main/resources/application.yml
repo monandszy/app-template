@@ -7,6 +7,8 @@ spring:
     add-properties: false
   main:
     banner-mode: off
+  security:
+    enabled: false
   modulith:
     detection-strategy: explicitly-annotated
   datasource:

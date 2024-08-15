@@ -1,9 +1,11 @@
 package code.modules.catnip.data;
 
-import code.configuration.RepositoryAdapter;
 import code.modules.catnip.service.Catnip;
 import code.modules.catnip.util.CatnipMapper;
+import code.util.RepositoryAdapter;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -13,6 +15,13 @@ public class CatnipRepo implements CatnipDao {
 
   private CatnipJpaRepo catnipJpaRepo;
   private CatnipMapper catnipMapper;
+
+  @Override
+  public Page<Catnip> search(PageRequest pageRequest, ExampleMatcher matcher, Catnip probe) {
+    Example<CatnipEntity> example = Example.of(catnipMapper.domainToEntity(probe), matcher);
+    Page<CatnipEntity> page = catnipJpaRepo.findAll(example, pageRequest);
+    return page.map(catnipMapper::entityToDomain);
+  }
 
   @Override
   public Page<Catnip> getPage(PageRequest pageRequest) {

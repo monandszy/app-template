@@ -1,6 +1,8 @@
 package code.configuration;
 
-public abstract class Constants {
+public interface Constants {
 
-  public static final Integer PAGE_SIZE = 10;
+  int PAGE_SIZE = 10;
+  int RANGE_SIZE = 9;
+  int RANGE_HALF = 4;
 }

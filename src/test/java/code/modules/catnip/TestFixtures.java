@@ -1,6 +1,7 @@
 package code.modules.catnip;
 
 import code.modules.catnip.service.Catnip;
+import code.web.catnip.CatnipCreateDto;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

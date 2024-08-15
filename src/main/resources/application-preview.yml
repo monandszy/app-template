@@ -21,6 +21,8 @@ spring:
       enabled: false
   mvc:
     log-request-details: true
+  security:
+    enabled: false
 
 logging:
   level:

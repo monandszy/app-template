@@ -4,6 +4,8 @@ import code.configuration.Constants;
 import code.configuration.ContextConfig;
 import code.configuration.FacadeAbstractIT;
 import code.modules.catnip.data.CatnipDao;
+import code.web.catnip.CatnipCreateDto;
+import code.web.catnip.CatnipReadDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -34,7 +36,7 @@ class CatnipFacadeTest extends FacadeAbstractIT {
     catnipDao.create(TestFixtures.catnip);
     PageRequest pageRequest = PageRequest.of(0, Constants.PAGE_SIZE);
     // when
-    Page<CatnipReadDto> catnipPage = catnipQueryFacade.getCatnipPage(pageRequest);
+    Page<CatnipReadDto> catnipPage = catnipQueryFacade.getCatnipPage(pageRequest, "");
     // then
     assertThat(catnipPage).isNotNull();
     assertThat(catnipPage.getContent()).isNotEmpty();

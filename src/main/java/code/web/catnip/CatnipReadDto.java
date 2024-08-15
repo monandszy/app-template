@@ -1,4 +1,4 @@
-package code.modules.catnip;
+package code.web.catnip;
 
 import org.springframework.lang.NonNull;
 

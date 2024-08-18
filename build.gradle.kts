@@ -40,6 +40,8 @@ dependencies {
   implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
   testImplementation("org.springframework.security:spring-security-test")
 
+  implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0")
+
   runtimeOnly("org.postgresql:postgresql")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.liquibase:liquibase-core")

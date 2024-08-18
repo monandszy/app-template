@@ -1,16 +1,34 @@
 package code.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.Objects;
 
 @Controller
 @Slf4j
 class HomePage {
 
-  @GetMapping(value = "/")
   String getHome() {
-    return "index";
+    return "home/home";
+  }
+
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  String index(
+    @RequestHeader(value = "HX-Request", required = false) String hxRequest
+  ) {
+    if (Objects.nonNull(hxRequest)) {
+      // It's an HTMX request, return partial content
+      return "home/home :: content";
+    } else {
+      // It's a full request, return the full page with UI
+      return "home/home";
+    }
   }
 
 }

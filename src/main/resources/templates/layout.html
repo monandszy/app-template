@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/vendored/htmx.min.js"></script>
+  <title>Layout</title>
+</head>
+<body>
+<div>
+  <nav hx-push-url="true" hx-target="#content">
+    <ul>
+      <li><button hx-get="/">Home</button></li>
+      <li><button hx-get="/catnip">Catnip</button></li>
+    </ul>
+  </nav>
+</div>
+<div layout:fragment="content" id="content">
+  <p>Page content goes here</p>
+</div>
+</body>
+</html>

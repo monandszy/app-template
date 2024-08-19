@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/vendored/htmx.min.js"></script>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <title>Layout</title>
+</head>
+<body>
+
+<div class="mainframe">
+  <nav class="sidebar" hx-push-url="true" hx-target="#content" hx-swap="outerHTML">
+    <button class="nav-button" hx-get="/">Home</button>
+    <button class="nav-button" hx-get="/catnip">Catnip</button>
+    <button class="nav-button" id="theme-toggle">Toggle Theme</button>
+    <script src="/js/theme-toggle.js"></script>
+  </nav>
+</div>
+
+<div layout:fragment="content" id="content">
+  <p>Page content goes here</p>
+</div>
+</body>
+</html>

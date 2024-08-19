@@ -15,11 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
+import java.util.Objects;
 
 import static code.util.ControllerUtil.getOrSetSessionAttr;
 import static code.util.SessionAttr.currentPage;
@@ -36,13 +38,23 @@ public class CatnipPage implements ControllerUtil {
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  String index(Model model, HttpSession session) {
+  String index(
+    @RequestHeader(value = "HX-Request", required = false) String hxRequest,
+    Model model,
+    HttpSession session
+  ) {
+    log.info("catnip/list HX: {}", hxRequest);
     model.addAttribute("catnipCreateDto", new CatnipCreateDto());
     list(null, null, null, model, session); // adds initial data to model
 
     List<String> sortOptions = List.of();
     model.addAttribute("sortOptions", sortOptions);
-    return "catnip";
+
+    if (Objects.nonNull(hxRequest)) {
+      return "catnip/catnip :: content";
+    } else {
+      return "catnip/catnip";
+    }
   }
 
   @GetMapping("/list")
@@ -67,12 +79,19 @@ public class CatnipPage implements ControllerUtil {
 
     model.addAttribute("newPage", catnipPage);
 
-    PaginationRangeDto range = getPaginationRange(page, catnipPage.getTotalPages(), Constants.RANGE_SIZE, Constants.RANGE_HALF);
+    PaginationRangeDto range = getPaginationRange(page, catnipPage.getTotalPages(),
+      Constants.RANGE_SIZE, Constants.RANGE_HALF);
     model.addAttribute("paginationRange", range);
-    return "fragments/catnip-list :: catnipList";
+
+    return "catnip/catnip-list :: catnipList";
   }
 
-  public PaginationRangeDto getPaginationRange(int page, int totalPages, int rangeSize, int half) {
+  public PaginationRangeDto getPaginationRange(
+    int page,
+    int totalPages,
+    int rangeSize,
+    int half
+  ) {
     int rangeStart, rangeEnd;
 
     if (totalPages <= rangeSize) {

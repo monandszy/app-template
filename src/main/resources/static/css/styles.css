@@ -7,6 +7,7 @@
 
 :root {
   --page-background: white;
+  --sidebar-background: #f5f5f5;
   --background: #f0f0f0;
   --text: #222;
   --hover-background: #ddd;
@@ -19,8 +20,9 @@
 }
 .dark-mode {
   --page-background: black;
+  --sidebar-background: #252525;
   --background: #222;
-  --text: #ccc;
+  --text: #eee;
   --hover-background: #444;
   --border: #444;
   --active-text: #fff;
@@ -54,7 +56,7 @@ body {
   width: 200px;
   padding: 20px;
   gap: 10px;
-  background-color: var(--background);
+  background-color: var(--sidebar-background);
   border: 1px solid var(--border);
 }
 

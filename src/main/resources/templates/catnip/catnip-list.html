@@ -4,45 +4,66 @@
   <title>Catnip List</title>
 </head>
 <body>
-<div id="catnip-list" th:fragment="catnipList">
-  <div th:each="catnip : ${newPage.content}">
-    <p th:text="${catnip.id}"></p>
+<div class="list-wrapper" id="catnip-list" th:fragment="catnipList">
+  <div class="list-container">
+    <div th:classappend="list-item"
+         th:each="catnip : ${newPage.content}"
+    >
+      <p th:text="${catnip.id}"></p>
+    </div>
   </div>
+  <!--<div class="list-container">
+    <table>
+      <thead>
+      <tr>
+        <th>Id</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:classappend="list-item"
+          th:each="catnip : ${newPage.content}"
+      >
+        <td th:text="${catnip.id}"></td>
+        <td>
+          <form action="#">
+            <button type="submit">-</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>-->
 
-  <div class="pagination-container">
+  <nav class="pagination-container" hx-swap="outerHTML" hx-target="#catnip-list">
     <button class="pagination-button"
             th:classappend="${newPage.number == 0} ? 'disabled-pagination-button'"
             th:attr="hx-get=@{catnip/list(page=0)}"
-            hx-target="#catnip-list"
     ><<
     </button>
     <button class="pagination-button"
             th:classappend="${newPage.number == 0} ? 'disabled-pagination-button'"
             th:attr="hx-get=@{catnip/list(page=${newPage.number - 1})}"
-            hx-target="#catnip-list"
     ><
     </button>
     <th:block th:each="i : ${#numbers.sequence(paginationRange.start, paginationRange.end)}">
       <button class="pagination-button"
-              th:classappend="${i == newPage.number} ? 'current-page'"
+              th:classappend="${i == newPage.number} ? 'active-pagination-button'"
               th:attr="hx-get=@{catnip/list(page=${i})}"
-              hx-target="#catnip-list"
               th:disabled="${i == newPage.number}"
-              th:text="${i + 1}">1</button>
+              th:text="${i + 1}">1
+      </button>
     </th:block>
     <button class="pagination-button"
             th:classappend="${newPage.number == newPage.totalPages - 1} ? 'disabled-pagination-button'"
             th:attr="hx-get=@{catnip/list(page=${newPage.number + 1})}"
-            hx-target="#catnip-list"
     >>
     </button>
     <button class="pagination-button"
             th:classappend="${newPage.number == newPage.totalPages - 1} ? 'disabled-pagination-button'"
             th:attr="hx-get=@{catnip/list(page=${newPage.totalPages - 1})}"
-            hx-target="#catnip-list"
     >>>
     </button>
-  </div>
+  </nav>
   <div th:if="${#lists.isEmpty(newPage.content)}">
     <p>No catnip available</p>
   </div>

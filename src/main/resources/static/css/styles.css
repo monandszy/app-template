@@ -1,0 +1,217 @@
+/* Global Styles */
+* {
+  border-radius: 2px;
+  color: var(--text);
+}
+
+
+:root {
+  --page-background: white;
+  --background: #f0f0f0;
+  --text: #222;
+  --hover-background: #ddd;
+  --border: #ddd;
+  --active-text: #fff;
+  --active: #0091b9;
+  --disabled-background: #ddd;
+  --disabled-text: #aaa;
+
+}
+.dark-mode {
+  --page-background: black;
+  --background: #222;
+  --text: #ccc;
+  --hover-background: #444;
+  --border: #444;
+  --active-text: #fff;
+  --active: #007bff;
+  --disabled-background: #444;
+  --disabled-text: #777;
+
+}
+
+
+/* Layout Styles */
+body {
+  background-color: var(--page-background);
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.mainframe {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 200px;
+  padding: 20px;
+  gap: 10px;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+}
+
+.nav-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+}
+
+.nav-button:hover {
+  background-color: var(--hover-background);
+  border-color: var(--border);
+}
+
+.nav-button:active {
+  background-color: var(--border);
+  border-color: var(--border);
+}
+
+/* Content Wrapper Styles */
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Styles */
+.header-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.header {
+  margin-right: 10px;
+}
+
+.header-button {
+  font-size: 16px;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+}
+
+.header-button:hover {
+  background-color: var(--hover-background);
+  border-color: var(--border);
+}
+
+.header-button:active {
+  background-color: var(--border);
+  border-color: var(--border);
+}
+
+/* Search Box Styles */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  max-width: 550px;
+  width: 100%;
+}
+
+.search-box {
+  flex: 1;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  font-size: 16px;
+}
+
+.search-box:focus {
+  outline: none;
+}
+.search-box:hover:not(:focus) {
+  background-color: var(--hover-background);
+  border-color: var(--border);
+  outline: none;
+}
+
+/* Sort Button Styles */
+.sort-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-button {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  font-size: 16px;
+}
+
+.sort-button:hover {
+  background-color: var(--hover-background);
+  border-color: var(--border);
+}
+.sort-button:active {
+  background-color: var(--border);
+  border-color: var(--border);
+}
+
+/* List Styles */
+.list-wrapper,
+.list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  width: 100%;
+  padding: 5px;
+}
+
+.list-item {
+  width: 100%;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+/* Pagination Styles */
+.pagination-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2px;
+  padding: 5px;
+}
+
+.pagination-button {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+}
+
+.pagination-button:hover {
+  background-color: var(--hover-background);
+  border-color: var(--border);
+}
+.pagination-button:active {
+  background-color: var(--border);
+  border-color: var(--border);
+}
+
+.disabled-pagination-button {
+  background-color: var(--disabled-background);
+  color: var(--disabled-text);
+  pointer-events: none;
+}
+
+.active-pagination-button {
+  background-color: var(--active);
+  color: var(--active-text);
+  border-color: var(--active);
+  pointer-events: none;
+}

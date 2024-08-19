@@ -79,13 +79,19 @@ public class CatnipPage implements ControllerUtil {
 
     model.addAttribute("newPage", catnipPage);
 
-    PaginationRangeDto range = getPaginationRange(page, catnipPage.getTotalPages(), Constants.RANGE_SIZE, Constants.RANGE_HALF);
+    PaginationRangeDto range = getPaginationRange(page, catnipPage.getTotalPages(),
+      Constants.RANGE_SIZE, Constants.RANGE_HALF);
     model.addAttribute("paginationRange", range);
 
     return "catnip/catnip-list :: catnipList";
   }
 
-  public PaginationRangeDto getPaginationRange(int page, int totalPages, int rangeSize, int half) {
+  public PaginationRangeDto getPaginationRange(
+    int page,
+    int totalPages,
+    int rangeSize,
+    int half
+  ) {
     int rangeStart, rangeEnd;
 
     if (totalPages <= rangeSize) {

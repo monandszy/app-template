@@ -2,6 +2,8 @@ package code.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import java.util.Objects;
+import javax.sql.DataSource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -9,9 +11,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
-
-import javax.sql.DataSource;
-import java.util.Objects;
 
 @Component
 @Slf4j
@@ -22,9 +21,11 @@ public class DatabaseInitializer {
 
   @Bean
   public DataSource dataSource() {
-    String url = initializeIfNotExists();
+    String profile = environment.getActiveProfiles()[0];
+    String url = initializeIfNotExists(profile);
     final HikariConfig hikariConfig = new HikariConfig();
-    hikariConfig.setDriverClassName(Objects.requireNonNull(environment.getProperty("spring.datasource.driver-class-name")));
+    hikariConfig.setDriverClassName(Objects.requireNonNull(
+      environment.getProperty("spring.datasource.driver-class-name")));
     hikariConfig.setJdbcUrl(url);
     hikariConfig.setUsername(environment.getProperty("spring.datasource.username"));
     hikariConfig.setPassword(environment.getProperty("spring.datasource.password"));
@@ -40,17 +41,32 @@ public class DatabaseInitializer {
     JdbcTemplate jdbcTemplate = new JdbcTemplate(hikariDataSource);
 
     String schemaName = environment.getProperty("spring.datasource.hikari.schema");
-    String query = "SELECT EXISTS(SELECT 1 FROM information_schema.schemata WHERE schema_name = '%s')".formatted(schemaName);
-    if (Boolean.FALSE.equals(jdbcTemplate.queryForObject(query, Boolean.class))) {
-      String createSchemaSql = "CREATE SCHEMA app";
-      jdbcTemplate.execute(createSchemaSql);
-    }
+    initializeSchema(jdbcTemplate, schemaName);
     return hikariDataSource;
   }
 
-  private String initializeIfNotExists() {
-    String profile = environment.getActiveProfiles()[0];
+  private static final String CheckSchemaExistence = """
+    SELECT EXISTS(
+    SELECT 1 FROM information_schema.schemata
+    WHERE schema_name = '%s')
+    """;
 
+  private void initializeSchema(JdbcTemplate jdbcTemplate, String schemaName) {
+    Boolean schemaExists = jdbcTemplate.queryForObject(CheckSchemaExistence
+      .formatted(schemaName), Boolean.class);
+    if (Boolean.FALSE.equals(schemaExists)) {
+      String createSchemaSql = "CREATE SCHEMA %s".formatted(schemaName);
+      jdbcTemplate.execute(createSchemaSql);
+    }
+  }
+
+  private static final String CheckDatabaseExistence = """
+    SELECT EXISTS(
+    SELECT 1 FROM pg_database
+    WHERE datname = '%s')
+    """;
+
+  private String initializeIfNotExists(String profile) {
     DriverManagerDataSource initialDataSource = new DriverManagerDataSource();
     initialDataSource.setDriverClassName("org.postgresql.Driver");
     initialDataSource.setUrl(environment.getProperty("spring.datasource.url"));
@@ -61,13 +77,13 @@ public class DatabaseInitializer {
     String suffix = profile.equals("prod") ? "" : "_dev";
     String dbName = "template" + suffix;
 
-    String query = "SELECT EXISTS(SELECT 1 FROM pg_database WHERE datname = '%s')".formatted(dbName);
-    Boolean databaseExists = jdbcTemplate.queryForObject(query, Boolean.class);
+    Boolean databaseExists = jdbcTemplate.queryForObject(CheckDatabaseExistence
+      .formatted(dbName), Boolean.class);
     log.info("Database exists: {}", databaseExists);
     if (Boolean.FALSE.equals(databaseExists)) {
       String createDbSql = "CREATE DATABASE " + dbName;
       jdbcTemplate.execute(createDbSql);
-      log.info("Database {} created successfully.", dbName);
+      log.info("Database {} created.", dbName);
     } else {
       log.info("Database {} already exists.", dbName);
     }

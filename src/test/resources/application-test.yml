@@ -7,11 +7,16 @@ spring:
     show-sql: true
     properties:
       format_sql: true
+  datasource:
+    hikari:
+      schema: ""
+  liquibase:
+    default-schema: ""
 logging:
   level:
     org:
-      #      springframework:
-      #        modulith: DEBUG
+      springframework:
+        modulith: DEBUG
       hibernate:
         orm:
           jdbc:

@@ -1,12 +1,11 @@
 package code.modules.catnip.service;
 
+import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
 import lombok.With;
-
-import java.util.UUID;
 
 @Value
 @With
@@ -14,7 +13,5 @@ import java.util.UUID;
 @EqualsAndHashCode(of = {"id"})
 @ToString(of = {"id"})
 public class Catnip {
-
   UUID id;
-
 }

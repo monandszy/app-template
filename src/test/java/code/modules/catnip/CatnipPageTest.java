@@ -1,11 +1,18 @@
 package code.modules.catnip;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 import code.configuration.Constants;
 import code.util.TestFixtures;
 import code.web.catnip.CatnipCreateDto;
 import code.web.catnip.CatnipPage;
 import code.web.catnip.CatnipReadDto;
 import code.web.catnip.PaginationRangeDto;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,14 +26,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(controllers = CatnipPage.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -50,7 +49,7 @@ class CatnipPageTest {
     mockMvc.perform(get("/catnip"))
       .andExpect(model().attribute("newPage", mocked))
       .andExpect(model().attribute("catnipCreateDto", new CatnipCreateDto()))
-      .andExpect(view().name("catnip"));
+      .andExpect(view().name("catnip/catnip"));
   }
 
   @Test
@@ -63,7 +62,7 @@ class CatnipPageTest {
     mockMvc.perform(get("/catnip/list")
         .param("page", page).param("sort", sort))
       .andExpect(model().attribute("newPage", mocked))
-      .andExpect(view().name("fragments/catnip-list :: catnipList"));
+      .andExpect(view().name("catnip/catnip-list :: catnipList"));
     Mockito.verify(catnipQueryFacade).requestCatnipPage(expected);
   }
 
@@ -76,7 +75,7 @@ class CatnipPageTest {
     mockMvc.perform(get("/catnip/list")
         .param("query", query))
       .andExpect(model().attribute("newPage", mocked))
-      .andExpect(view().name("fragments/catnip-list :: catnipList"));
+      .andExpect(view().name("catnip/catnip-list :: catnipList"));
     Mockito.verify(catnipQueryFacade).searchCatnip(expected, query);
   }
 
@@ -104,28 +103,32 @@ class CatnipPageTest {
     // Less than range
     int totalPages1 = 3;
     int page1 = 1;
-    PaginationRangeDto result1 = catnipPage.getPaginationRange(page1, totalPages1, rangeSize, rangeHalf);
+    PaginationRangeDto result1 = catnipPage
+      .getPaginationRange(page1, totalPages1, rangeSize, rangeHalf);
     Assertions.assertEquals(0, result1.start());
     Assertions.assertEquals(2, result1.end());
 
     // Start of range
     int totalPages2 = 10;
     int page2 = 1;
-    PaginationRangeDto result2 = catnipPage.getPaginationRange(page2, totalPages2, rangeSize, rangeHalf);
+    PaginationRangeDto result2 = catnipPage
+      .getPaginationRange(page2, totalPages2, rangeSize, rangeHalf);
     Assertions.assertEquals(0, result2.start());
     Assertions.assertEquals(4, result2.end());
 
     // Middle of range
     int totalPages3 = 10;
     int page3 = 5;
-    PaginationRangeDto result3 = catnipPage.getPaginationRange(page3, totalPages3, rangeSize, rangeHalf);
+    PaginationRangeDto result3 = catnipPage
+      .getPaginationRange(page3, totalPages3, rangeSize, rangeHalf);
     Assertions.assertEquals(3, result3.start());
     Assertions.assertEquals(7, result3.end());
 
     // End of range
     int totalPages4 = 7;
     int page4 = 6;
-    PaginationRangeDto result4 = catnipPage.getPaginationRange(page4, totalPages4, rangeSize, rangeHalf);
+    PaginationRangeDto result4 = catnipPage
+      .getPaginationRange(page4, totalPages4, rangeSize, rangeHalf);
 
     Assertions.assertEquals(2, result4.start());
     Assertions.assertEquals(6, result4.end());

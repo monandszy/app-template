@@ -1,8 +1,10 @@
 /**
- * This package contains another test module
+ * This package contains another test module.
  * <p>
- * The classes in this package are temporary
+ * The classes in this package are temporary.
  * </p>
  */
-@org.springframework.modulith.ApplicationModule(displayName = "potModule")
+@ApplicationModule(displayName = "potModule")
 package code.modules.pot;
+
+import org.springframework.modulith.ApplicationModule;

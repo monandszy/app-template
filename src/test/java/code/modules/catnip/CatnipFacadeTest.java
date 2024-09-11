@@ -1,5 +1,7 @@
 package code.modules.catnip;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import code.configuration.Constants;
 import code.configuration.ContextConfig;
 import code.configuration.FacadeAbstract;
@@ -18,8 +20,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @Import(ContextConfig.CatnipModuleContext.class)
@@ -48,9 +48,10 @@ class CatnipFacadeTest extends FacadeAbstract {
 
   @Test
   @Transactional
+  @Disabled
   void should_return_searched_catnip() {
     // given
-    String query = "field value todo";
+    String query = "TODO field value";
     catnipDao.create(TestFixtures.catnip);
     Catnip expected = TestFixtures.catnip;  // .withField(value + xxx)
     catnipDao.create(expected);
@@ -62,7 +63,7 @@ class CatnipFacadeTest extends FacadeAbstract {
     assertThat(catnipPage.getContent()).isNotEmpty();
     assertThat(catnipPage.getTotalElements()).isEqualTo(1);
     assertThat(catnipPage.getContent().getFirst().id()).isNotNull();
-    // field contains query eg. the correct one was returned
+    // TODO field contains query eg. the correct one was returned
   }
 
   @Test

@@ -14,7 +14,7 @@ services:
     environment:
       - "SPRING_PROFILES_ACTIVE=prod"
     ports:
-      - "8000"
+      - "8001:8000"
     networks:
       - observability
       - data

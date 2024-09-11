@@ -10,7 +10,6 @@ plugins {
 
 group = "code"
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-application.mainClass = "code.TemplateApp"
 
 apply(from = rootProject.file("gradle/util/misc.gradle.kts"))
 apply(from = rootProject.file("gradle/util/git.gradle.kts"))
@@ -24,28 +23,20 @@ repositories {
 }
 
 dependencies {
+  implementation(libs.spring.modulith)
 
-  implementation(libs.bundles.spring.modulith)
+  implementation(libs.bundles.spring.data)
+  runtimeOnly(libs.postgresql)
+
   implementation(libs.bundles.observability)
   runtimeOnly(libs.modulith.observability)
 
-  implementation("org.springframework.boot:spring-boot-starter-validation")
+  implementation(libs.bundles.events)
+
   implementation(libs.bundles.spring.web)
-  implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:3.4.1")
+  implementation(libs.bundles.thymeleaf)
 
-//   implementation("org.springframework.session:spring-session-core")
-//   testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-
-  implementation("org.springframework.boot:spring-boot-starter-security")
-  implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
-  testImplementation("org.springframework.security:spring-security-test")
-
-  implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0")
-
-  runtimeOnly("org.postgresql:postgresql")
-  implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-  implementation("org.liquibase:liquibase-core")
-
+//  implementation(libs.bundles.jmolecules)
   compileOnly(libs.lombok)
   annotationProcessor(libs.lombok)
   testImplementation(libs.lombok)
@@ -53,7 +44,7 @@ dependencies {
   implementation(libs.mapstruct)
   annotationProcessor(libs.bundles.mapstruct.annotation)
 
-  testImplementation(libs.bundles.test.containers)
+  testImplementation(libs.bundles.testcontainers)
   testImplementation(libs.junit.jupiter)
   testRuntimeOnly(libs.junit.platform)
   testImplementation(libs.bundles.spring.test)
@@ -61,13 +52,12 @@ dependencies {
   developmentOnly(libs.spring.dev.tools)
   testJavaagent(libs.javaagent.impl)
 
-  implementation(libs.bundles.jmolecules)
 }
 
 dependencyManagement {
   imports {
     mavenBom("org.springframework.modulith:spring-modulith-bom:1.2.1")
-    mavenBom("org.jmolecules:jmolecules-bom:2023.1.4")
+//    mavenBom("org.jmolecules:jmolecules-bom:2023.1.4")
     mavenBom("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.6.0")
   }
 }
@@ -87,7 +77,16 @@ tasks {
     }
   }
 
+  check {
+    dependsOn(pmdMain)
+    dependsOn(pmdTest)
+    dependsOn(jacocoTestReport)
+    dependsOn(checkstyleMain)
+    dependsOn(checkstyleTest)
+  }
+
   pmd {
+    toolVersion = "7.4.0"
     isConsoleOutput = false
     isIgnoreFailures = true
     rulesMinimumPriority = 5
@@ -95,18 +94,19 @@ tasks {
     pmdMain {
       exclude(
       )
+      doLast {
+        val reportPath = layout.buildDirectory.file("reports/pmd/main.html").get().asFile
+        println("PmdMain report: file://${reportPath.toURI().path}")
+      }
     }
     pmdTest {
       exclude(
       )
+      doLast {
+        val reportPath = layout.buildDirectory.file("reports/pmd/test.html").get().asFile
+        println("PmdTest report: file://${reportPath.toURI().path}")
+      }
     }
-  }
-  check {
-    dependsOn(pmdMain)
-    dependsOn(pmdTest)
-    dependsOn(jacocoTestReport)
-    dependsOn(checkstyleMain)
-    dependsOn(checkstyleTest)
   }
 
   checkstyle {
@@ -143,6 +143,22 @@ tasks {
         })
       )
       dependsOn(test)
+    }
+  }
+
+  register("report") {
+    doLast {
+      var reportPath = layout.buildDirectory.file("reports/jacoco/index.html").get().asFile
+      println("Jacoco report: file://${reportPath.toURI().path}")
+      reportPath = layout.buildDirectory.file("reports/checkstyle/main.html").get().asFile
+      println("CheckstyleMain report: file://${reportPath.toURI().path}")
+      reportPath = layout.buildDirectory.file("reports/checkstyle/test.html").get().asFile
+      println("CheckstyleTest report: file://${reportPath.toURI().path}")
+      reportPath = layout.buildDirectory.file("reports/pmd/main.html").get().asFile
+      println("PmdMain report: file://${reportPath.toURI().path}")
+      reportPath = layout.buildDirectory.file("reports/pmd/test.html").get().asFile
+      println("PmdTest report: file://${reportPath.toURI().path}")
+
     }
   }
 

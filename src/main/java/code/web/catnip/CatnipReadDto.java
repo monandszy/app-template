@@ -1,8 +1,7 @@
 package code.web.catnip;
 
-import org.springframework.lang.NonNull;
-
 import java.util.UUID;
+import org.springframework.lang.NonNull;
 
 public record CatnipReadDto(
   @NonNull UUID id

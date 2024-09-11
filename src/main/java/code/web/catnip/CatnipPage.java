@@ -1,10 +1,17 @@
 package code.web.catnip;
 
+import static code.util.ControllerUtil.getOrSetSessionAttr;
+import static code.util.SessionAttr.currentPage;
+import static code.util.SessionAttr.currentQuery;
+import static code.util.SessionAttr.currentSort;
+
 import code.configuration.Constants;
 import code.modules.catnip.CatnipCommandFacade;
 import code.modules.catnip.CatnipQueryFacade;
 import code.util.ControllerUtil;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,14 +26,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.List;
-import java.util.Objects;
-
-import static code.util.ControllerUtil.getOrSetSessionAttr;
-import static code.util.SessionAttr.currentPage;
-import static code.util.SessionAttr.currentQuery;
-import static code.util.SessionAttr.currentSort;
 
 @Controller
 @AllArgsConstructor
@@ -72,10 +71,11 @@ public class CatnipPage implements ControllerUtil {
 
     PageRequest pageRequest = PageRequest.of(page, Constants.PAGE_SIZE, Sort.by(sort));
     Page<CatnipReadDto> catnipPage;
-    if (query.isBlank())
+    if (query.isBlank()) {
       catnipPage = catnipQueryFacade.requestCatnipPage(pageRequest);
-    else
+    } else {
       catnipPage = catnipQueryFacade.searchCatnip(pageRequest, query);
+    }
 
     model.addAttribute("newPage", catnipPage);
 
@@ -92,7 +92,8 @@ public class CatnipPage implements ControllerUtil {
     int rangeSize,
     int half
   ) {
-    int rangeStart, rangeEnd;
+    int rangeStart;
+    int rangeEnd;
 
     if (totalPages <= rangeSize) {
       rangeStart = 0;

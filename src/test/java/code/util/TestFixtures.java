@@ -3,9 +3,8 @@ package code.util;
 import code.modules.catnip.service.Catnip;
 import code.web.catnip.CatnipCreateDto;
 import code.web.catnip.CatnipReadDto;
-import lombok.experimental.UtilityClass;
-
 import java.util.UUID;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class TestFixtures {

@@ -7,10 +7,6 @@ spring:
     add-properties: false
   main:
     banner-mode: off
-  security:
-    enabled: false
-  modulith:
-    detection-strategy: explicitly-annotated
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
@@ -33,6 +29,22 @@ spring:
     hibernate:
       ddl-auto: none
     open-in-view: false
+  modulith:
+    republish-outstanding-events-on-restart: true
+    events:
+      externalization:
+        enabled: true
+      jdbc:
+        schema-initialization:
+          enabled: true
+    detection-strategy: explicitly-annotated
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: rabbitmq
+    password: rabbitmq
+  security:
+    enabled: false
 management:
   endpoints:
     web:
@@ -48,15 +60,21 @@ management:
 otel.traces.exporter: otlp
 otel.metrics.exporter: otlp
 otel.logs.exporter: otlp
+#otel.traces.exporter: none
+#otel.metrics.exporter: none
+#otel.logs.exporter: none
 otel:
   exporter:
     otlp:
       traces:
-        endpoint: http://otel-collector:4318/v1/traces
+        endpoint: "http://otel-collector:4318/v1/traces"
       metrics:
-        endpoint: http://otel-collector:4318/v1/metrics
+        endpoint: "http://otel-collector:4318/v1/metrics"
       logs:
-        endpoint: http://otel-collector:4318/v1/logs
+        endpoint: "http://otel-collector:4318/v1/logs"
+  instrumentation:
+    micrometer:
+      enabled: true
 logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger{36} - %msg%n"

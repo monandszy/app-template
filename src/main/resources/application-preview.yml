@@ -1,0 +1,41 @@
+# profile for easier view development with spring dev tools outside of docker
+spring.config.activate.on-profile: preview
+
+spring:
+  application:
+    name: preview
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+  devtools:
+    add-properties: true
+    restart:
+      enabled: true
+    livereload:
+      port: 35731
+      enabled: true
+  h2:
+    console:
+      enabled: false
+  graphql:
+    graphiql:
+      enabled: false
+  mvc:
+    log-request-details: true
+  security:
+    enabled: false
+  rabbitmq:
+    host: localhost
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+otel:
+  exporter:
+    otlp:
+      traces:
+        endpoint: "http://localhost:4318/v1/traces"
+      metrics:
+        endpoint: "http://localhost:4318/v1/metrics"
+      logs:
+        endpoint: "http://localhost:4318/v1/logs"

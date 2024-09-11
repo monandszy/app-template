@@ -1,8 +1,11 @@
 /**
- * This package contains ...
+ * This package contains the catnip module, responsible for catnip crud.
  * <p>
- * The classes in this package ...
+ * The classes in this package are purely fictional.
  * </p>
  */
-@org.springframework.modulith.ApplicationModule(displayName = "catModule")
+
+@ApplicationModule(displayName = "catnipModule")
 package code.modules.catnip;
+
+import org.springframework.modulith.ApplicationModule;

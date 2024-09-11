@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS catnip
 (
-    id SERIAL NOT NULL,
-    PRIMARY KEY (id)
+  id uuid DEFAULT gen_random_uuid(),
+  PRIMARY KEY (id)
 );
 --liquibase formatted sql

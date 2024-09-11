@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+  <title>Thymeleaf and HTMX</title>
+</head>
+<body>
+<div layout:fragment="content" th:fragment="content" class="content-wrapper" id="content">
+  <div class="header-wrapper">
+    <h1 class="header">Catnip List</h1>
+    <form
+      hx-post="catnip"
+      hx-swap="none"
+      hx-trigger="submit"
+      th:object="${catnipCreateDTO}"
+      hx-on--after-request="updateCatnipList()"
+    >
+      <button class="header-button"
+        type="submit" th:text="Add"
+      ></button>
+    </form>
+  </div>
+  <div class="search-wrapper" hx-target="#catnip-list" hx-swap="outerHTML">
+    <input class="search-box" type="search"
+           name="query" placeholder="Search..."
+           hx-get="/catnip/list"
+           hx-trigger="input changed delay:500ms, search, submit"
+           hx-vals='{"page": 0}'
+    >
+    <div class="sort-wrapper" hx-swap="outerHTML">
+      <button class="sort-button"
+        hx-get="/catnip/list"
+        hx-vals='{"sort":"id","page":0}'
+      >Default
+      </button>
+      <th:block th:each="sortOption : ${sortOptions}" th:classappend="sort-button">
+        <button
+          hx-get="/catnip/list"
+          hx:vals="${ {sort: sortOption, page:0} }"
+        > [[${sortOption}]]
+        </button>
+      </th:block>
+    </div>
+  </div>
+
+  <div th:replace="~{catnip/catnip-list :: catnipList}"></div>
+
+  <script>
+    function updateCatnipList() {
+      htmx.ajax('GET', '/catnip/list', {target:'#catnip-list', swap:'outerHTML'});
+    }
+  </script>
+</div>
+
+</body>
+</html>

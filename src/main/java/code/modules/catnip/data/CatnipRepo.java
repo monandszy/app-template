@@ -1,13 +1,37 @@
 package code.modules.catnip.data;
 
-import code.modules.catnip.data.dao.CatDao;
-import code.modules.catnip.data.jpa.CatnipJpaRepo;
+import code.modules.catnip.service.Catnip;
+import code.modules.catnip.util.CatnipMapper;
+import code.util.RepositoryAdapter;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
-@Repository
+@RepositoryAdapter
 @AllArgsConstructor
-class CatnipRepo implements CatDao {
+public class CatnipRepo implements CatnipDao {
 
   private CatnipJpaRepo catnipJpaRepo;
+  private CatnipMapper catnipMapper;
+
+  @Override
+  public Page<Catnip> search(PageRequest pageRequest, ExampleMatcher matcher, Catnip probe) {
+    Example<CatnipEntity> example = Example.of(catnipMapper.domainToEntity(probe), matcher);
+    Page<CatnipEntity> page = catnipJpaRepo.findAll(example, pageRequest);
+    return page.map(catnipMapper::entityToDomain);
+  }
+
+  @Override
+  public Page<Catnip> getPage(PageRequest pageRequest) {
+    Page<CatnipEntity> page = catnipJpaRepo.findAll(pageRequest);
+    return page.map(catnipMapper::entityToDomain);
+  }
+
+  @Override
+  public Catnip create(Catnip catnip) {
+    CatnipEntity entity = catnipMapper.domainToEntity(catnip);
+    return catnipMapper.entityToDomain(catnipJpaRepo.save(entity));
+  }
 }

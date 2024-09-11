@@ -1,11 +1,11 @@
 networks:
+  ${default-network}:
+    driver: bridge
+    name: ${default-network}
   observability:
     external: true
   data:
     external: true
-  default:
-    driver: bridge
-    name: ${default-network}
 services:
   app-template:
     container_name: app-template
@@ -18,3 +18,4 @@ services:
     networks:
       - observability
       - data
+      - ${default-network}

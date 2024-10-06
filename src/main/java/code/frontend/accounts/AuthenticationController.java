@@ -19,10 +19,9 @@ public class AuthenticationController {
   @ResponseStatus(HttpStatus.OK)
   String login(
     @RequestHeader(value = "HX-Request", required = false) String hxRequest,
-    @RequestHeader(value = "message", required = false) String message,
     Model model
   ) {
-    model.addAttribute("loginRequest", new LoginRequestDto("", ""));
+    model.addAttribute("loginRequestDto", new LoginRequestDto("", ""));
     if (Objects.nonNull(hxRequest)) {
       return "authentication/login :: content";
     } else {
@@ -32,5 +31,4 @@ public class AuthenticationController {
 
   public record LoginRequestDto(String email, String password) {
   }
-
 }

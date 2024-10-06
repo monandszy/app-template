@@ -1,6 +1,5 @@
 package code.modules.accounts.service;
 
-import code.modules.accounts.data.AccountDao;
 import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -24,8 +23,8 @@ class Authentication implements UserDetailsService {
   @Transactional
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     Account account = accountDAO.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
-    List<GrantedAuthority> authorities = getAccountAuthority(account.getRoles());
-    return buildAccountForAuthentication(account, authorities);
+//    List<GrantedAuthority> authorities = getAccountAuthority(account.getRoles());
+    return buildAccountForAuthentication(account, List.of());
   }
 
   //

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -26,10 +27,11 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(uuid, HttpStatus.BAD_REQUEST);
   }
 
-//  @ExceptionHandler(AuthenticationException.class)
-//  public void handle(AuthenticationException ex) {
-//    RedirectView redirectView = new RedirectView("login");
-//    return "#authorization/login?invalid";
-//  }
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<UUID> handle(MethodArgumentNotValidException ex) {
+    UUID uuid = UUID.randomUUID();
+    log.error("MethodArgumentNotValidException: {} UUID: {}", ex, uuid);
+    return new ResponseEntity<>(uuid, HttpStatus.BAD_REQUEST);
+  }
 
 }

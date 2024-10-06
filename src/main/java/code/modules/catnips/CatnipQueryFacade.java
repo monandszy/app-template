@@ -1,7 +1,7 @@
 package code.modules.catnips;
 
-import code.modules.catnips.data.CatnipDao;
 import code.modules.catnips.service.Catnip;
+import code.modules.catnips.service.CatnipDao;
 import code.modules.catnips.util.CatnipMapper;
 import code.util.Facade;
 import java.util.UUID;

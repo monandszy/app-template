@@ -2,8 +2,8 @@ package code.modules.catnips;
 
 import code.events.CatnipCreatedEvent;
 import code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
-import code.modules.catnips.data.CatnipDao;
 import code.modules.catnips.service.Catnip;
+import code.modules.catnips.service.CatnipDao;
 import code.modules.catnips.util.CatnipMapper;
 import code.util.Facade;
 import lombok.AllArgsConstructor;

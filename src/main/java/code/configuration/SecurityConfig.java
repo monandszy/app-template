@@ -61,7 +61,7 @@ public class SecurityConfig {
     AuthenticationManager auth
   ) {
     return http
-      .csrf(AbstractHttpConfigurer::disable)
+//      .csrf(AbstractHttpConfigurer::disable)
       .requestCache((cache) -> cache
         .requestCache(new NullRequestCache())
       )
@@ -74,7 +74,12 @@ public class SecurityConfig {
           "/js/*",
           "/vendored/*",
           "favicon.ico"
-        ).anonymous()
+        ).permitAll()
+        .requestMatchers(
+          "/catnip",
+          "/catnip/*",
+          "/"
+        ).authenticated()
       )
       .formLogin(authorize -> authorize
         .loginPage("/login")

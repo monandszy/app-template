@@ -1,6 +1,5 @@
-package code.modules.catnips.data;
+package code.modules.catnips.service;
 
-import code.modules.catnips.service.Catnip;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

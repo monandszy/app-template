@@ -17,7 +17,5 @@ public class EventService {
   void on(CatnipCreatedEvent event) {
     System.out.println("CATT");
     log.info("event recived!: {}", event.id());
-    log.info("event recivedd!: {}", event.id());
-    log.info("event reciveddd!: {}", event.id());
   }
 }

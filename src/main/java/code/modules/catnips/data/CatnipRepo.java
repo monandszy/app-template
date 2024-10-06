@@ -1,6 +1,7 @@
 package code.modules.catnips.data;
 
 import code.modules.catnips.service.Catnip;
+import code.modules.catnips.service.CatnipDao;
 import code.modules.catnips.util.CatnipMapper;
 import code.util.RepositoryAdapter;
 import lombok.AllArgsConstructor;

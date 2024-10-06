@@ -1,11 +1,14 @@
 package code.frontend.accounts;
 
 import static code.modules.accounts.UserCommandFacade.AccountCreateDto;
+import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 import code.modules.accounts.UserCommandFacade;
+import jakarta.servlet.http.HttpSession;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @AllArgsConstructor
@@ -24,10 +28,9 @@ public class RegistrationController {
   @ResponseStatus(HttpStatus.OK)
   String register(
     @RequestHeader(value = "HX-Request", required = false) String hxRequest,
-    @RequestHeader(value = "message", required = false) String message,
     Model model
   ) {
-    model.addAttribute("message", message);
+    model.addAttribute("accountCreateDto", new AccountCreateDto("", ""));
     if (Objects.nonNull(hxRequest)) {
       return "authentication/register :: content";
     } else {
@@ -36,11 +39,13 @@ public class RegistrationController {
   }
 
   @PostMapping("/register")
-  public String registerAccount(
-    @ModelAttribute("account") AccountCreateDto account
+  RedirectView registerAccount(
+    @ModelAttribute("account") AccountCreateDto account,
+    HttpSession session
   ) {
-    userCommandFacade.register(account);
-    return "authentication/login";
+    SecurityContext context = userCommandFacade.register(account);
+    session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, context);
+    return new RedirectView("/");
   }
 
 }

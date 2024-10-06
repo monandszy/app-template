@@ -7,5 +7,5 @@ import lombok.extern.slf4j.Slf4j;
 @Facade
 @AllArgsConstructor
 @Slf4j
-public class UserQueryFacade {
+public class AccountQueryFacade {
 }

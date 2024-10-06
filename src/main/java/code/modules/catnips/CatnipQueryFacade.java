@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.lang.NonNull;
 
 @Facade
 @Slf4j
@@ -21,7 +20,7 @@ public class CatnipQueryFacade {
   private CatnipMapper catnipMapper;
 
   public Page<CatnipReadDto> requestCatnipPage(
-    @NonNull PageRequest pageRequest
+    PageRequest pageRequest
   ) {
     Page<CatnipReadDto> page = catnipDao.getPage(pageRequest)
       .map(catnipMapper::domainToReadDto);
@@ -31,8 +30,8 @@ public class CatnipQueryFacade {
 
   // TODO
   public Page<CatnipReadDto> searchCatnip(
-    @NonNull PageRequest pageRequest,
-    @NonNull String query
+    PageRequest pageRequest,
+    String query
   ) {
     ExampleMatcher matcher = ExampleMatcher.matchingAny();
 //        .withMatcher("id", match -> match.contains().ignoreCase());
@@ -47,7 +46,7 @@ public class CatnipQueryFacade {
   }
 
   public record CatnipReadDto(
-    @NonNull UUID id
+    UUID id
   ) {
   }
 

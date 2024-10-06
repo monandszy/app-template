@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface AccountJpaRepo extends JpaRepository<AccountEntity, Integer> {
   @EntityGraph(
     attributePaths = {
-      "roles"
+      "authorities"
     }
   )
   Optional<AccountEntity> findByEmail(String email);

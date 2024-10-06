@@ -12,7 +12,7 @@ import lombok.With;
 @Builder
 @EqualsAndHashCode(of = {"id"})
 @ToString(of = {"id"})
-public class Role {
+public class Authority {
   UUID id;
-  String name;
+  AuthorityName name;
 }

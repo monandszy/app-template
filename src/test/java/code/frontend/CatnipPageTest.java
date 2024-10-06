@@ -1,4 +1,4 @@
-package code.modules.catnips;
+package code.frontend;
 
 import static code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import code.configuration.Constants;
 import code.frontend.catnips.CatnipPage;
 import code.frontend.catnips.CatnipPage.PaginationRangeDto;
+import code.modules.catnips.CatnipCommandFacade;
+import code.modules.catnips.CatnipQueryFacade;
 import code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
 import code.util.TestFixtures;
 import java.util.List;
@@ -90,8 +92,9 @@ class CatnipPageTest {
   @Test
   void should_create_catnip() throws Exception {
     CatnipCreateDto expected = TestFixtures.catnipCreateDto;
-    mockMvc.perform(post("/catnip"))
-      .andExpect(status().isCreated());
+    mockMvc.perform(post("/catnip")
+        .content("{}").header("Content-Type", "application/json")
+      ).andExpect(status().isCreated());
     Mockito.verify(catnipCommandFacade).createCatnip(expected);
   }
 

@@ -18,5 +18,5 @@ public class Account {
   String email;
   String password;
   Boolean enabled;
-  Set<Role> roles;
+  Set<Authority> authorities;
 }

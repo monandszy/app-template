@@ -1,19 +1,37 @@
 package code.modules.accounts.util;
 
+import static code.modules.accounts.AccountCommandFacade.AccountReadDto;
+
 import code.configuration.SpringMapperConfig;
-import code.modules.accounts.UserCommandFacade.AccountCreateDto;
+import code.modules.accounts.AccountCommandFacade.AccountCreateDto;
 import code.modules.accounts.data.AccountEntity;
 import code.modules.accounts.service.Account;
+import code.modules.accounts.service.Authority;
 import code.util.Generated;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 @Mapper(config = SpringMapperConfig.class)
 @AnnotateWith(Generated.class)
 public interface AccountMapper {
 
   Account entityToDomain(AccountEntity accountEntity);
+
   AccountEntity domainToEntity(Account account);
 
-   Account createDtoToDomain(AccountCreateDto accountCreateDto);
+  Account createDtoToDomain(AccountCreateDto accountCreateDto);
+
+  @Mapping(target = "authorities", source = "authorities", qualifiedByName = "authorityMapping")
+  AccountReadDto domainToReadDto(Account account);
+
+  @Named("authorityMapping")
+  default Set<String> authorityMapping(Set<Authority> authorities) {
+    if (Objects.isNull(authorities)) return null;
+    return authorities.stream().map(e -> e.getName().name()).collect(Collectors.toSet());
+  }
 }

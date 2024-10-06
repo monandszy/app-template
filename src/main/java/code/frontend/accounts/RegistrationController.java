@@ -1,14 +1,13 @@
 package code.frontend.accounts;
 
-import static code.modules.accounts.UserCommandFacade.AccountCreateDto;
-import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
+import static code.modules.accounts.AccountCommandFacade.AccountCreateDto;
 
-import code.modules.accounts.UserCommandFacade;
-import jakarta.servlet.http.HttpSession;
+import code.modules.accounts.AccountCommandFacade;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,9 @@ import org.springframework.web.servlet.view.RedirectView;
 @AllArgsConstructor
 public class RegistrationController {
 
-  private UserCommandFacade userCommandFacade;
+  private AccountCommandFacade accountCommandFacade;
+//  private AuthenticationManager authenticationManager;
+  private CustomAuthenticationFilter authenticationFilter;
 
   @GetMapping("/register")
   @ResponseStatus(HttpStatus.OK)
@@ -41,11 +42,23 @@ public class RegistrationController {
   @PostMapping("/register")
   RedirectView registerAccount(
     @ModelAttribute("account") AccountCreateDto account,
-    HttpSession session
+    HttpServletRequest request,
+    HttpServletResponse response
   ) {
-    SecurityContext context = userCommandFacade.register(account);
-    session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, context);
+    accountCommandFacade.register(account);
+    authenticationFilter.attemptAuthentication(request, response);
     return new RedirectView("/");
   }
+
+//  // TODO somehow integrate with authenticationFilter
+//  private void authenticate(AccountCreateDto account, HttpSession session) {
+//    Authentication authRequest = UsernamePasswordAuthenticationToken
+//      .unauthenticated(account.email(), account.password());
+//    // Also runs failure/success handler
+//    Authentication authResult = authenticationManager.authenticate(authRequest);
+//    SecurityContext context = SecurityContextHolder.getContext();
+//    context.setAuthentication(authResult);
+//    session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, context);
+//  }
 
 }

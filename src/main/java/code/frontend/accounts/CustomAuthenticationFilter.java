@@ -14,8 +14,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
   public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {

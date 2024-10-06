@@ -1,5 +1,6 @@
 package code.frontend.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mapping.PropertyReferenceException;
@@ -31,6 +32,13 @@ public class GlobalExceptionHandler {
   public ResponseEntity<UUID> handle(MethodArgumentNotValidException ex) {
     UUID uuid = UUID.randomUUID();
     log.error("MethodArgumentNotValidException: {} UUID: {}", ex, uuid);
+    return new ResponseEntity<>(uuid, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<UUID> handle(ConstraintViolationException ex) {
+    UUID uuid = UUID.randomUUID();
+    log.error("ConstraintViolationException: {} UUID: {}", ex, uuid);
     return new ResponseEntity<>(uuid, HttpStatus.BAD_REQUEST);
   }
 

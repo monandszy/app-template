@@ -6,6 +6,7 @@ import code.modules.catnips.service.Catnip;
 import code.modules.catnips.service.CatnipDao;
 import code.modules.catnips.util.CatnipMapper;
 import code.util.Facade;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -20,7 +21,7 @@ public class CatnipCommandFacade {
   private CatnipMapper catnipMapper;
   private ApplicationEventPublisher publisher;
 
-  public CatnipReadDto createCatnip(@NonNull CatnipCreateDto createDto) {
+  public CatnipReadDto createCatnip(@Valid @NonNull CatnipCreateDto createDto) {
     Catnip created = catnipDao.create(catnipMapper.createDtoToDomain(createDto));
     log.info("Created Catnip: {}", created);
     this.publisher.publishEvent(new CatnipCreatedEvent(created.getId()));

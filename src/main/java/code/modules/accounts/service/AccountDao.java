@@ -5,6 +5,6 @@ import java.util.Optional;
 public interface AccountDao {
   Optional<Account> findByEmail(String email);
 
-  Account create(Account account);
+  Account create(Account account, AuthorityName authority);
 
 }

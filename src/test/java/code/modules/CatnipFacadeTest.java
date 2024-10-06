@@ -1,4 +1,4 @@
-package code.modules.catnips;
+package code.modules;
 
 import static code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -6,7 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import code.configuration.Constants;
 import code.configuration.ContextConfig;
 import code.configuration.FacadeAbstract;
+import code.modules.catnips.CatnipCommandFacade;
 import code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
+import code.modules.catnips.CatnipQueryFacade;
 import code.modules.catnips.service.Catnip;
 import code.modules.catnips.service.CatnipDao;
 import code.util.TestFixtures;
@@ -15,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class CatnipFacadeTest extends FacadeAbstract {
 
-  private ApplicationContext applicationContext;
   private CatnipQueryFacade catnipQueryFacade;
   private CatnipCommandFacade catnipCommandFacade;
   private CatnipDao catnipDao;
@@ -76,16 +76,6 @@ class CatnipFacadeTest extends FacadeAbstract {
     // then
     assertThat(createdCatnip).isNotNull();
     assertThat(createdCatnip.id()).isNotNull();
-  }
-
-  @Test
-  @Disabled
-  void check_initialized_beans() {
-    String[] beanNames = applicationContext.getBeanDefinitionNames();
-    log.info("Beans initialized in the context:");
-    for (String beanName : beanNames) {
-      log.info(beanName);
-    }
   }
 
 }

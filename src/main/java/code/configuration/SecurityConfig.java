@@ -61,7 +61,6 @@ public class SecurityConfig {
     AuthenticationManager auth
   ) {
     return http
-//      .csrf(AbstractHttpConfigurer::disable)
       .requestCache((cache) -> cache
         .requestCache(new NullRequestCache())
       )

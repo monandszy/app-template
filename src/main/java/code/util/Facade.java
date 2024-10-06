@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Validated
 @Transactional
 public @interface Facade {
 }

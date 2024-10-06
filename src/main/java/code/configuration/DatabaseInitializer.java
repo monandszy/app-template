@@ -22,7 +22,8 @@ public class DatabaseInitializer {
   @Bean
   public DataSource dataSource() {
     String profile = environment.getActiveProfiles()[0];
-    String url = initializeIfNotExists(profile);
+    String applicationName = environment.getProperty("spring.application.name");
+    String url = initializeDatabase(profile, applicationName);
     final HikariConfig hikariConfig = new HikariConfig();
     hikariConfig.setDriverClassName(Objects.requireNonNull(
       environment.getProperty("spring.datasource.driver-class-name")));
@@ -66,7 +67,7 @@ public class DatabaseInitializer {
     WHERE datname = '%s')
     """;
 
-  private String initializeIfNotExists(String profile) {
+  private String initializeDatabase(String profile, String databaseName) {
     DriverManagerDataSource initialDataSource = new DriverManagerDataSource();
     initialDataSource.setDriverClassName("org.postgresql.Driver");
     initialDataSource.setUrl(environment.getProperty("spring.datasource.url"));
@@ -74,22 +75,25 @@ public class DatabaseInitializer {
     initialDataSource.setPassword(environment.getProperty("spring.datasource.password"));
     JdbcTemplate jdbcTemplate = new JdbcTemplate(initialDataSource);
 
-    String suffix = profile.equals("prod") ? "" : "_dev";
-    String dbName = "template" + suffix;
-
-    Boolean databaseExists = jdbcTemplate.queryForObject(CheckDatabaseExistence
-      .formatted(dbName), Boolean.class);
-    log.info("Database exists: {}", databaseExists);
-    if (Boolean.FALSE.equals(databaseExists)) {
-      String createDbSql = "CREATE DATABASE " + dbName;
-      jdbcTemplate.execute(createDbSql);
-      log.info("Database {} created.", dbName);
-    } else {
-      log.info("Database {} already exists.", dbName);
+    databaseName = databaseName.replace("-", "_");
+    String env = "postgres";
+    if (profile.equals("preview")) {
+      env = "localhost";
+      databaseName = databaseName.replace("preview", "dev");
     }
 
-    String env = profile.equals("preview") ? "localhost" : "postgres";
-    String url = "jdbc:postgresql://%s:5432/%s".formatted(env, dbName);
+    Boolean databaseExists = jdbcTemplate.queryForObject(CheckDatabaseExistence
+      .formatted(databaseName), Boolean.class);
+    log.info("Database exists: {}", databaseExists);
+    if (Boolean.FALSE.equals(databaseExists)) {
+      String createDbSql = "CREATE DATABASE " + databaseName;
+      jdbcTemplate.execute(createDbSql);
+      log.info("Database {} created.", databaseName);
+    } else {
+      log.info("Database {} already exists.", databaseName);
+    }
+
+    String url = "jdbc:postgresql://%s:5432/%s".formatted(env, databaseName);
     log.info("Database url: {}", url);
     return url;
     // jdbc:postgresql://postgres:5432/postgres

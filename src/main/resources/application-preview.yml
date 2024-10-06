@@ -4,7 +4,7 @@ spring.config.activate.on-profile: preview
 
 spring:
   application:
-    name: preview
+    name: app-template-preview
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
   devtools:

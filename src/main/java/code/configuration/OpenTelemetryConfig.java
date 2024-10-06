@@ -1,19 +1,12 @@
 package code.configuration;
 
-import static io.opentelemetry.sdk.resources.Resource.create;
-
-import io.opentelemetry.api.common.AttributeKey;
-import io.opentelemetry.api.common.Attributes;
-import io.opentelemetry.sdk.resources.Resource;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
+//@Configuration
 public class OpenTelemetryConfig {
 
-  private static final AttributeKey<String> SERVICE_NAME = AttributeKey.stringKey("service.name");
-  private static final Resource MANDATORY = create(Attributes.of(SERVICE_NAME, "unknown_service:java"));
+//  private static final AttributeKey<String> SERVICE_NAME = AttributeKey.stringKey("service.name");
+//  private static final Resource MANDATORY = create(Attributes.of(SERVICE_NAME, "unknown_service:java"));
 
-  // TODO remove export bloat
+  // TODO remove exporting parameter bloat with custom config
 
 //  @Bean
 //  OpenTelemetry openTelemetry(  ) {

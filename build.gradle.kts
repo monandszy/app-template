@@ -11,9 +11,13 @@ plugins {
 group = "code"
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-apply(from = rootProject.file("gradle/util/misc.gradle.kts"))
-apply(from = rootProject.file("gradle/util/git.gradle.kts"))
-apply(from = rootProject.file("gradle/util/docker.gradle.kts"))
+try {
+  apply(from = rootProject.file("gradle/util/misc.gradle.kts"))
+  apply(from = rootProject.file("gradle/util/git.gradle.kts"))
+  apply(from = rootProject.file("gradle/util/docker.gradle.kts"))
+} catch (e: Exception) {
+  println("Error while loading utils ${e.message}")
+}
 
 repositories {
   mavenCentral()

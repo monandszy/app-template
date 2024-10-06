@@ -4,5 +4,6 @@
       "name": "spring.security.enabled",
       "type": "java.lang.String",
       "description": "security disabled in preview profile."
-  }
-] }
+    }
+  ]
+}

@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 class HomePage {
 
-  String getHome() {
-    return "home/home";
-  }
-
-  @GetMapping
+  @GetMapping("/")
   @ResponseStatus(HttpStatus.OK)
   String index(
     @RequestHeader(value = "HX-Request", required = false) String hxRequest

@@ -1,8 +1,9 @@
 package code.util;
 
-import code.modules.catnip.service.Catnip;
-import code.web.catnip.CatnipCreateDto;
-import code.web.catnip.CatnipReadDto;
+import static code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
+
+import code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
+import code.modules.catnips.service.Catnip;
 import java.util.UUID;
 import lombok.experimental.UtilityClass;
 

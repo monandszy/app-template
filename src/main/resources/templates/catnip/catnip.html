@@ -17,7 +17,7 @@
       hx-on--after-request="updateCatnipList()"
     >
       <button class="header-button"
-        type="submit" th:text="Add"
+              type="submit" th:text="Add"
       ></button>
     </form>
   </div>
@@ -30,8 +30,8 @@
     >
     <div class="sort-wrapper" hx-swap="outerHTML">
       <button class="sort-button"
-        hx-get="/catnip/list"
-        hx-vals='{"sort":"id","page":0}'
+              hx-get="/catnip/list"
+              hx-vals='{"sort":"id","page":0}'
       >Default
       </button>
       <th:block th:each="sortOption : ${sortOptions}" th:classappend="sort-button">
@@ -48,7 +48,7 @@
 
   <script>
     function updateCatnipList() {
-      htmx.ajax('GET', '/catnip/list', {target:'#catnip-list', swap:'outerHTML'});
+      htmx.ajax('GET', '/catnip/list', {target: '#catnip-list', swap: 'outerHTML'});
     }
   </script>
 </div>

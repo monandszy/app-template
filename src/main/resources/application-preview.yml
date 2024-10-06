@@ -1,4 +1,5 @@
 # profile for easier view development with spring dev tools outside of docker
+# can also be used as an application demo
 spring.config.activate.on-profile: preview
 
 spring:
@@ -22,14 +23,20 @@ spring:
   mvc:
     log-request-details: true
   security:
-    enabled: false
+    enabled: true
   rabbitmq:
     host: localhost
 logging:
   level:
     org:
       springframework:
-        web: debug
+        modulith: debug
+        security: debug
+      hibernate:
+        orm:
+          jdbc:
+            bind: trace
+        SQL: debug
 otel:
   exporter:
     otlp:

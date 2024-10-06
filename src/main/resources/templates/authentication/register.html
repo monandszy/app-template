@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+  <title>Register</title>
+</head>
+<body>
+<div id="authentication-form" th:fragment="registerForm">
+  <form th:action="@{/register}" method="post">
+    <label>
+      <input type="text" name="username" placeholder="Username"/>
+    </label>
+    <label>
+      <input type="password" name="password" placeholder="Password"/>
+    </label>
+    <input type="submit" value="Log in"/>
+  </form>
+</div>
+</body>
+<div>
+  <a hx-get="/login"
+     hx-target="authentication-form"
+  >Login?</a>
+</div>
+</html>

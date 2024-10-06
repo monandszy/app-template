@@ -1,6 +1,6 @@
 package code.configuration;
 
-import code.modules.catnip.CatnipQueryFacade;
+import code.modules.catnips.CatnipQueryFacade;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 

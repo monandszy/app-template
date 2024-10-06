@@ -1,6 +1,6 @@
 package code.web;
 
-import code.web.catnip.CatnipPage;
+import code.web.catnips.CatnipPage;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

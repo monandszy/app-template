@@ -10,3 +10,14 @@ management:
   endpoint:
     shutdown:
       enabled: true
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        modulith: debug
+#        security: debug
+#      hibernate:
+#        orm:
+#          jdbc:
+#            bind: trace
+#        SQL: debug

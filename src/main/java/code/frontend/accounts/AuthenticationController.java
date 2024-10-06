@@ -1,7 +1,5 @@
-package code.web.accounts;
+package code.frontend.accounts;
 
-import code.modules.accounts.UserQueryFacade;
-import code.modules.accounts.UserQueryFacade.LoginRequestDto;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,21 +15,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @AllArgsConstructor
 public class AuthenticationController {
 
-  private UserQueryFacade userQueryFacade;
-
   @GetMapping("/login")
   @ResponseStatus(HttpStatus.OK)
   String login(
     @RequestHeader(value = "HX-Request", required = false) String hxRequest,
+    @RequestHeader(value = "message", required = false) String message,
     Model model
   ) {
     model.addAttribute("loginRequest", new LoginRequestDto("", ""));
     if (Objects.nonNull(hxRequest)) {
-      return "authentication/login :: loginForm";
+      return "authentication/login :: content";
     } else {
       return "authentication/login";
     }
   }
 
+  public record LoginRequestDto(String email, String password) {
+  }
 
 }

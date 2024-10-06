@@ -37,6 +37,11 @@ logging:
           jdbc:
             bind: trace
         SQL: debug
+# exporting disabled
+otel.traces.exporter: none
+otel.metrics.exporter: none
+otel.logs.exporter: none
+
 otel:
   exporter:
     otlp:

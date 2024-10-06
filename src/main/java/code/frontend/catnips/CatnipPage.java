@@ -1,4 +1,4 @@
-package code.web.catnips;
+package code.frontend.catnips;
 
 import static code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
 import static code.util.ControllerUtil.getOrSetSessionAttr;

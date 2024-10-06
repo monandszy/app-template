@@ -1,6 +1,7 @@
 package code.configuration;
 
-import code.web.accounts.CustomAuthenticationFilter;
+import code.frontend.accounts.CustomAuthenticationFilter;
+import lombok.SneakyThrows;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,31 +53,47 @@ public class SecurityConfig {
   }
 
   @Bean
+  @SneakyThrows
   @ConditionalOnProperty(value = "spring.security.enabled",
     havingValue = "true", matchIfMissing = true)
-  public SecurityFilterChain securityEnabled(HttpSecurity http, AuthenticationManager auth) throws Exception {
+  public SecurityFilterChain securityEnabled(
+    HttpSecurity http,
+    AuthenticationManager auth
+  ) {
     return http
       .csrf(AbstractHttpConfigurer::disable)
-//      .requestCache((cache) -> cache
-//        .requestCache(new NullRequestCache())
-//      )
+      .requestCache((cache) -> cache
+        .requestCache(new NullRequestCache())
+      )
       .authorizeHttpRequests(authorize -> authorize
-        .requestMatchers("/login", "/error", "/register")
-        .permitAll().anyRequest().authenticated()
+        .requestMatchers(
+          "/login",
+          "/error",
+          "/register",
+          "/css/*",
+          "/js/*",
+          "/vendored/*",
+          "favicon.ico"
+        ).anonymous()
       )
       .formLogin(authorize -> authorize
         .loginPage("/login")
         .usernameParameter("email")
         .successForwardUrl("/")
+        .failureForwardUrl("/login?invalid")
         .permitAll()
       )
       .logout(authorize -> authorize
-        .logoutSuccessUrl("/login")
+        .logoutSuccessUrl("/login?logout")
         .invalidateHttpSession(true)
         .deleteCookies("JSESSIONID")
         .permitAll()
       )
-//      .addFilter(new CustomAuthenticationFilter())
+      .exceptionHandling(exh -> exh
+        .authenticationEntryPoint((request, response, authException) -> {
+          response.addHeader("message", authException.getMessage());
+          response.sendRedirect("/login?unauthorized");
+        }))
       .addFilterBefore(new CustomAuthenticationFilter(auth), UsernamePasswordAuthenticationFilter.class)
       .build();
   }
@@ -94,4 +111,5 @@ public class SecurityConfig {
       )
       .build();
   }
+
 }

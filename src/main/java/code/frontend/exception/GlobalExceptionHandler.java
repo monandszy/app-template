@@ -1,4 +1,4 @@
-package code.web.exception;
+package code.frontend.exception;
 
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -25,5 +25,11 @@ public class GlobalExceptionHandler {
     log.error("PropertyReferenceException: {} UUID: {}", ex, uuid);
     return new ResponseEntity<>(uuid, HttpStatus.BAD_REQUEST);
   }
+
+//  @ExceptionHandler(AuthenticationException.class)
+//  public void handle(AuthenticationException ex) {
+//    RedirectView redirectView = new RedirectView("login");
+//    return "#authorization/login?invalid";
+//  }
 
 }

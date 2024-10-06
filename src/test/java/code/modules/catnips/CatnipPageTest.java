@@ -8,10 +8,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import code.configuration.Constants;
+import code.frontend.catnips.CatnipPage;
+import code.frontend.catnips.CatnipPage.PaginationRangeDto;
 import code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
 import code.util.TestFixtures;
-import code.web.catnips.CatnipPage;
-import code.web.catnips.CatnipPage.PaginationRangeDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;

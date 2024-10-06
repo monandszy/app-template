@@ -1,4 +1,4 @@
-package code.web.accounts;
+package code.frontend.accounts;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,15 +16,19 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
   public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
     super(authenticationManager);
+    super.setAuthenticationFailureHandler((request, response, exception) ->
+      response.sendRedirect("/login?invalid")
+    ); // Setting this in SecurityConfig did not work even tho it initialized correctly
   }
 
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
     String email = request.getParameter("email");
     String password = request.getParameter("password");
+    // TODO data persisting in form on failure
 
     log.info("Attempting to authenticate user: [{}], [{}]", email, password);
-
+    // not sus at all
     try {
       Authentication auth = super.attemptAuthentication(request, response);
       log.info("Account [{}] authenticated successfully", email);
@@ -44,6 +48,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
   ) throws IOException, ServletException {
     super.successfulAuthentication(request, response, chain, authResult);
     log.info("Account [{}] logged in successfully", authResult.getName());
-//    response.sendRedirect("/home"); // Redirect after successful login
+    response.sendRedirect("/"); // Redirect after successful login
+  }
+
+  @Override
+  protected void unsuccessfulAuthentication(
+    HttpServletRequest request, HttpServletResponse response, AuthenticationException failed
+  ) throws IOException, ServletException {
+    super.unsuccessfulAuthentication(request, response, failed);
+    log.info("Account login failed [{}]", failed.getMessage());
   }
 }

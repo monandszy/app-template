@@ -1,4 +1,4 @@
-package code.modules.accounts.service;
+package code.modules.accounts.service.domain;
 
 public enum AuthorityName {
   ROLE_USER,

@@ -47,7 +47,6 @@ public class CatnipQueryFacade {
 
   public record CatnipReadDto(
     UUID id
-  ) {
-  }
+  ) {}
 
 }

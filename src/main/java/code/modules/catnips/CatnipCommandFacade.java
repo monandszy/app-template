@@ -30,6 +30,5 @@ public class CatnipCommandFacade {
 
   public record CatnipCreateDto(
 
-  ) {
-  }
+  ) {}
 }

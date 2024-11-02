@@ -36,10 +36,6 @@ class ModularIntegrityTests {
   }
 
   @Test
-  void should_run() {
-  }
-
-  @Test
   @Disabled
   void print_initialized_beans() {
     String[] beanNames = applicationContext.getBeanDefinitionNames();

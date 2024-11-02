@@ -79,6 +79,7 @@ public class SecurityConfig {
           "/catnip/*",
           "/"
         ).authenticated()
+        .anyRequest().authenticated()
       )
       .formLogin(authorize -> authorize
         .loginPage("/login")

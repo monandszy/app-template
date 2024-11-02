@@ -1,5 +1,7 @@
 package code.modules.accounts.service;
 
+import code.modules.accounts.service.domain.Account;
+import code.modules.accounts.service.domain.Authority;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

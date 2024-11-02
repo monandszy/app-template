@@ -1,6 +1,6 @@
 package code.configuration;
 
-import code.modules.accounts.service.AuthorityName;
+import code.modules.accounts.service.domain.AuthorityName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

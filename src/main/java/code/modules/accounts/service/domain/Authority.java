@@ -1,6 +1,5 @@
-package code.modules.accounts.service;
+package code.modules.accounts.service.domain;
 
-import java.util.Set;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -13,10 +12,7 @@ import lombok.With;
 @Builder
 @EqualsAndHashCode(of = {"id"})
 @ToString(of = {"id"})
-public class Account {
+public class Authority {
   UUID id;
-  String email;
-  String password;
-  Boolean enabled;
-  Set<Authority> authorities;
+  AuthorityName name;
 }

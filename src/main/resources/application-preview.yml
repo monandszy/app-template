@@ -32,6 +32,9 @@ logging:
       springframework:
         modulith: debug
         security: debug
+      apache:
+        coyote:
+          http11: debug
       hibernate:
         orm:
           jdbc:

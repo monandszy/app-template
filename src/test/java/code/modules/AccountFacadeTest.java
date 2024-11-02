@@ -6,7 +6,7 @@ import static code.modules.accounts.AccountCommandFacade.AccountReadDto;
 import code.configuration.ContextConfig;
 import code.configuration.FacadeAbstract;
 import code.modules.accounts.AccountCommandFacade;
-import code.modules.accounts.service.AuthorityName;
+import code.modules.accounts.service.domain.AuthorityName;
 import code.util.TestFixtures;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

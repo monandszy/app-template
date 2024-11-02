@@ -8,43 +8,46 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import code.configuration.Constants;
+import code.configuration.WebAbstract;
 import code.frontend.catnips.CatnipPage;
 import code.frontend.catnips.CatnipPage.PaginationRangeDto;
 import code.modules.catnips.CatnipCommandFacade;
 import code.modules.catnips.CatnipQueryFacade;
 import code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
 import code.util.TestFixtures;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers = CatnipPage.class)
-@AutoConfigureMockMvc(addFilters = false)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-class CatnipPageTest {
+class CatnipPageTest extends WebAbstract {
 
   @MockBean
   private CatnipQueryFacade catnipQueryFacade;
   @MockBean
   private CatnipCommandFacade catnipCommandFacade;
 
+  private ObjectMapper objectMapper;
+
   private CatnipPage catnipPage;
 
   private MockMvc mockMvc;
 
   @Test
-  void should_return_index() throws Exception {
+  void should_return_view() throws Exception {
     Page<CatnipReadDto> mocked = new PageImpl<>(List.of(TestFixtures.catnipReadDto));
     PageRequest expected = PageRequest.of(0, Constants.PAGE_SIZE, Sort.by("id"));
     Mockito.when(catnipQueryFacade.requestCatnipPage(expected)).thenReturn(mocked);
@@ -93,7 +96,8 @@ class CatnipPageTest {
   void should_create_catnip() throws Exception {
     CatnipCreateDto expected = TestFixtures.catnipCreateDto;
     mockMvc.perform(post("/catnip")
-        .content("{}").header("Content-Type", "application/json")
+        .content(objectMapper.writeValueAsString(new CatnipCreateDto()))
+        .contentType(MediaType.APPLICATION_JSON)
       ).andExpect(status().isCreated());
     Mockito.verify(catnipCommandFacade).createCatnip(expected);
   }

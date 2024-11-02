@@ -1,8 +1,8 @@
 package code.modules.accounts.data;
 
-import code.modules.accounts.service.Account;
 import code.modules.accounts.service.AccountDao;
-import code.modules.accounts.service.AuthorityName;
+import code.modules.accounts.service.domain.Account;
+import code.modules.accounts.service.domain.AuthorityName;
 import code.modules.accounts.util.AccountMapper;
 import code.util.RepositoryAdapter;
 import java.util.Optional;

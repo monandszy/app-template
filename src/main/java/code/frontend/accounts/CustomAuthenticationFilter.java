@@ -35,8 +35,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
     String email = request.getParameter("email");
     String password = request.getParameter("password");
-    // TODO data persisting in form on failure or unauthorized
-
     log.info("Attempting to authenticate user: [{}], [{}]", email, password);
     // not sus at all
     try {

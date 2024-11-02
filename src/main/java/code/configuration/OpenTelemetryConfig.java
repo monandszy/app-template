@@ -6,7 +6,7 @@ public class OpenTelemetryConfig {
 //  private static final AttributeKey<String> SERVICE_NAME = AttributeKey.stringKey("service.name");
 //  private static final Resource MANDATORY = create(Attributes.of(SERVICE_NAME, "unknown_service:java"));
 
-  // TODO remove exporting parameter bloat with custom config
+  // TODO remove exporting parameter bloat with custom export config
 
 //  @Bean
 //  OpenTelemetry openTelemetry(  ) {

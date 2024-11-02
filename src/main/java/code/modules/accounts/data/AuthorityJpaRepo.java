@@ -1,6 +1,6 @@
 package code.modules.accounts.data;
 
-import code.modules.accounts.service.AuthorityName;
+import code.modules.accounts.service.domain.AuthorityName;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

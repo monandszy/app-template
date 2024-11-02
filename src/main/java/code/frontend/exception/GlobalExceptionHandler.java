@@ -17,28 +17,28 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<UUID> handle(IllegalArgumentException ex) {
     UUID uuid = UUID.randomUUID();
-    log.error("IllegalArgumentException: {} UUID: {}", ex, uuid);
+    log.error("IllegalArgument: {} UUID: {}", ex, uuid);
     return new ResponseEntity<>(uuid, HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(PropertyReferenceException.class)
   public ResponseEntity<UUID> handle(PropertyReferenceException ex) {
     UUID uuid = UUID.randomUUID();
-    log.error("PropertyReferenceException: {} UUID: {}", ex, uuid);
+    log.error("PropertyReference: {} UUID: {}", ex, uuid);
     return new ResponseEntity<>(uuid, HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<UUID> handle(MethodArgumentNotValidException ex) {
     UUID uuid = UUID.randomUUID();
-    log.error("MethodArgumentNotValidException: {} UUID: {}", ex, uuid);
+    log.error("ArgumentNotValid: {} UUID: {}", ex, uuid);
     return new ResponseEntity<>(uuid, HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<UUID> handle(ConstraintViolationException ex) {
     UUID uuid = UUID.randomUUID();
-    log.error("ConstraintViolationException: {} UUID: {}", ex, uuid);
+    log.error("ConstraintViolation: {} UUID: {}", ex, uuid);
     return new ResponseEntity<>(uuid, HttpStatus.BAD_REQUEST);
   }
 

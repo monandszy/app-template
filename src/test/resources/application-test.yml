@@ -1,3 +1,4 @@
+spring.config.activate.on-profile: test
 spring:
   application:
     name: app-template-test
@@ -12,6 +13,8 @@ spring:
       schema: ""
   liquibase:
     default-schema: ""
+  security:
+    enabled: false
 logging:
   level:
     org:
@@ -23,3 +26,6 @@ logging:
           jdbc:
             bind: trace
         SQL: debug
+otel.traces.exporter: none
+otel.metrics.exporter: none
+otel.logs.exporter: none

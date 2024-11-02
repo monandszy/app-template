@@ -22,7 +22,6 @@ import org.springframework.web.servlet.view.RedirectView;
 public class RegistrationController {
 
   private AccountCommandFacade accountCommandFacade;
-//  private AuthenticationManager authenticationManager;
   private CustomAuthenticationFilter authenticationFilter;
 
   @GetMapping("/register")
@@ -41,7 +40,7 @@ public class RegistrationController {
 
   @PostMapping("/register")
   RedirectView registerAccount(
-    @ModelAttribute("account") AccountCreateDto account,
+    @ModelAttribute("accountCreateDto") AccountCreateDto account,
     HttpServletRequest request,
     HttpServletResponse response
   ) {
@@ -49,16 +48,5 @@ public class RegistrationController {
     authenticationFilter.attemptAuthentication(request, response);
     return new RedirectView("/");
   }
-
-//  // TODO somehow integrate with authenticationFilter
-//  private void authenticate(AccountCreateDto account, HttpSession session) {
-//    Authentication authRequest = UsernamePasswordAuthenticationToken
-//      .unauthenticated(account.email(), account.password());
-//    // Also runs failure/success handler
-//    Authentication authResult = authenticationManager.authenticate(authRequest);
-//    SecurityContext context = SecurityContextHolder.getContext();
-//    context.setAuthentication(authResult);
-//    session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, context);
-//  }
 
 }

@@ -1,6 +1,6 @@
 package code.modules.accounts.data;
 
-import code.modules.accounts.service.AuthorityName;
+import code.modules.accounts.service.domain.AuthorityName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -1,8 +1,6 @@
 /**
- * This package contains the catnip module, responsible for catnip crud.
- * <p>
- * The classes in this package are purely fictional.
- * </p>
+ * This is responsible for an experimental object - catnip management.
+ * It serves as a template for future modules
  */
 
 @ApplicationModule(displayName = "catnipModule")

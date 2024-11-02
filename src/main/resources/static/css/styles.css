@@ -35,7 +35,7 @@
 
 
 /* Layout Styles */
-body {
+.scaffold {
   background-color: var(--page-background);
   display: flex;
   flex-direction: row;

@@ -1,6 +1,7 @@
 package code.modules;
 
 import code.TemplateApp;
+import code.configuration.TestContainersConfig;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -8,13 +9,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
 import org.springframework.modulith.core.ApplicationModules;
 import org.springframework.modulith.docs.Documenter;
+import org.springframework.test.context.ActiveProfiles;
 
 // https://spring.io/projects/spring-modulith
 // https://docs.spring.io/spring-modulith/reference/
 @Slf4j
+@ActiveProfiles("test")
 @SpringBootTest(classes = TemplateApp.class)
+@Import(TestContainersConfig.class)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class ModularIntegrityTests {
   private final ApplicationModules modules = ApplicationModules.of(TemplateApp.class);

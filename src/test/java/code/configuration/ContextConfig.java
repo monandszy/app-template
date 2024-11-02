@@ -2,8 +2,10 @@ package code.configuration;
 
 import code.modules.accounts.AccountQueryFacade;
 import code.modules.catnips.CatnipQueryFacade;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 //@ApplicationModuleTest TODO replace current context splitting, when and if they implement it.
 public class ContextConfig {
@@ -13,7 +15,11 @@ public class ContextConfig {
 
   @Configuration
   @ComponentScan(basePackageClasses = AccountQueryFacade.class)
-//  @Import({SecurityConfig.class, DataInitializer.class})
-  public static class AccountModuleContext {}
+  public static class AccountModuleContext {
+    @Bean // Enables method validation
+    public MethodValidationPostProcessor methodValidationPostProcessor() {
+      return new MethodValidationPostProcessor();
+    }
+  }
 
 }

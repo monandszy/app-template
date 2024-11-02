@@ -1,6 +1,7 @@
 package code.configuration;
 
 import code.frontend.accounts.CustomAuthenticationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -83,7 +84,7 @@ public class SecurityConfig {
       )
       .formLogin(authorize -> authorize
         .loginPage("/login")
-        .usernameParameter("email")
+        // Configured in CustomAuthenticationFilter, options here were overridden with defaults
         .successForwardUrl("/")
         .failureForwardUrl("/login?invalid")
         .permitAll()
@@ -96,8 +97,14 @@ public class SecurityConfig {
       )
       .exceptionHandling(exh -> exh
         .authenticationEntryPoint((request, response, authException) -> {
-          response.addHeader("message", authException.getMessage());
-          response.sendRedirect("/login?unauthorized");
+          String acceptHeader = request.getHeader("Accept");
+          if (acceptHeader != null && acceptHeader.contains("text/html")) {
+            // Redirect to login page for HTML requests
+            response.sendRedirect("/login?unauthorized");
+          } else {
+            // Return 401 Unauthorized for API requests
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+          }
         }))
       .addFilterBefore(new CustomAuthenticationFilter(auth), UsernamePasswordAuthenticationFilter.class)
       .build();
@@ -105,7 +112,7 @@ public class SecurityConfig {
 
   @Bean
   @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
-  public SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
+  public SecurityFilterChain securityBypassed(HttpSecurity http) throws Exception {
     return http
       .csrf(AbstractHttpConfigurer::disable)
       .requestCache((cache) -> cache

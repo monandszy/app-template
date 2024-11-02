@@ -4,6 +4,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -18,7 +19,6 @@ import code.modules.accounts.AccountCommandFacade;
 import code.modules.accounts.AccountCommandFacade.AccountCreateDto;
 import code.modules.accounts.service.AuthService;
 import code.util.TestFixtures;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -27,11 +27,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.shaded.com.trilead.ssh2.auth.AuthenticationManager;
 
 @WebMvcTest(controllers = {AuthenticationController.class, RegistrationController.class, CustomAuthenticationFilter.class})
@@ -47,8 +48,6 @@ class AuthenticationTest {
   }
 
   private MockMvc mockMvc;
-  private PasswordEncoder passwordEncoder;
-  private ObjectMapper objectMapper;
 
   @MockBean
   private AuthService authService;
@@ -59,8 +58,12 @@ class AuthenticationTest {
 
   @Test
   void should_secure_unauthorized() throws Exception {
-//    mockMvc.perform(get("/random"))
-//      .andExpect(status().isOk());
+    mockMvc.perform(get("/random"))
+      .andExpect(status().isUnauthorized());
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/random").accept(MediaType.TEXT_HTML))
+      .andExpect(status().is3xxRedirection()) // Expect a 3xx status for redirection
+      .andExpect(redirectedUrl("/login?unauthorized"));
   }
 
   @Test
@@ -101,6 +104,8 @@ class AuthenticationTest {
       .thenReturn(TestFixtures.user);
     mockMvc.perform(post("/login").with(csrf())
       .param("email", loginDto.email())
-      .param("password", loginDto.password()));
+      .param("password", loginDto.password()))
+      .andExpect(status().is3xxRedirection())
+      .andExpect(redirectedUrl("/"));
   }
 }

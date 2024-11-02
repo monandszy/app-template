@@ -48,7 +48,7 @@ public class AccountCommandFacade {
     @Email
     String email,
     @NotBlank
-    @Size(min = 6)
+    @Size(min = 6, max = 32)
     @NonNull
     String password
   ) {

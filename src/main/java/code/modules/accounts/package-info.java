@@ -1,6 +1,7 @@
 /**
- * This package contains the accounts module, responsible for user authentication,
- * authorization and providing user data
+ * This package is responsible for user authentication and authorization,
+ * a {@link code.frontend.accounts.CustomAuthenticationFilter} has been added
+ * to provide more insight into the inner workings of spring security
  */
 
 @ApplicationModule(displayName = "accountModule")

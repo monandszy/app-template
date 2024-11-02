@@ -1,4 +1,4 @@
-package code.modules;
+package code.integration;
 
 import code.TemplateApp;
 import code.configuration.TestContainersConfig;
@@ -13,6 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 class ContextRunsTest {
 
   @Test
-  void should_run() {
+  void should_load() {
   }
 }

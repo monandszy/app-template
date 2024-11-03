@@ -1,0 +1,39 @@
+package code.modules.conversation.util;
+
+import code.configuration.SpringMapperConfig;
+import code.modules.conversation.ConversationCommandFacade;
+import code.modules.conversation.ConversationCommandFacade.ConversationBeginDto;
+import code.modules.conversation.ConversationsQueryFacade.ConversationReadDto;
+import code.modules.conversation.ConversationsQueryFacade.ResponseReadDto;
+import code.modules.conversation.data.ConversationEntity;
+import code.modules.conversation.data.RequestEntity;
+import code.modules.conversation.data.ResponseEntity;
+import code.modules.conversation.service.Conversation;
+import code.modules.conversation.service.Request;
+import code.modules.conversation.service.Response;
+import code.util.Generated;
+import org.mapstruct.AnnotateWith;
+import org.mapstruct.Mapper;
+
+@Mapper(config = SpringMapperConfig.class)
+@AnnotateWith(Generated.class)
+public interface ConversationMapper {
+
+  Request createDtoToDomain(ConversationCommandFacade.RequestGenerateDto createDto);
+
+  ResponseReadDto domainToReadDto(Response domain);
+
+  RequestEntity domainToEntity(Request request);
+  ConversationEntity domainToEntity(Conversation conversation);
+  ResponseEntity domainToEntity(Response response);
+
+  Request entityToDomain(RequestEntity save);
+  Response entityToDomain(ResponseEntity saved);
+  Conversation entityToDomain(ConversationEntity saved);
+
+  Conversation createDtoToDomain(ConversationBeginDto conversationDto);
+
+  ConversationReadDto domainToReadDto(Conversation conversation);
+  Response readDtoToDomain(ResponseReadDto responseDto);
+
+}

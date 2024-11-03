@@ -5,15 +5,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(of = {"id"})
@@ -22,10 +24,20 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "queries")
-public class QueryEntity {
+@Table(name = "requests")
+public class RequestEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private UUID id;
+
+  @Column(name = "text")
+  private String text;
+
+  @Column(name = "created", updatable = false)
+  private OffsetDateTime created;
+
+  @ManyToOne
+  @JoinColumn(name = "conversation_id")
+  private ConversationEntity conversation;
 }

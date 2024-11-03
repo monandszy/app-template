@@ -13,11 +13,11 @@ import org.mapstruct.Mapper;
 @AnnotateWith(Generated.class)
 public interface CatnipMapper {
 
-  CatnipEntity domainToEntity(Catnip catnip);
+  CatnipEntity domainToEntity(Catnip domain);
 
-  Catnip entityToDomain(CatnipEntity catnipEntity);
+  Catnip entityToDomain(CatnipEntity entity);
 
-  CatnipReadDto domainToReadDto(Catnip catnip);
+  CatnipReadDto domainToReadDto(Catnip domain);
 
-  Catnip createDtoToDomain(CatnipCreateDto catnipCreateDto);
+  Catnip createDtoToDomain(CatnipCreateDto createDto);
 }

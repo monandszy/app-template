@@ -10,16 +10,16 @@ public class ConversationsQueryFacade {
     return null;
   }
 
-  public Page<QueryReadDto> getQueryPage(ConversationReadDto conversationReadDto) {
+  public Page<RequestReadDto> getQueryPage(ConversationReadDto conversationReadDto) {
     return null;
   }
 
-  public record QueryReadDto() {
+  public record RequestReadDto() {
   }
 
-  public record ConversationReadDto() {
-  }
+  public record ConversationReadDto() {}
 
-  public record ResponseReadDto() {
-  }
+  public record ResponseReadDto(
+    String text
+  ) {}
 }

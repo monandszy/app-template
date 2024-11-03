@@ -1,13 +1,12 @@
 package code.modules.accounts.data;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-interface AccountJpaRepo extends JpaRepository<AccountEntity, Integer> {
+public interface AccountJpaRepo extends JpaRepository<AccountEntity, Integer> {
   @EntityGraph(
     attributePaths = {
       "authorities"

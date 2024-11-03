@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @Slf4j
-class HomePage {
+public class HomePage {
 
   @GetMapping("/")
   @ResponseStatus(HttpStatus.OK)

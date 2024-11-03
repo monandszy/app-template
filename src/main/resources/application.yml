@@ -77,3 +77,5 @@ otel:
 logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger{36} - %msg%n"
+
+api.generativelanguage.googleapis.com.url: https://generativelanguage.googleapis.com

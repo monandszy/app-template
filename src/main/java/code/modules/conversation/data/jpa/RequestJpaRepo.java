@@ -1,11 +1,10 @@
 package code.modules.conversation.data.jpa;
 
-import code.modules.conversation.data.EditedQueryEntity;
+import code.modules.conversation.data.RequestEntity;
+import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
-public interface EditedQueryJpaRepo extends JpaRepository<EditedQueryEntity, UUID> {
+public interface RequestJpaRepo extends JpaRepository<RequestEntity, UUID> {
 }

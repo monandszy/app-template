@@ -1,26 +1,21 @@
-package code.modules.conversation;
+package code.modules.googleApi.internal;
 
-import code.openApi.ApiClient;
 import code.openApi.infrastructure.ModelsApi;
-import code.openApi.model.Content;
 import code.openApi.model.GenerateContentRequest;
 import code.openApi.model.GenerateContentResponse;
 import code.openApi.model.ListModelsResponse;
-import code.openApi.model.Part;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
-public class ModelApiService {
+public class ApiCallService {
 
-  private static final ApiClient apiClient = new ApiClient();
-  private static final ModelsApi modelsApi = new ModelsApi(apiClient);
+  private ModelsApi modelsApi;
+
   private static final String errorFormat = "1";
   private static final String dataFormat = "json";
-  private static final String apiToken = "AIzaSyCgRiOEsvoG7o_lOir7e0PICmPTo4kjuNk";
+  private static final String apiToken = Authorization.GoogleApiToken;
   private static final String model = "gemini-1.5-flash";
   // String | Selector specifying which fields to include in a partial response.
   private static final String fields = null; // I have no idea how to use this
@@ -32,30 +27,7 @@ public class ModelApiService {
 // String | Legacy upload protocol for media (e.g. \"media\", \"multipart\").
 //    String uploadType = "uploadType_example";
 
-  //  private ObjectMapper objectMapper;
-  static {
-    apiClient.setBasePath("https://generativelanguage.googleapis.com");
-  }
-
-//  @SneakyThrows
-//  public void generate() {
-  public static void main(String[] args) {
-    GenerateContentRequest request = new GenerateContentRequest();
-    String query = "write a poem!";
-    Part part = new Part();
-    part.setText(query);
-
-    Content content = new Content();
-    content.setParts(List.of(part));
-    List<Content> contentList = List.of(content);
-
-    request.setContents(contentList);
-    GenerateContentResponse generateContentResponse = generateContent(request);
-    System.out.println(generateContentResponse
-      .getCandidates().getFirst().getContent().getParts().getFirst().getText());
-  }
-
-  private static GenerateContentResponse generateContent(GenerateContentRequest request) {
+  public GenerateContentResponse modelsGenerateContent(GenerateContentRequest request) {
     return modelsApi.generativelanguageModelsGenerateContent(
       model,
       errorFormat,
@@ -72,11 +44,7 @@ public class ModelApiService {
       request
     ).block();
   }
-
-  private static ListModelsResponse getModelList() {
-//    ListModelsResponse response = getModelList();
-//    List<Model> models = response.getModels();
-//    models.stream().map(e -> e.getName()).forEach(System.out::println);
+  public ListModelsResponse modelsList() {
     return modelsApi.generativelanguageModelsList(
       errorFormat,
       null,

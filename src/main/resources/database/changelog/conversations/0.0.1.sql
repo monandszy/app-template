@@ -1,21 +1,22 @@
 CREATE TABLE conversations
 (
   id uuid DEFAULT gen_random_uuid(),
-  PRIMARY KEY (id)
+  account_id uuid,
+  PRIMARY KEY (id),
+  FOREIGN KEY (account_id) REFERENCES accounts (id)
 );
-CREATE TABLE edited_queries
+CREATE TABLE requests
 (
   id uuid DEFAULT gen_random_uuid(),
-  PRIMARY KEY (id)
-);
-CREATE TABLE queries
-(
-  id uuid DEFAULT gen_random_uuid(),
-  PRIMARY KEY (id)
+  conversation_id uuid NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (conversation_id) REFERENCES conversations (id)
 );
 CREATE TABLE responses
 (
   id uuid DEFAULT gen_random_uuid(),
-  PRIMARY KEY (id)
+  request_id uuid NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (request_id) REFERENCES requests (id)
 );
 --liquibase formatted sql

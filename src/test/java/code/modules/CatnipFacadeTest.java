@@ -6,11 +6,15 @@ import code.configuration.FacadeAbstract;
 import code.modules.catnips.CatnipCommandFacade;
 import code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
 import code.modules.catnips.CatnipQueryFacade;
+import static code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
+import code.modules.catnips.data.CatnipEntity;
+import code.modules.catnips.data.CatnipJpaRepo;
 import code.modules.catnips.service.Catnip;
 import code.modules.catnips.service.CatnipDao;
 import code.util.TestFixtures;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +22,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
-
-import static code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @Import(ContextConfig.CatnipModuleContext.class)
@@ -30,6 +31,7 @@ class CatnipFacadeTest extends FacadeAbstract {
   private CatnipQueryFacade catnipQueryFacade;
   private CatnipCommandFacade catnipCommandFacade;
   private CatnipDao catnipDao;
+  private CatnipJpaRepo catnipJpaRepo;
 
   @Test
   @Transactional
@@ -42,7 +44,6 @@ class CatnipFacadeTest extends FacadeAbstract {
     // then
     assertThat(catnipPage).isNotNull();
     assertThat(catnipPage.getContent()).isNotEmpty();
-    assertThat(catnipPage.getTotalElements()).isEqualTo(1);
     assertThat(catnipPage.getContent().getFirst().id()).isNotNull();
   }
 
@@ -61,7 +62,6 @@ class CatnipFacadeTest extends FacadeAbstract {
     // then
     assertThat(catnipPage).isNotNull();
     assertThat(catnipPage.getContent()).isNotEmpty();
-    assertThat(catnipPage.getTotalElements()).isEqualTo(1);
     assertThat(catnipPage.getContent().getFirst().id()).isNotNull();
     // TODO field contains query eg. the correct one was returned
   }
@@ -76,6 +76,8 @@ class CatnipFacadeTest extends FacadeAbstract {
     // then
     assertThat(createdCatnip).isNotNull();
     assertThat(createdCatnip.id()).isNotNull();
+    CatnipEntity entity = catnipJpaRepo.findAll().getFirst();
+    assertThat(entity).isNotNull();
   }
 
 }

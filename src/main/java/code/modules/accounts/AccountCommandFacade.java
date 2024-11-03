@@ -9,12 +9,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Set;
 
 @Facade
 @Slf4j
@@ -25,7 +23,7 @@ public class AccountCommandFacade {
   private PasswordEncoder passwordEncoder;
   private AccountMapper accountMapper;
 
-  public AccountReadDto register(@Valid @NonNull AccountCreateDto accountDto) {
+  public AccountReadDto register(@Valid AccountCreateDto accountDto) {
     log.info("Registering account [{}]", accountDto); // TODO also a bit sus
     Account account = accountDao.create(accountMapper.createDtoToDomain(accountDto)
       .withEmail(accountDto.email())
@@ -44,13 +42,11 @@ public class AccountCommandFacade {
   }
 
   public record AccountCreateDto(
-    @NonNull
     @NotBlank
     @Email
     String email,
     @NotBlank
     @Size(min = 6, max = 32)
-    @NonNull
     String password
   ) {
   }

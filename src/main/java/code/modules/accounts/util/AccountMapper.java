@@ -1,9 +1,8 @@
 package code.modules.accounts.util;
 
-import static code.modules.accounts.AccountCommandFacade.AccountReadDto;
-
 import code.configuration.SpringMapperConfig;
 import code.modules.accounts.AccountCommandFacade.AccountCreateDto;
+import static code.modules.accounts.AccountCommandFacade.AccountReadDto;
 import code.modules.accounts.data.AccountEntity;
 import code.modules.accounts.service.domain.Account;
 import code.modules.accounts.service.domain.Authority;
@@ -20,14 +19,14 @@ import org.mapstruct.Named;
 @AnnotateWith(Generated.class)
 public interface AccountMapper {
 
-  Account entityToDomain(AccountEntity accountEntity);
+  Account entityToDomain(AccountEntity entity);
 
-  AccountEntity domainToEntity(Account account);
+  AccountEntity domainToEntity(Account domain);
 
-  Account createDtoToDomain(AccountCreateDto accountCreateDto);
+  Account createDtoToDomain(AccountCreateDto createDto);
 
   @Mapping(target = "authorities", source = "authorities", qualifiedByName = "authorityMapping")
-  AccountReadDto domainToReadDto(Account account);
+  AccountReadDto domainToReadDto(Account domain);
 
   @Named("authorityMapping")
   default Set<String> authorityMapping(Set<Authority> authorities) {

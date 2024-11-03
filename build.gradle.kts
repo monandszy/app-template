@@ -63,7 +63,9 @@ dependencies {
   implementation("org.openapitools:jackson-databind-nullable:0.2.6")
   implementation("javax.annotation:javax.annotation-api:1.3.2")
   implementation("org.springframework.boot:spring-boot-starter-webflux")
-//  testImplementation ("com.github.tomakehurst:wiremock-standalone:${wiremock}")
+  implementation("org.slf4j:slf4j-api:2.0.5")
+  implementation("com.github.tomakehurst:wiremock-standalone:2.27.2")
+//  implementation("org.wiremock:wiremock-standalone:3.9.2") // use once cause of 500 errors is found
 //  testImplementation ("io.rest-assured:rest-assured:${restAssured}")
 }
 

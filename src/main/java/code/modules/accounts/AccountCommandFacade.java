@@ -9,11 +9,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Set;
 
 @Facade
 @Slf4j
@@ -29,7 +30,7 @@ public class AccountCommandFacade {
     Account account = accountDao.create(accountMapper.createDtoToDomain(accountDto)
       .withEmail(accountDto.email())
       .withPassword(passwordEncoder.encode(accountDto.password()))
-      .withEnabled(true), AuthorityName.ROLE_USER); // TODO check behaviour
+      .withEnabled(true), AuthorityName.ROLE_USER);
     log.info("Registered account [{}]", account);
     return accountMapper.domainToReadDto(account);
   }

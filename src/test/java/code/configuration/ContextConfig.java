@@ -2,12 +2,12 @@ package code.configuration;
 
 import code.modules.accounts.AccountQueryFacade;
 import code.modules.catnips.CatnipQueryFacade;
+import code.modules.conversation.ConversationsQueryFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
-//@ApplicationModuleTest TODO replace current context splitting, when and if they implement it.
 public class ContextConfig {
   @Configuration
   @ComponentScan(basePackageClasses = CatnipQueryFacade.class)
@@ -22,4 +22,8 @@ public class ContextConfig {
     }
   }
 
+  @Configuration
+  @ComponentScan(basePackageClasses = ConversationsQueryFacade.class)
+  public static class ConversationsModuleContext {
+  }
 }

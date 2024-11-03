@@ -26,7 +26,6 @@ class ModularIntegrityTests {
   private ApplicationContext applicationContext;
 
   @Test
-  @Disabled
   void print_modules() {
     modules.forEach(System.out::println);
     modules.verify();
@@ -35,9 +34,7 @@ class ModularIntegrityTests {
   @Test
   void should_write_documentation() {
     new Documenter(modules, "build/reports/modulith-docs")
-      .writeModulesAsPlantUml()
-      .writeIndividualModulesAsPlantUml()
-      .writeModuleCanvases();
+      .writeModuleCanvases(Documenter.CanvasOptions.defaults().revealInternals().revealEmptyLines());
   }
 
   @Test

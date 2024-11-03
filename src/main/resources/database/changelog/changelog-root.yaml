@@ -3,3 +3,5 @@ databaseChangeLog:
       path: classpath:/database/changelog/catnips
   - includeAll:
       path: classpath:/database/changelog/accounts
+  - includeAll:
+      path: classpath:/database/changelog/conversations

@@ -5,9 +5,10 @@ import code.modules.accounts.service.domain.Account;
 import code.modules.accounts.service.domain.AuthorityName;
 import code.modules.accounts.util.AccountMapper;
 import code.util.RepositoryAdapter;
+import lombok.AllArgsConstructor;
+
 import java.util.Optional;
 import java.util.Set;
-import lombok.AllArgsConstructor;
 
 @RepositoryAdapter
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class AccountRepo implements AccountDao {
     return byUserName.map(e -> accountMapper.entityToDomain(e));
   }
 
-  @Override // TODO check if sets authority
+  @Override
   public Account create(Account account, AuthorityName authority) {
     AuthorityEntity initialAuthority = authorityJpaRepo.findByName(authority).orElseThrow();
     AccountEntity entity = accountMapper.domainToEntity(account);

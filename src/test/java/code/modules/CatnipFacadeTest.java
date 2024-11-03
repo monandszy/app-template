@@ -1,8 +1,5 @@
 package code.modules;
 
-import static code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import code.configuration.Constants;
 import code.configuration.ContextConfig;
 import code.configuration.FacadeAbstract;
@@ -22,6 +19,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
+import static code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
+import static org.assertj.core.api.Assertions.assertThat;
+
 @Slf4j
 @Import(ContextConfig.CatnipModuleContext.class)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -38,7 +38,7 @@ class CatnipFacadeTest extends FacadeAbstract {
     catnipDao.create(TestFixtures.catnip);
     PageRequest pageRequest = PageRequest.of(0, Constants.PAGE_SIZE);
     // when
-    Page<CatnipReadDto> catnipPage = catnipQueryFacade.requestCatnipPage(pageRequest);
+    Page<CatnipReadDto> catnipPage = catnipQueryFacade.getPage(pageRequest);
     // then
     assertThat(catnipPage).isNotNull();
     assertThat(catnipPage.getContent()).isNotEmpty();

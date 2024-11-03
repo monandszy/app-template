@@ -1,3 +1,4 @@
+
 plugins {
   application
   pmd
@@ -6,6 +7,7 @@ plugins {
   alias(libs.plugins.spring.boot)
   alias(libs.plugins.spring.management)
   alias(libs.plugins.javaagent)
+  id("org.openapi.generator") version "7.9.0"
 }
 
 group = "code"
@@ -21,9 +23,8 @@ try {
 
 repositories {
   mavenCentral()
-  maven {
-    url = uri("https://repo.spring.io/release")
-  }
+  maven { url = uri("https://repo.spring.io/release") }
+  maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 dependencies {
@@ -56,6 +57,14 @@ dependencies {
   developmentOnly(libs.spring.dev.tools)
   testJavaagent(libs.javaagent.impl)
 
+  implementation("com.google.code.findbugs:jsr305:3.0.2")
+//  implementation("org.openapitools:openapi-java-client:v1beta")
+  implementation("io.swagger.core.v3:swagger-annotations:2.2.25")
+  implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+  implementation("javax.annotation:javax.annotation-api:1.3.2")
+  implementation("org.springframework.boot:spring-boot-starter-webflux")
+//  testImplementation ("com.github.tomakehurst:wiremock-standalone:${wiremock}")
+//  testImplementation ("io.rest-assured:rest-assured:${restAssured}")
 }
 
 dependencyManagement {
@@ -64,6 +73,28 @@ dependencyManagement {
 //    mavenBom("org.jmolecules:jmolecules-bom:2023.1.4")
     mavenBom("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.6.0")
   }
+}
+
+sourceSets {
+  named("main") {
+    java.srcDir(layout.buildDirectory.file("/generated/sources/openapi/src/main/java").get().asFile.path)
+  }
+}
+
+openApiGenerate {
+  generatorName.set("java")
+  library.set("webclient")
+  inputSpec.set("$projectDir/src/main/resources/openapi/generativelanguage_googleapis_com.json")
+  outputDir.set(layout.buildDirectory.file("/generated/sources/openapi").get().asFile.path)
+  apiPackage.set("code.openApi.infrastructure")
+  modelPackage.set("code.openApi.model")
+  configOptions.set(
+    mapOf(
+      "serializableModel" to "true",
+      "dateLibrary" to "java8",
+      "serializationLibrary" to "jackson"
+    )
+  )
 }
 
 tasks {
@@ -97,6 +128,7 @@ tasks {
     ruleSets = listOf("category/java/errorprone.xml", "category/java/bestpractices.xml")
     pmdMain {
       exclude(
+        "code/openApi/**"
       )
       doLast {
         val reportPath = layout.buildDirectory.file("reports/pmd/main.html").get().asFile
@@ -142,6 +174,7 @@ tasks {
         files(classDirectories.files.map {
           fileTree(it) {
             exclude(
+              "code/openApi/**"
             )
           }
         })
@@ -167,13 +200,16 @@ tasks {
   }
 
   javadoc {
-    setDestinationDir(file(layout.buildDirectory.dir("docs")))
+    setDestinationDir(file(layout.buildDirectory.dir("reports/javadoc")))
+
     options.encoding = "UTF-8"
   }
   compileJava {
+//    dependsOn(openApiGenerate)
     options.encoding = "UTF-8"
   }
   compileTestJava {
+//    dependsOn(openApiGenerate)
     options.encoding = "UTF-8"
   }
 }

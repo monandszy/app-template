@@ -1,6 +1,7 @@
 package code.modules.conversation.service;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -18,4 +19,5 @@ public class Request {
   String text;
   OffsetDateTime created;
   Conversation conversation;
+  List<Response> responses;
 }

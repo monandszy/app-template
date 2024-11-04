@@ -2,7 +2,7 @@ package code.configuration;
 
 import code.modules.accounts.AccountQueryFacade;
 import code.modules.catnips.CatnipQueryFacade;
-import code.modules.conversation.ConversationsQueryFacade;
+import code.modules.conversation.ConversationQueryFacade;
 import code.modules.googleApi.GoogleApiAdapter;
 import code.openApi.ApiClient;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ public class ContextConfig {
   }
 
   @Configuration
-  @ComponentScan(basePackageClasses = ConversationsQueryFacade.class)
+  @ComponentScan(basePackageClasses = ConversationQueryFacade.class)
   public static class ConversationsModuleContext {
   }
 

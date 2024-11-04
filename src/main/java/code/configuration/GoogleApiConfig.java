@@ -24,9 +24,4 @@ public class GoogleApiConfig {
     return new ModelsApi(apiClient);
   }
 
-//  @Bean
-//  public DefaultApi petApi(final ApiClient apiClient) {
-//    return new DefaultApi(apiClient);
-//  }
-
 }

@@ -211,7 +211,6 @@ tasks {
     options.encoding = "UTF-8"
   }
   compileTestJava {
-//    dependsOn(openApiGenerate)
     options.encoding = "UTF-8"
   }
 }

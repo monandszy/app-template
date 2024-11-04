@@ -38,7 +38,6 @@ public class GoogleApiAdapter {
   ) {}
 
   public record ApiResponseDto(
-    String text,
-    Integer status
+    String text
   ) {}
 }

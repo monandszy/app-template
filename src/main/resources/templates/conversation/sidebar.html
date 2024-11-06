@@ -1,29 +1,37 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:hx="https://github.com/wimdeblauwe/htmx-spring-boot"
-      xmlns:th="http://www.thymeleaf.org">
+<html
+  lang="en"
+  xmlns:hx="https://github.com/wimdeblauwe/htmx-spring-boot"
+  xmlns:th="http://www.thymeleaf.org"
+>
 <head>
-  <title>Conversation Window Fragment</title>
+  <title>Conversation Sidebar</title>
 </head>
-<div th:fragment="fragment" class="sidebar-wrapper" id="sidebar-wrapper" hx-push-url="true">
-  <div id="sidebar-content" hx-swap="outerHTML" hx-target="#window-content">
-    <nav class="sidebar" th:classappend="sidebar-button"
-         th:each="conversation : ${conversationPage.content}">
-      <p th:text="${conversation.id}"></p>
-      <button hx:get="@{/conversation/{id}(id=${conversation.id})}"
+<th:block th:fragment="fragment">
+  <div id="sidebar-wrapper">
+    <div
+      id="sidebar-content"
+      hx-push-url="true" hx-swap="outerHTML" hx-target="#window-content"
+    >
+      <nav th:each="conversation : ${conversationPage.content}">
+        <p th:text="${conversation.id}"></p>
+        <button
+          hx:get="@{/conversation/{id}(id=${conversation.id})}"
+        ></button>
+      </nav>
+    </div>
+    <!--  ONLY SHOW WHEN NOT ON INTRODUCTION>/...../?-->
+    <form
+      hx-get="introduction"
+      hx-swap="outerHTML"
+      hx-target="#window-wrapper"
+      hx-trigger="submit"
+    >
+      <button
+        class="header-button"
+        type="submit" th:text="New_Conversation"
       ></button>
-    </nav>
+    </form>
   </div>
-<!--  ONLY SHOW WHEN NOT ON INTRODUCTION>/...../?-->
-  <form
-    hx-get="introduction"
-    hx-swap="outerHTML"
-    hx-target="#window-wrapper"
-    hx-trigger="submit"
-  >
-    <button class="header-button"
-            type="submit" th:text="New_Conversation"
-    ></button>
-  </form>
-</div>
+</th:block>
 </html>

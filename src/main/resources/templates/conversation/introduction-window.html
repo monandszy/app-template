@@ -1,36 +1,38 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+>
 <head>
-  <title>Initial Conversation Window Fragment</title>
+  <title>Introduction Window Fragment</title>
 </head>
-<div th:fragment="fragment" class="window-wrapper" id="window-wrapper">
-  <div id="window-content" th:fragment="content-fragment">
-    <h1>Generic invitation and instructions</h1>
-    <form
-      hx-post="conversation"
-      hx-swap="none"
-      hx-trigger="submit"
-      hx-on--after-request="updateContent(event)"
-      th:object="${conversationBeginDto}"
-    >
-      <button class="header-button"
-              type="submit" th:text="Begin_Conversation"
-      ></button>
-    </form>
-    <script>
-      function updateContent(event) {
-        const response = event.detail.xhr.response;
-        const data = JSON.parse(response);
-        const conversationId = data.id;
+<th:block th:fragment="fragment">
+  <div id="window-wrapper">
+    <div id="window-content" th:fragment="content-fragment">
+      <h1>Generic invitation and instructions</h1>
+      <form
+        hx-post="conversation"
+        hx-swap="none"
+        hx-trigger="submit"
+        hx-on--after-request="updateContent(event)"
+        th:object="${conversationBeginDto}"
+      >
+        <button
+          type="submit" th:text="Begin_Conversation"
+        ></button>
+      </form>
+      <script>
+        function updateContent(event) {
+          const response = event.detail.xhr.response;
+          const data = JSON.parse(response);
+          const conversationId = data.id;
 
-        htmx.ajax('GET', '/conversation/list', {target: '#sidebar-wrapper', swap: 'outerHTML'});
-        htmx.ajax('GET', '/conversation/' + conversationId, {target: '#window-wrapper', swap: 'outerHTML'});
-        window.history.pushState({}, '', '/conversation/' + conversationId);
-      }
-    </script>
+          htmx.ajax('GET', '/conversation/list', {target: '#sidebar-wrapper', swap: 'outerHTML'});
+          htmx.ajax('GET', '/conversation/' + conversationId, {target: '#window-wrapper', swap: 'outerHTML'});
+          window.history.pushState({}, '', '/conversation/' + conversationId);
+        }
+      </script>
+    </div>
   </div>
-
-
-</div>
+</th:block>
 </html>

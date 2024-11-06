@@ -5,8 +5,10 @@
 <head>
   <title>Conversations</title>
 </head>
-<div layout:fragment="content" th:fragment="fragment" id="content" class="conversation-content">
-  <div th:replace="~{conversation/sidebar :: fragment}"></div>
-  <div th:replace="~{conversation/introduction-window :: fragment}"></div>
-</div>
+<th:block layout:fragment="content" th:fragment="fragment">
+  <div id="content" class="conversation-content">
+    <div th:replace="~{conversation/sidebar :: fragment}"></div>
+    <div th:replace="~{conversation/introduction-window :: fragment}"></div>
+  </div>
+</th:block>
 </html>

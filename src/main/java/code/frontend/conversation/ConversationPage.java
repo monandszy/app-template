@@ -70,7 +70,7 @@ public class ConversationPage {
   ) {
     beginDto = beginDto.withAccountId(UUID.fromString(principal.getName()));
     ConversationReadDto readDto = commandFacade.begin(beginDto);
-    // conversation is created, the genereated request filed is null
+    // conversation is created, the generated request filed is null
     return ResponseEntity.status(HttpStatus.CREATED).body(readDto);
   }
 

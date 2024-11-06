@@ -2,7 +2,6 @@ package code.frontend.conversation;
 
 import code.configuration.Constants;
 import code.modules.conversation.ConversationCommandFacade;
-import code.modules.conversation.ConversationCommandFacade.ConversationBeginDto;
 import code.modules.conversation.ConversationCommandFacade.RequestGenerateDto;
 import code.modules.conversation.ConversationQueryFacade;
 import static code.modules.conversation.ConversationQueryFacade.ConversationReadDto;
@@ -44,7 +43,7 @@ public class ConversationPage {
     Model model
   ) {
     list(principal, model);
-    model.addAttribute("conversationBeginDto", new ConversationBeginDto(null));
+    model.addAttribute("requestGenerateDto", new RequestGenerateDto(null));
     if (Objects.nonNull(hxRequest)) {
       return "conversation/content :: fragment";
     } else {
@@ -62,18 +61,6 @@ public class ConversationPage {
     return "conversation/sidebar :: fragment";
   }
 
-  @PostMapping
-  @ResponseBody
-  ResponseEntity<ConversationReadDto> beginConversation(
-    @ModelAttribute ConversationBeginDto beginDto,
-    Principal principal
-  ) {
-    beginDto = beginDto.withAccountId(UUID.fromString(principal.getName()));
-    ConversationReadDto readDto = commandFacade.begin(beginDto);
-    // conversation is created, the generated request filed is null
-    return ResponseEntity.status(HttpStatus.CREATED).body(readDto);
-  }
-
   @GetMapping("/{conversationId}")
   @ResponseStatus(HttpStatus.OK)
   String window(
@@ -87,7 +74,8 @@ public class ConversationPage {
     ConversationReadDto readDto = new ConversationReadDto(id);
     Page<RequestReadDto> requestPage = queryFacade.getRequestPage(pageRequest, readDto);
     model.addAttribute("requestPage", requestPage);
-    model.addAttribute("requestGenerateDto", new RequestGenerateDto(null, id));
+    model.addAttribute("requestGenerateDto", new RequestGenerateDto(null));
+    model.addAttribute("conversationId", conversationId);
     if (Objects.nonNull(hxRequest)) {
       return "conversation/window :: fragment";
     } else {
@@ -101,22 +89,47 @@ public class ConversationPage {
   String introduction(
     Model model
   ) {
-    // Add the request object to model. if decide to gen must
-    model.addAttribute("conversationBeginDto", new ConversationBeginDto(null));
+    // Here is a good example of the discrepancy between what the api needs
+    // and what the frontend due to reuse of Dto, only text is passed in the frontend this way
+    model.addAttribute("requestGenerateDto", new RequestGenerateDto(null));
     return "conversation/introduction-window :: fragment";
   }
 
-
-  @PostMapping("/generate")
+  @PostMapping("/{conversationId}")
   @ResponseStatus(HttpStatus.OK)
   String generate(
     @ModelAttribute RequestGenerateDto generateDto,
+    @PathVariable String conversationId,
     Model model
   ) {
-    RequestReadDto readDto = commandFacade.generate(generateDto);
+    RequestReadDto readDto = commandFacade.generate(
+      generateDto, UUID.fromString(conversationId));
     model.addAttribute("requestReadDto", readDto);
-    return "conversation/window :: content-fragment";
+    return "conversation/window :: singular-fragment";
   }
 
+  //  @PostMapping
+//  @ResponseBody
+//  // TODO integrate with beforeend
+//  ResponseEntity<Void> beginConversation(
+//    @ModelAttribute RequestGenerateDto generateDto,
+//    Principal principal
+//  ) {
+//    ConversationCommandFacade.ConversationBeginDto beginDto = new ConversationCommandFacade.ConversationBeginDto(UUID.fromString(principal.getName()));
+//    ConversationReadDto readDto = commandFacade.begin(beginDto);
+//    commandFacade.generate(generateDto, readDto.id());
+//    return ResponseEntity.status(HttpStatus.CREATED).build();
+//  }
 
+  @PostMapping
+  @ResponseBody
+  ResponseEntity<ConversationReadDto> beginConversation(
+    @ModelAttribute RequestGenerateDto generateDto,
+    Principal principal
+  ) {
+    ConversationCommandFacade.ConversationBeginDto beginDto = new ConversationCommandFacade.ConversationBeginDto(UUID.fromString(principal.getName()));
+    ConversationReadDto readDto = commandFacade.begin(beginDto);
+    commandFacade.generate(generateDto, readDto.id());
+    return ResponseEntity.status(HttpStatus.CREATED).body(readDto);
+  }
 }

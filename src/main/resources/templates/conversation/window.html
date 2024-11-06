@@ -12,36 +12,21 @@
     <div th:replace="~{conversation/sidebar :: fragment}"></div>
     <th:block th:fragment="fragment">
       <div id="window-wrapper">
-        <div id="window-content" hx-swap="outerHTML" hx-target="#window-content">
-          <h1>Some Responses and requests content</h1>
-          <div th:each="request : ${requestPage.content}">
-            <p th:text="${request.text}"></p>
-            <th:block th:each="response : ${request.responses}">
-              <p th:text="${response.text}"></p>
-            </th:block>
+<!--        <th:block th:fragment="content-fragment">-->
+          <div id="window-content">
+            <h1>Some Responses and requests content</h1>
+            <div th:each="request : ${requestPage.content}">
+              <p th:text="${request.text}"></p>
+              <th:block th:each="response : ${request.responses}">
+                <p th:text="${response.text}"></p>
+              </th:block>
+            </div>
           </div>
-        </div>
-        <div id="generate-form">
-          <form
-            hx-post="generate"
-            hx-swap="beforeend"
-            hx-target="#window-content"
-            hx-trigger="submit"
-            th:object="${requestGenerateDto}"
-          >
-            <input type="text" th:field="*{text}" required/>
-            <input type="hidden" th:field="*{conversationId}"/>
-            <button
-              class="header-button"
-              type="submit" th:text="Post_Generate"
-            ></button>
-          </form>
-        </div>
       </div>
     </th:block>
   </div>
 </th:block>
-<th:block th:fragment="content-fragment">
+<th:block th:fragment="singular-fragment">
   <div>
     <p th:text="${requestReadDto.text}"></p>
     <th:block th:each="response : ${requestReadDto.responses}">

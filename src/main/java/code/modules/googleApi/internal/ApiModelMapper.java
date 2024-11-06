@@ -40,6 +40,9 @@ public interface ApiModelMapper {
 
   @Named("textMapping")
   default String textMapping(List<Candidate> candidates) {
-  return candidates.getFirst().getContent().getParts().getFirst().getText();
+    Content content = candidates.getFirst().getContent();
+    List<Part> parts = Objects.requireNonNull(content).getParts();
+    Part first = Objects.requireNonNull(parts).getFirst();
+    return first.getText();
   }
 }

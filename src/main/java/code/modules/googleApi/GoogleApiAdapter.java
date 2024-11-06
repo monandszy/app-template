@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 
 @Facade
 @AllArgsConstructor
@@ -20,16 +19,23 @@ public class GoogleApiAdapter {
   private ApiCallService apiCallService;
   private ObjectMapper objectMapper;
 
-  @SneakyThrows
   public ApiResponseDto generate(ApiRequestDto request) {
-    GenerateContentResponse response = apiCallService.modelsGenerateContent(apiModelMapper.dtoToApiModel(request));
-    return apiModelMapper.apiModelToDto(response);
+    try {
+      GenerateContentResponse response = apiCallService.modelsGenerateContent(apiModelMapper.dtoToApiModel(request));
+      return apiModelMapper.apiModelToDto(response);
+    } catch (Exception e) {
+      throw new InternalApiException(e.getMessage(), e.getCause());
+    }
   }
 
   public List<String> getModelList() {
-    ListModelsResponse response = apiCallService.modelsList();
-    List<Model> models = response.getModels();
-    return models.stream().map(Model::getName).toList();
+    try {
+      ListModelsResponse response = apiCallService.modelsList();
+      List<Model> models = response.getModels();
+      return models.stream().map(Model::getName).toList();
+    } catch (Exception e) {
+      throw new InternalApiException(e.getMessage(), e.getCause());
+    }
   }
 
   public record ApiRequestDto(

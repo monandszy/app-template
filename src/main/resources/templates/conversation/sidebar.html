@@ -9,29 +9,44 @@
 </head>
 <th:block th:fragment="fragment">
   <div id="sidebar-wrapper">
-    <div
+    <nav
       id="sidebar-content"
-      hx-push-url="true" hx-swap="outerHTML" hx-target="#window-content"
+      hx-push-url="true" hx-swap="outerHTML" hx-target="#window-wrapper"
     >
-      <nav th:each="conversation : ${conversationPage.content}">
+      <th:block th:each="conversation : ${conversationPage.content}">
         <p th:text="${conversation.id}"></p>
         <button
+          th:text="ButtonText"
           hx:get="@{/conversation/{id}(id=${conversation.id})}"
+          th:hx-on--after-request="|updateFormUrl('${conversation.id}')|"
         ></button>
-      </nav>
+      </th:block>
+    </nav>
+    <script>
+      function updateFormUrl(conversationId) {
+        console.log("updateUrl Script is executing...")
+        console.log(conversationId)
+        const form = document.getElementById('dynamic-form');
+        const submitButton = document.getElementById('submit-button');
+        form.setAttribute('hx-post',
+          `/conversation${conversationId != null ? '/' + conversationId : ''}`);
+        form.setAttribute('hx-on--after-request',
+          `updateContent(event, ${conversationId != null ? '\'' + conversationId + '\'': 'null'})`);
+        submitButton.innerText = 'Post_Generate';
+      }
+    </script>
+    <div>
+      <form
+        hx-get="/conversation/introduction"
+        hx-swap="outerHTML"
+        hx-target="#window-wrapper"
+        hx-trigger="submit"
+      >
+        <button
+          type="submit" th:text="New_Conversation"
+        ></button>
+      </form>
     </div>
-    <!--  ONLY SHOW WHEN NOT ON INTRODUCTION>/...../?-->
-    <form
-      hx-get="introduction"
-      hx-swap="outerHTML"
-      hx-target="#window-wrapper"
-      hx-trigger="submit"
-    >
-      <button
-        class="header-button"
-        type="submit" th:text="New_Conversation"
-      ></button>
-    </form>
   </div>
 </th:block>
 </html>

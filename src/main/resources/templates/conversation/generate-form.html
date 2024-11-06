@@ -17,7 +17,7 @@
       hx-target="#window-content"
       hx-trigger="submit"
       th:object="${requestGenerateDto}"
-      th:hx-on--after-request="|updateContent(event, '${conversationId}')|"
+      th:hx-on--after-request="|updateContent(event, 'CAT')|"
     >
       <input type="text" th:field="*{text}" required/>
       <button

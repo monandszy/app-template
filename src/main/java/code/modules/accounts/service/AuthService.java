@@ -2,6 +2,7 @@ package code.modules.accounts.service;
 
 import code.modules.accounts.service.domain.Account;
 import code.modules.accounts.service.domain.Authority;
+import jakarta.servlet.http.HttpSession;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,18 +19,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService implements UserDetailsService {
 
   private AccountDao accountDAO;
+  private HttpSession session;
 
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     Account account = accountDAO.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
+    session.setAttribute("accountId", account.getId());
     return buildAccountForAuthentication(account, account.getAuthorities());
   }
 
   private UserDetails buildAccountForAuthentication(
     Account account, Set<Authority> authorities) {
     return new User(
-      account.getEmail(),
+      account.getId().toString(),
       account.getPassword(),
       account.getEnabled(),
       true,

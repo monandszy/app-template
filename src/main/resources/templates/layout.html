@@ -13,27 +13,27 @@
   <nav class="sidebar" hx-push-url="true" hx-target="#content" hx-swap="outerHTML">
     <button class="nav-button" hx-get="/">Home</button>
     <button class="nav-button" hx-get="/catnip">Catnip</button>
+    <button class="nav-button" hx-get="/conversation">Conversation</button>
     <button class="nav-button" id="theme-toggle">Toggle Theme</button>
     <script>
       document.getElementById('theme-toggle').addEventListener('click', function () {
         document.body.classList.toggle('dark-mode');
       });
     </script>
-    <script th:inline="javascript">
-      /*<![CDATA[*/
-      document.body.addEventListener('htmx:configRequest', (event) => {
-        // Check if the request is NOT an htmx GET request
-        if (event.detail.verb.toUpperCase() !== 'GET') {
-          const csrfHeader = /*[[${_csrf != null ? _csrf.headerName : ''}]]*/ 'X-Sample-CSRF-Header';
-          const csrfToken = /*[[${_csrf != null ? _csrf.token : ''}]]*/ 'sample-csrf-token';
-          event.detail.headers[csrfHeader] = csrfToken;
-        }
-      });
-      /*]]>*/
-    </script>
   </nav>
 </div>
-
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  document.body.addEventListener('htmx:configRequest', (event) => {
+    // Check if the request is NOT an htmx GET request
+    if (event.detail.verb.toUpperCase() !== 'GET') {
+      const csrfHeader = /*[[${_csrf != null ? _csrf.headerName : ''}]]*/ 'X-Sample-CSRF-Header';
+      const csrfToken = /*[[${_csrf != null ? _csrf.token : ''}]]*/ 'sample-csrf-token';
+      event.detail.headers[csrfHeader] = csrfToken;
+    }
+  });
+  /*]]>*/
+</script>
 <div layout:fragment="content" id="content">
   <p>Page content goes here</p>
 </div>

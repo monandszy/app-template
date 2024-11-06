@@ -1,11 +1,18 @@
-package code.frontend.catnips;
+package code.frontend.catnip;
 
 import code.configuration.Constants;
 import code.modules.catnips.CatnipCommandFacade;
+import static code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
 import code.modules.catnips.CatnipQueryFacade;
 import code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
 import code.util.ControllerUtil;
+import static code.util.ControllerUtil.getOrSetSessionAttr;
+import static code.util.SessionAttr.currentPage;
+import static code.util.SessionAttr.currentQuery;
+import static code.util.SessionAttr.currentSort;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,15 +28,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.List;
-import java.util.Objects;
-
-import static code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
-import static code.util.ControllerUtil.getOrSetSessionAttr;
-import static code.util.SessionAttr.currentPage;
-import static code.util.SessionAttr.currentQuery;
-import static code.util.SessionAttr.currentSort;
 
 @Controller
 @AllArgsConstructor
@@ -87,7 +85,7 @@ public class CatnipPage implements ControllerUtil {
       Constants.RANGE_SIZE, Constants.RANGE_HALF);
     model.addAttribute("paginationRange", range);
 
-    return "catnip/catnip-list :: catnipList";
+    return "catnip/catnip-list :: list";
   }
 
   public PaginationRangeDto getPaginationRange(

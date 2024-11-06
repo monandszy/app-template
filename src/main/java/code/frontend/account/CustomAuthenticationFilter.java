@@ -1,6 +1,4 @@
-package code.frontend.accounts;
-
-import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
+package code.frontend.account;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,6 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -22,6 +21,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
   public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
     super(authenticationManager);
+    super.setAuthenticationFailureHandler((request, response, exception) ->
+      response.sendRedirect("/login?invalid")
+    ); // Setting this in SecurityConfig did not work even tho it initialized correctly
+    super.setAuthenticationSuccessHandler((request, response, authentication) ->
+      response.sendRedirect("/"));
     super.setUsernameParameter("email");
     super.setPasswordParameter("password");
   }

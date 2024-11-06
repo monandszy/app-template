@@ -1,20 +1,12 @@
 package code.frontend;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 import code.configuration.SecurityConfig;
 import code.configuration.TestContainersConfig;
 import code.configuration.UtilBeanConfig;
-import code.frontend.accounts.AuthenticationController;
-import code.frontend.accounts.AuthenticationController.LoginRequestDto;
-import code.frontend.accounts.CustomAuthenticationFilter;
-import code.frontend.accounts.RegistrationController;
+import code.frontend.account.AuthenticationController;
+import code.frontend.account.AuthenticationController.LoginRequestDto;
+import code.frontend.account.CustomAuthenticationFilter;
+import code.frontend.account.RegistrationController;
 import code.modules.accounts.AccountCommandFacade;
 import code.modules.accounts.AccountCommandFacade.AccountCreateDto;
 import code.modules.accounts.service.AuthService;
@@ -28,11 +20,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import org.testcontainers.shaded.com.trilead.ssh2.auth.AuthenticationManager;
 
 @WebMvcTest(controllers = {AuthenticationController.class, RegistrationController.class, CustomAuthenticationFilter.class})

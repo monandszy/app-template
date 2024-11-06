@@ -17,6 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.With;
 
 @Facade
 @AllArgsConstructor
@@ -48,6 +49,8 @@ public class ConversationCommandFacade {
     return mapper.domainToReadDto(conversation);
   }
 
+
+  @With
   public record ConversationBeginDto(
     @NotNull
     UUID accountId

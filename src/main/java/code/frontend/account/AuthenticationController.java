@@ -1,4 +1,4 @@
-package code.frontend.accounts;
+package code.frontend.account;
 
 import java.util.Objects;
 import lombok.AllArgsConstructor;

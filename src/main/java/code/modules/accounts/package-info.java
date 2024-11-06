@@ -1,6 +1,6 @@
 /**
  * This package is responsible for user authentication and authorization,
- * a {@link code.frontend.accounts.CustomAuthenticationFilter} has been added
+ * a {@link code.frontend.account.CustomAuthenticationFilter} has been added
  * to provide more insight into the inner workings of spring security
  */
 

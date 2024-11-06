@@ -33,7 +33,6 @@
 
 }
 
-
 /* Layout Styles */
 .scaffold {
   background-color: var(--page-background);
@@ -81,11 +80,21 @@
 }
 
 /* Content Wrapper Styles */
-.content-wrapper {
+.catnip-wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.home-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.conversation-wrapper {
+  flex: 1;
+  display: flex;
 }
 
 /* Header Styles */

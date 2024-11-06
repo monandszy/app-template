@@ -2,13 +2,15 @@ package code.frontend;
 
 import code.configuration.Constants;
 import code.configuration.WebAbstract;
-import code.frontend.catnips.CatnipPage;
-import code.frontend.catnips.CatnipPage.PaginationRangeDto;
+import code.frontend.catnip.CatnipPage;
+import code.frontend.catnip.CatnipPage.PaginationRangeDto;
 import code.modules.catnips.CatnipCommandFacade;
+import static code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
 import code.modules.catnips.CatnipQueryFacade;
 import code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
 import code.util.TestFixtures;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,10 +24,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
-
-import static code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;

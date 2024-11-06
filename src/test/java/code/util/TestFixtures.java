@@ -1,11 +1,10 @@
 package code.util;
 
-import static code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
-
-import code.frontend.accounts.AuthenticationController.LoginRequestDto;
+import code.frontend.account.AuthenticationController.LoginRequestDto;
 import code.modules.accounts.AccountCommandFacade.AccountCreateDto;
 import code.modules.accounts.service.domain.AuthorityName;
 import code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
+import static code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
 import code.modules.catnips.service.Catnip;
 import java.util.List;
 import java.util.UUID;

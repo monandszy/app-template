@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}"
-      xmlns:hx="https://github.com/wimdeblauwe/htmx-spring-boot">
+      xmlns:hx="https://github.com/wimdeblauwe/htmx-spring-boot"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Thymeleaf and HTMX</title>
 </head>
-<div layout:fragment="content" th:fragment="content" class="content-wrapper" id="content">
+<div layout:fragment="content" th:fragment="content" class="catnip-wrapper" id="content">
   <div class="header-wrapper">
     <h1 class="header">Catnip List</h1>
     <form
@@ -13,7 +14,7 @@
       hx-swap="none"
       hx-trigger="submit"
       th:object="${catnipCreateDTO}"
-      hx-on--after-request="updateCatnipList()"
+      hx-on--after-request="updateList()"
     >
       <button class="header-button"
               type="submit" th:text="Add"
@@ -43,10 +44,10 @@
     </div>
   </div>
 
-  <div th:replace="~{catnip/catnip-list :: catnipList}"></div>
+  <div th:replace="~{catnip/catnip-list :: list}"></div>
 
   <script>
-    function updateCatnipList() {
+    function updateList() {
       htmx.ajax('GET', '/catnip/list', {target: '#catnip-list', swap: 'outerHTML'});
     }
   </script>

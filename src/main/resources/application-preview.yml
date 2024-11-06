@@ -40,6 +40,8 @@ logging:
           jdbc:
             bind: trace
         SQL: debug
+        hql: debug
+        jdbc: debug
 # exporting disabled
 otel.traces.exporter: none
 otel.metrics.exporter: none

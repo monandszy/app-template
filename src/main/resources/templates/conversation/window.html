@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Conversation Window Fragment</title>
+</head>
+<div layout:fragment="content">
+  <div th:replace="~{conversation/sidebar :: fragment}"></div>
+  <div th:fragment="fragment" class="window-wrapper" id="window-wrapper">
+    <div id="window-content" hx-swap="outerHTML" hx-target="#window-content">
+      <h1>Some Responses and requests content</h1>
+      <div th:each="request : ${requestPage.content}">
+        <p th:text="${request.text}"></p>
+        <th:block th:each="response : ${request.responses}">
+          <p th:text="${response.text}"></p>
+          </th:block>
+      </div>
+    </div>
+<!--        TODO append to existing, or fetch all anew-->
+    <div id="generate-form">
+      <form
+        hx-post="generate"
+        hx-swap="beforeend"
+        hx-target="#window-content"
+        hx-trigger="submit"
+        th:object="${requestGenerateDto}"
+      >
+        <input type="text" th:field="*{text}" required/>
+        <input type="hidden" th:field="*{conversationId}"/>
+        <button class="header-button"
+                type="submit" th:text="Post_Generate"
+        ></button>
+      </form>
+    </div>
+  </div>
+</div>
+<div th:fragment="content-fragment">
+  <div>
+    <p th:text="${requestReadDto.text}"></p>
+    <th:block th:each="response : ${requestReadDto.responses}">
+      <p th:text="${response.text}"></p>
+    </th:block>
+  </div>
+</div>
+</html>

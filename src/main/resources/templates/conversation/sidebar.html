@@ -13,16 +13,16 @@
       id="sidebar-content"
       hx-push-url="true" hx-swap="outerHTML" hx-target="#window-wrapper"
     >
-      <th:block th:each="conversation : ${conversationPage.content}">
+      <div th:each="conversation : ${conversationPage.content}" th:classappend="sidebar-item">
         <p th:text="${conversation.id}"></p>
         <button
           th:text="ButtonText"
           hx:get="@{/conversation/{id}(id=${conversation.id})}"
           th:hx-on--after-request="|setGlobal('${conversation.id}')|"
         ></button>
-      </th:block>
+      </div>
     </nav>
-    <div>
+    <div id="new-conversation-form">
       <form
         hx-push-url="/conversation"
         hx-get="/conversation/introduction"

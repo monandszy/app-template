@@ -1,5 +1,36 @@
-
-
-.conversation-content {
-
+#conversation-content {
+  #sidebar-wrapper {
+    #sidebar-content {
+      .sidebar-item {
+        button {
+        }
+        p {
+        }
+      }
+    }
+    #new-conversation-form {
+      form {
+      }
+      button {
+      }
+    }
+  }
+  #window-wrapper {
+    #introduction-window-content {
+    }
+    #window-content {
+    }
+    .window-item {
+      p {
+      }
+    }
+  }
+  #generate-form-wrapper {
+    #generate-form {
+      #dynamic-form {
+      }
+      button {
+      }
+    }
+  }
 }

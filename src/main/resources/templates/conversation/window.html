@@ -14,7 +14,7 @@
       <div id="window-wrapper">
         <div id="window-content">
           <h1>Some Responses and requests content</h1>
-          <div th:each="request : ${requestPage.content}">
+          <div th:each="request : ${requestPage.content}" th:classappend="window-item">
             <p th:text="${request.text}"></p>
             <th:block th:each="response : ${request.responses}">
               <p th:text="${response.text}"></p>
@@ -34,7 +34,7 @@
   </div>
 </th:block>
 <th:block th:fragment="singular-fragment">
-  <div>
+  <div class="window-item">
     <p th:text="${requestReadDto.text}"></p>
     <th:block th:each="response : ${requestReadDto.responses}">
       <p th:text="${response.text}"></p>

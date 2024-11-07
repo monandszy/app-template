@@ -5,22 +5,24 @@
 >
 <head>
   <title>Introduction Window Fragment</title>
-  <th:block th:fragment="script-fragment">
-    <script src="/js/conversation_scripts.js"></script>
-  </th:block>
 </head>
 <th:block th:fragment="fragment">
-  <div id="generate-form">
-    <form
-      id="dynamic-form"
-      th:object="${requestGenerateDto}"
-    >
-      <input type="text" th:field="*{text}" required/>
-      <button
-        id="submit-button" type="submit"
-        th:text="TEMPLATE"
-      ></button>
-    </form>
+  <div id="generate-form-wrapper">
+    <div id="generate-form">
+      <form
+        id="dynamic-form"
+        th:object="${requestGenerateDto}"
+      >
+        <input type="text" th:field="*{text}" required/>
+        <button
+          id="submit-button" type="submit"
+          th:text="TEMPLATE"
+        ></button>
+      </form>
+    </div>
   </div>
+</th:block>
+<th:block th:fragment="script-fragment">
+  <script src="/js/conversation_scripts.js"></script>
 </th:block>
 </html>

@@ -1,36 +1,96 @@
-#conversation-content {
-  #sidebar-wrapper {
-    #sidebar-content {
-      .sidebar-item {
-        button {
-        }
-        p {
-        }
-      }
-    }
-    #new-conversation-form {
-      form {
-      }
-      button {
-      }
-    }
-  }
-  #window-wrapper {
-    #introduction-window-content {
-    }
-    #window-content {
-    }
-    .window-item {
-      p {
-      }
-    }
-  }
-  #generate-form-wrapper {
-    #generate-form {
-      #dynamic-form {
-      }
-      button {
-      }
-    }
-  }
-}
+.conversation-content {
+  display: flex;
+  flex-direction: row;
+  height: 100vh; }
+  .conversation-content #sidebar-wrapper {
+    width: 250px;
+    background-color: #f4f4f4;
+    border-right: 1px solid #ddd;
+    padding: 20px; }
+    .conversation-content #sidebar-wrapper #sidebar-content .sidebar-item {
+      margin-bottom: 15px; }
+      .conversation-content #sidebar-wrapper #sidebar-content .sidebar-item button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; }
+        .conversation-content #sidebar-wrapper #sidebar-content .sidebar-item button:hover {
+          background-color: #0056b3; }
+      .conversation-content #sidebar-wrapper #sidebar-content .sidebar-item p {
+        margin-top: 5px;
+        font-size: 14px;
+        color: #333; }
+    .conversation-content #sidebar-wrapper #new-conversation-form {
+      margin-top: 20px; }
+      .conversation-content #sidebar-wrapper #new-conversation-form form {
+        display: flex;
+        flex-direction: column; }
+        .conversation-content #sidebar-wrapper #new-conversation-form form input[type="text"] {
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          margin-bottom: 10px; }
+          .conversation-content #sidebar-wrapper #new-conversation-form form input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none; }
+      .conversation-content #sidebar-wrapper #new-conversation-form button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer; }
+        .conversation-content #sidebar-wrapper #new-conversation-form button:hover {
+          background-color: #218838; }
+  .conversation-content #window-wrapper {
+    flex-grow: 1;
+    padding: 20px; }
+    .conversation-content #window-wrapper #introduction-window-content {
+      margin-bottom: 20px; }
+      .conversation-content #window-wrapper #introduction-window-content h1 {
+        font-size: 24px;
+        color: #333; }
+      .conversation-content #window-wrapper #introduction-window-content p {
+        font-size: 16px;
+        color: #666; }
+    .conversation-content #window-wrapper #window-content {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px; }
+    .conversation-content #window-wrapper .window-item {
+      margin-bottom: 15px; }
+      .conversation-content #window-wrapper .window-item p {
+        font-size: 14px;
+        color: #444; }
+        .conversation-content #window-wrapper .window-item p.user-message {
+          text-align: right;
+          font-weight: bold; }
+        .conversation-content #window-wrapper .window-item p.bot-message {
+          text-align: left;
+          color: #007bff; }
+  .conversation-content #generate-form-wrapper {
+    margin-top: auto; }
+    .conversation-content #generate-form-wrapper #generate-form {
+      display: flex; }
+      .conversation-content #generate-form-wrapper #generate-form #dynamic-form {
+        flex-grow: 1; }
+        .conversation-content #generate-form-wrapper #generate-form #dynamic-form input[type="text"] {
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          margin-right: 10px; }
+          .conversation-content #generate-form-wrapper #generate-form #dynamic-form input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none; }
+      .conversation-content #generate-form-wrapper #generate-form button {
+        background-color: #ffc107;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px; }
+        .conversation-content #generate-form-wrapper #generate-form button:hover {
+          background-color: #e0a800; }

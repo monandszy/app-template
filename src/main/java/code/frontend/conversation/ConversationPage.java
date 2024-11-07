@@ -44,6 +44,7 @@ public class ConversationPage {
   ) {
     list(principal, model);
     model.addAttribute("requestGenerateDto", new RequestGenerateDto(null));
+    model.addAttribute("isHxRequest", hxRequest);
     if (Objects.nonNull(hxRequest)) {
       return "conversation/content :: fragment";
     } else {
@@ -76,6 +77,7 @@ public class ConversationPage {
     model.addAttribute("requestPage", requestPage);
     model.addAttribute("requestGenerateDto", new RequestGenerateDto(null));
     model.addAttribute("conversationId", conversationId);
+    model.addAttribute("isHxRequest", hxRequest);
     if (Objects.nonNull(hxRequest)) {
       return "conversation/window :: fragment";
     } else {

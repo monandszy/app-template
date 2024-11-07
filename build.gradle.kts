@@ -1,4 +1,3 @@
-
 plugins {
   application
   pmd
@@ -8,6 +7,7 @@ plugins {
   alias(libs.plugins.spring.management)
   alias(libs.plugins.javaagent)
   id("org.openapi.generator") version "7.9.0"
+  id("com.unclezs.gradle.sass") version "1.0.10"
 }
 
 group = "code"
@@ -99,7 +99,21 @@ openApiGenerate {
   )
 }
 
+sass {
+  cssPath = "static/css"
+  sassPath = "static/scss"
+  // --rerun-tasks
+}
+
 tasks {
+  compileJava {
+//    dependsOn(openApiGenerate)
+    dependsOn(compileSass)
+    options.encoding = "UTF-8"
+  }
+  compileTestJava {
+    options.encoding = "UTF-8"
+  }
   bootJar {
     archiveFileName = "${project.name}-${version}.${archiveExtension.get()}"
   }
@@ -203,14 +217,6 @@ tasks {
 
   javadoc {
     setDestinationDir(file(layout.buildDirectory.dir("reports/javadoc")))
-
-    options.encoding = "UTF-8"
-  }
-  compileJava {
-//    dependsOn(openApiGenerate)
-    options.encoding = "UTF-8"
-  }
-  compileTestJava {
     options.encoding = "UTF-8"
   }
 }

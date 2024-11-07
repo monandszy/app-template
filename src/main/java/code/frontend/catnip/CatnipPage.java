@@ -50,7 +50,7 @@ public class CatnipPage implements ControllerUtil {
 
     List<String> sortOptions = List.of();
     model.addAttribute("sortOptions", sortOptions);
-
+    model.addAttribute("isHxRequest", hxRequest);
     if (Objects.nonNull(hxRequest)) {
       return "catnip/catnip :: content";
     } else {

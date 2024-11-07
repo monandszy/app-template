@@ -5,9 +5,16 @@
   xmlns:th="http://www.thymeleaf.org"
 >
 <head>
-  <title>Conversation Window</title>
+  <title>Conversation</title>
+  <link hx-preserve="true" rel="stylesheet" href="/css/conversation_styles.css"/>
+  <script hx-preserve="true" src="/js/conversation_scripts.js" defer></script>
 </head>
 <th:block layout:fragment="content">
+  <head th:if="${isHxRequest == 'true'}" hx-head="merge">
+    <title>Conversation</title>
+    <link hx-preserve="true" rel="stylesheet" href="/css/conversation_styles.css"/>
+    <script hx-preserve="true" src="/js/conversation_scripts.js" defer></script>
+  </head>
   <div id="content" class="conversation-content">
     <div th:replace="~{conversation/sidebar :: fragment}"></div>
     <th:block th:fragment="fragment">
@@ -24,13 +31,14 @@
       </div>
     </th:block>
     <div th:replace="~{conversation/generate-form :: fragment}"></div>
-    <div th:include="~{conversation/generate-form :: script-fragment}"></div>
-    <script th:inline="javascript">
-      /*<![CDATA[*/
-      const conversationId = /*[[${conversationId}]]*/ 'null'
-      setGlobal(conversationId)
-      /*]]>*/
-    </script>
+    <div>
+      <script th:inline="javascript">
+        /*<![CDATA[*/
+        const conversationId = /*[[${conversationId}]]*/ 'null'
+        setGlobal(conversationId)
+        /*]]>*/
+      </script>
+    </div>
   </div>
 </th:block>
 <th:block th:fragment="singular-fragment">

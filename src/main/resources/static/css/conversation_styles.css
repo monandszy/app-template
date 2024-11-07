@@ -1,21 +1,10 @@
-html, body {
-  height: 100vh;
-  margin: 0;
-  overflow: hidden;
-  padding: 0; }
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box; }
-
 .conversation-content {
   display: flex;
+  flex: 1;
   flex-direction: row;
   height: 100vh;
-  margin: 0;
-  overflow: hidden;
-  padding: 0; }
+  width: 100vh;
+  overflow: hidden; }
   .conversation-content #sidebar-wrapper {
     border-right: 1px solid #ccc;
     display: flex;
@@ -45,6 +34,7 @@ html, body {
     flex: 1;
     flex-direction: column;
     height: 100vh;
+    min-width: 0;
     overflow: hidden; }
     .conversation-content #conversation-wrapper #window-wrapper {
       display: flex;
@@ -60,12 +50,10 @@ html, body {
         overflow-y: auto; }
     .conversation-content #conversation-wrapper #generate-form-wrapper {
       align-items: center;
-      background-color: white;
       border-top: 1px solid #ccc;
       bottom: 0;
       display: flex;
       flex-shrink: 0;
-      padding: 1rem;
       position: sticky; }
       .conversation-content #conversation-wrapper #generate-form-wrapper #generate-form {
         display: flex;

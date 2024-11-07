@@ -34,10 +34,10 @@
       <div th:replace="~{conversation/generate-form :: fragment}"></div>
     </div>
     <div>
-      <script th:inline="javascript">
+      <script th:inline="javascript" defer>
         /*<![CDATA[*/
-        const conversationId = /*[[${conversationId}]]*/ 'null'
-        setGlobal(conversationId)
+        globalConversationId = /*[[${conversationId}]]*/ 'null'
+        document.getElementById('submit-button').innerText = 'Post_Generate';
         /*]]>*/
       </script>
     </div>

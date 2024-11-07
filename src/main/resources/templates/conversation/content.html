@@ -22,8 +22,9 @@
       <div th:replace="~{conversation/generate-form :: fragment}"></div>
     </div>
     <div>
-      <script th:inline="javascript">
-        resetGlobal()
+      <script th:inline="javascript" defer>
+        globalConversationId = 'null'
+        document.getElementById('submit-button').innerText = 'Begin_Generate';
       </script>
     </div>
   </div>

@@ -27,11 +27,9 @@ document.getElementById('dynamic-form').addEventListener('submit', function (eve
 
 function resetGlobal() {
   globalConversationId = 'null'
-  const submitButton = document.getElementById('submit-button');
-  submitButton.innerText = 'Begin_Generate';
+  document.getElementById('submit-button').innerText = 'Begin_Generate';
 }
 function setGlobal(conversationId) {
   globalConversationId = conversationId
-  const submitButton = document.getElementById('submit-button');
-  submitButton.innerText = 'Post_Generate';
+  document.getElementById('submit-button').innerText = 'Post_Generate';
 }

@@ -14,9 +14,8 @@
       hx-push-url="true" hx-swap="outerHTML" hx-target="#window-wrapper"
     >
       <div th:each="conversation : ${conversationPage.content}" th:classappend="sidebar-item">
-        <p th:text="${conversation.id}"></p>
         <button
-          th:text="ButtonText"
+          th:text="${conversation.id}"
           hx:get="@{/conversation/{id}(id=${conversation.id})}"
           th:hx-on--after-request="|setGlobal('${conversation.id}')|"
         ></button>

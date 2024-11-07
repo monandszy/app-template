@@ -17,20 +17,22 @@
   </head>
   <div id="content" class="conversation-content">
     <div th:replace="~{conversation/sidebar :: fragment}"></div>
-    <th:block th:fragment="fragment">
-      <div id="window-wrapper">
-        <div id="window-content">
-          <h1>Some Responses and requests content</h1>
-          <div th:each="request : ${requestPage.content}" th:classappend="window-item">
-            <p th:text="${request.text}"></p>
-            <th:block th:each="response : ${request.responses}">
-              <p th:text="${response.text}"></p>
-            </th:block>
+    <div id="conversation-wrapper">
+      <th:block th:fragment="fragment">
+        <div id="window-wrapper">
+          <div id="window-content">
+            <h1>Some Responses and requests content</h1>
+            <div th:each="request : ${requestPage.content}" th:classappend="window-item">
+              <p th:text="${request.text}" class="request"></p>
+              <th:block th:each="response : ${request.responses}">
+                <p th:text="${response.text}" class="response"></p>
+              </th:block>
+            </div>
           </div>
         </div>
-      </div>
-    </th:block>
-    <div th:replace="~{conversation/generate-form :: fragment}"></div>
+      </th:block>
+      <div th:replace="~{conversation/generate-form :: fragment}"></div>
+    </div>
     <div>
       <script th:inline="javascript">
         /*<![CDATA[*/

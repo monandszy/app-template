@@ -4,6 +4,10 @@
   color: var(--text);
 }
 
+html, body {
+  overflow: hidden;
+}
+
 
 :root {
   --page-background: white;

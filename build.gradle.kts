@@ -106,6 +106,10 @@ sass {
 }
 
 tasks {
+
+  compileSass {
+    outputs.upToDateWhen { false }
+  }
   compileJava {
 //    dependsOn(openApiGenerate)
     dependsOn(compileSass)

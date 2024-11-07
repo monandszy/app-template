@@ -11,6 +11,7 @@ spring:
     add-properties: true
     restart:
       enabled: true
+      additional-paths: resources
     livereload:
       port: 35731
       enabled: true

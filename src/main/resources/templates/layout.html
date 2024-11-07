@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/vendored/htmx.min.js"></script>
+  <script src="/js/layout_scripts.js"></script>
   <link rel="stylesheet" href="/css/styles.css"/>
   <title>Layout</title>
 </head>
@@ -15,25 +16,22 @@
     <button class="nav-button" hx-get="/catnip">Catnip</button>
     <button class="nav-button" hx-get="/conversation">Conversation</button>
     <button class="nav-button" id="theme-toggle">Toggle Theme</button>
-    <script>
-      document.getElementById('theme-toggle').addEventListener('click', function () {
-        document.body.classList.toggle('dark-mode');
-      });
-    </script>
   </nav>
 </div>
-<script th:inline="javascript">
-  /*<![CDATA[*/
-  document.body.addEventListener('htmx:configRequest', (event) => {
-    // Check if the request is NOT an htmx GET request
-    if (event.detail.verb.toUpperCase() !== 'GET') {
-      const csrfHeader = /*[[${_csrf != null ? _csrf.headerName : ''}]]*/ 'X-Sample-CSRF-Header';
-      const csrfToken = /*[[${_csrf != null ? _csrf.token : ''}]]*/ 'sample-csrf-token';
-      event.detail.headers[csrfHeader] = csrfToken;
-    }
-  });
-  /*]]>*/
-</script>
+<div>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    document.body.addEventListener('htmx:configRequest', (event) => {
+      // Check if the request is NOT an htmx GET request
+      if (event.detail.verb.toUpperCase() !== 'GET') {
+        const csrfHeader = /*[[${_csrf != null ? _csrf.headerName : ''}]]*/ 'X-Sample-CSRF-Header';
+        const csrfToken = /*[[${_csrf != null ? _csrf.token : ''}]]*/ 'sample-csrf-token';
+        event.detail.headers[csrfHeader] = csrfToken;
+      }
+    });
+    /*]]>*/
+  </script>
+</div>
 <div layout:fragment="content" id="content">
   <p>Page content goes here</p>
 </div>

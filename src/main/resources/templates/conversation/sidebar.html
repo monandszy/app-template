@@ -18,29 +18,18 @@
         <button
           th:text="ButtonText"
           hx:get="@{/conversation/{id}(id=${conversation.id})}"
-          th:hx-on--after-request="|updateFormUrl('${conversation.id}')|"
+          th:hx-on--after-request="|setGlobal('${conversation.id}')|"
         ></button>
       </th:block>
     </nav>
-    <script>
-      function updateFormUrl(conversationId) {
-        console.log("updateUrl Script is executing...")
-        console.log(conversationId)
-        const form = document.getElementById('dynamic-form');
-        const submitButton = document.getElementById('submit-button');
-        form.setAttribute('hx-post',
-          `/conversation${conversationId != null ? '/' + conversationId : ''}`);
-        form.setAttribute('hx-on--after-request',
-          `updateContent(event, ${conversationId != null ? '\'' + conversationId + '\'': 'null'})`);
-        submitButton.innerText = 'Post_Generate';
-      }
-    </script>
     <div>
       <form
+        hx-push-url="/conversation"
         hx-get="/conversation/introduction"
         hx-swap="outerHTML"
         hx-target="#window-wrapper"
         hx-trigger="submit"
+        hx-on--after-request="resetGlobal()"
       >
         <button
           type="submit" th:text="New_Conversation"

@@ -10,6 +10,10 @@
     <div th:replace="~{conversation/sidebar :: fragment}"></div>
     <div th:replace="~{conversation/introduction-window :: fragment}"></div>
     <div th:replace="~{conversation/generate-form :: fragment}"></div>
+    <div th:include="~{conversation/generate-form :: script-fragment}"></div>
+    <script th:inline="javascript">
+      resetGlobal()
+    </script>
   </div>
 </th:block>
 </html>

@@ -89,8 +89,6 @@ public class ConversationPage {
   String introduction(
     Model model
   ) {
-    // Here is a good example of the discrepancy between what the api needs
-    // and what the frontend due to reuse of Dto, only text is passed in the frontend this way
     model.addAttribute("requestGenerateDto", new RequestGenerateDto(null));
     return "conversation/introduction-window :: fragment";
   }
@@ -107,19 +105,6 @@ public class ConversationPage {
     model.addAttribute("requestReadDto", readDto);
     return "conversation/window :: singular-fragment";
   }
-
-  //  @PostMapping
-//  @ResponseBody
-//  // TODO integrate with beforeend
-//  ResponseEntity<Void> beginConversation(
-//    @ModelAttribute RequestGenerateDto generateDto,
-//    Principal principal
-//  ) {
-//    ConversationCommandFacade.ConversationBeginDto beginDto = new ConversationCommandFacade.ConversationBeginDto(UUID.fromString(principal.getName()));
-//    ConversationReadDto readDto = commandFacade.begin(beginDto);
-//    commandFacade.generate(generateDto, readDto.id());
-//    return ResponseEntity.status(HttpStatus.CREATED).build();
-//  }
 
   @PostMapping
   @ResponseBody

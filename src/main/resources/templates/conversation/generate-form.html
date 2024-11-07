@@ -2,52 +2,25 @@
 <html
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
-  xmlns:hx="https://github.com/wimdeblauwe/htmx-spring-boot"
 >
 <head>
   <title>Introduction Window Fragment</title>
+  <th:block th:fragment="script-fragment">
+    <script src="/js/conversation_scripts.js"></script>
+  </th:block>
 </head>
 <th:block th:fragment="fragment">
   <div id="generate-form">
     <form
-      hx-push-url="true"
       id="dynamic-form"
-      hx:post="${conversationId != null ? '/conversation/' + conversationId : '/conversation'}"
-      hx-swap="beforeend"
-      hx-target="#window-content"
-      hx-trigger="submit"
       th:object="${requestGenerateDto}"
-      th:hx-on--after-request="|updateContent(event, 'CAT')|"
     >
       <input type="text" th:field="*{text}" required/>
       <button
         id="submit-button" type="submit"
-        th:text="${conversationId != null ? 'Post_Generate' : 'Begin_Conversation'}"
+        th:text="TEMPLATE"
       ></button>
     </form>
-    <script>
-      function updateContent(event, conversationId) {
-        console.log("updateContent Script is executing...")
-        console.log(conversationId)
-        if (conversationId === 'null') {
-          console.log("updateContent Script is executing 2...")
-          const response = event.detail.xhr.response;
-          const data = JSON.parse(response);
-          conversationId = data.id;
-          console.log(conversationId)
-          htmx.ajax('GET', '/conversation/list', {target: '#sidebar-wrapper', swap: 'outerHTML'});
-          htmx.ajax('GET', '/conversation/' + conversationId, {target: '#window-wrapper', swap: 'outerHTML'});
-          window.history.pushState({}, '', '/conversation/' + conversationId);
-          const form = document.getElementById('dynamic-form');
-          const submitButton = document.getElementById('submit-button');
-          form.setAttribute('hx-post',
-            `/conversation${conversationId != null ? '/' + conversationId : ''}`);
-          form.setAttribute('hx-on--after-request',
-            `updateContent(event, ${conversationId != null ? '\'' + conversationId + '\'': 'null'})`);
-          submitButton.innerText = 'Post_Generate';
-        }
-      }
-    </script>
   </div>
 </th:block>
 </html>

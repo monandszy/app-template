@@ -1,0 +1,22 @@
+version: "3.5"
+
+networks:
+  default:
+    driver: bridge
+    name: app-template-dev
+  observability:
+    external: true
+  data:
+    external: true
+services:
+  app-template-dev:
+    container_name: app-template-dev
+    image: project-base/app-template-dev:latest
+    restart: unless-stopped
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - "8000:8000"
+    networks:
+      - observability
+      - data

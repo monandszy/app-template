@@ -18,6 +18,8 @@ repositories {
   maven { url = uri("https://repo.spring.io/milestone") }
 }
 
+version = "latest"
+
 dependencies {
   implementation(libs.spring.modulith)
 
@@ -75,7 +77,6 @@ sass {
 }
 
 tasks {
-
   compileSass {
     outputs.upToDateWhen { false }
   }

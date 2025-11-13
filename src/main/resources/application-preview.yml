@@ -52,8 +52,8 @@ otel:
   exporter:
     otlp:
       traces:
-        endpoint: "http://localhost:4318/v1/traces"
+        endpoint: "http://192.168.99.104:4318/v1/traces"
       metrics:
-        endpoint: "http://localhost:4318/v1/metrics"
+        endpoint: "http://192.168.99.104:4318/v1/metrics"
       logs:
-        endpoint: "http://localhost:4318/v1/logs"
+        endpoint: "http://192.168.99.104:4318/v1/logs"

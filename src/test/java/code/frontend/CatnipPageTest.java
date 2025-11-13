@@ -5,12 +5,10 @@ import code.configuration.WebAbstract;
 import code.frontend.catnip.CatnipPage;
 import code.frontend.catnip.CatnipPage.PaginationRangeDto;
 import code.modules.catnips.CatnipCommandFacade;
-import static code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
 import code.modules.catnips.CatnipQueryFacade;
 import code.modules.catnips.CatnipQueryFacade.CatnipReadDto;
 import code.util.TestFixtures;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,6 +22,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+
+import static code.modules.catnips.CatnipCommandFacade.CatnipCreateDto;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -66,7 +68,7 @@ class CatnipPageTest extends WebAbstract {
     mockMvc.perform(get("/catnip/list")
         .param("page", page).param("sort", sort))
       .andExpect(model().attribute("newPage", mocked))
-      .andExpect(view().name("catnip/catnip-list :: catnipList"));
+      .andExpect(view().name("catnip/catnip-list :: list"));
     Mockito.verify(catnipQueryFacade).getPage(expected);
   }
 
@@ -79,7 +81,7 @@ class CatnipPageTest extends WebAbstract {
     mockMvc.perform(get("/catnip/list")
         .param("query", query))
       .andExpect(model().attribute("newPage", mocked))
-      .andExpect(view().name("catnip/catnip-list :: catnipList"));
+      .andExpect(view().name("catnip/catnip-list :: list"));
     Mockito.verify(catnipQueryFacade).searchCatnip(expected, query);
   }
 

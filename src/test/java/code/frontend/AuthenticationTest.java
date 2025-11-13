@@ -20,19 +20,19 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import org.testcontainers.shaded.com.trilead.ssh2.auth.AuthenticationManager;
 
 @WebMvcTest(controllers = {AuthenticationController.class, RegistrationController.class, CustomAuthenticationFilter.class})
 @AutoConfigureMockMvc
@@ -52,16 +52,14 @@ class AuthenticationTest {
   private AuthService authService;
   @MockBean
   private AccountCommandFacade accountCommandFacade;
-  @MockBean
-  private AuthenticationManager authenticationManager;
 
   @Test
   void should_secure_unauthorized() throws Exception {
     mockMvc.perform(get("/random"))
-      .andExpect(status().isUnauthorized());
+      .andExpect(status().is3xxRedirection());
 
     mockMvc.perform(MockMvcRequestBuilders.get("/random").accept(MediaType.TEXT_HTML))
-      .andExpect(status().is3xxRedirection()) // Expect a 3xx status for redirection
+      .andExpect(status().is3xxRedirection()) // or isUnauthorized
       .andExpect(redirectedUrl("/login?unauthorized"));
   }
 

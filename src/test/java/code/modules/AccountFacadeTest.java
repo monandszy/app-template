@@ -9,12 +9,14 @@ import code.modules.accounts.data.AccountEntity;
 import code.modules.accounts.data.AccountJpaRepo;
 import code.modules.accounts.service.domain.AuthorityName;
 import code.util.TestFixtures;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +34,9 @@ class AccountFacadeTest extends FacadeAbstract {
   private AccountCommandFacade commandFacade;
   private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
   private AccountJpaRepo accountJpaRepo;
+
+  @MockBean
+  private HttpSession session;
 
   @Test
   void should_register_account() {

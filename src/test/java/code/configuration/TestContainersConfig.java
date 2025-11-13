@@ -29,17 +29,11 @@ public class TestContainersConfig {
   @ServiceConnection
   @SuppressWarnings("resource")
   static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_VERSION)
-//    .withReuse(true)
-      ;
+    .withReuse(true).withPrivilegedMode(true);
 
   @ServiceConnection
   static RabbitMQContainer rabbitmq = new RabbitMQContainer(RABBITMQ_VERSION)
-//    .withReuse(true)
-      ;
-
-//  @DynamicPropertySource
-//  static void registerRabbitMqProperties(DynamicPropertyRegistry registry) {
-//  }
+    .withReuse(true).withPrivilegedMode(true);
 
   @Bean
   DataSource dataSource(final PostgreSQLContainer<?> postgresqlContainer) {

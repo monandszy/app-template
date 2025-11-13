@@ -21,15 +21,15 @@ document.getElementById('dynamic-form').addEventListener('submit', function (eve
     });
   } else {
     htmx.ajax('POST', '/conversation/' + globalConversationId,
-      {values: formData, swap: 'beforeend', target: '#window-content'});
+      {values: formData, swap: 'beforeend', target: '#window-wrapper'});
   }
 });
 
 function resetGlobal() {
   globalConversationId = 'null'
-  document.getElementById('submit-button').innerText = 'Begin_Generate';
+  document.getElementById('generate-form-button').innerText = 'Begin_Generate';
 }
 function setGlobal(conversationId) {
   globalConversationId = conversationId
-  document.getElementById('submit-button').innerText = 'Post_Generate';
+  document.getElementById('generate-form-button').innerText = 'Post_Generate';
 }

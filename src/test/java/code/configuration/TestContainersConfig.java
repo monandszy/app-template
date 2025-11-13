@@ -1,13 +1,14 @@
 package code.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
-import javax.sql.DataSource;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.RabbitMQContainer;
+
+import javax.sql.DataSource;
 
 @TestConfiguration
 public class TestContainersConfig {
@@ -28,11 +29,13 @@ public class TestContainersConfig {
   @ServiceConnection
   @SuppressWarnings("resource")
   static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_VERSION)
-    .withReuse(true);
+//    .withReuse(true)
+      ;
 
   @ServiceConnection
   static RabbitMQContainer rabbitmq = new RabbitMQContainer(RABBITMQ_VERSION)
-    .withReuse(true);
+//    .withReuse(true)
+      ;
 
 //  @DynamicPropertySource
 //  static void registerRabbitMqProperties(DynamicPropertyRegistry registry) {

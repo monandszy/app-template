@@ -2,8 +2,6 @@ package code.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import java.util.Objects;
-import javax.sql.DataSource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +10,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import javax.sql.DataSource;
+import java.util.Objects;
 
 @Configuration
 @Profile("!test")
@@ -80,7 +81,7 @@ public class DatabaseInitializer {
     databaseName = databaseName.replace("-", "_");
     String env = "postgres";
     if (profile.equals("preview")) {
-      env = "localhost";
+      env = "192.168.99.104";
       databaseName = databaseName.replace("preview", "dev");
     }
 

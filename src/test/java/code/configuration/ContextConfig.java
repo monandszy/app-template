@@ -2,9 +2,6 @@ package code.configuration;
 
 import code.modules.accounts.AccountQueryFacade;
 import code.modules.catnips.CatnipQueryFacade;
-import code.modules.conversation.ConversationQueryFacade;
-import code.modules.googleApi.GoogleApiAdapter;
-import code.openApi.ApiClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,13 +20,4 @@ public class ContextConfig {
       return new MethodValidationPostProcessor();
     }
   }
-
-  @Configuration
-  @ComponentScan(basePackageClasses = ConversationQueryFacade.class)
-  public static class ConversationsModuleContext {
-  }
-
-  @Configuration
-  @ComponentScan(basePackageClasses = {GoogleApiAdapter.class, ApiClient.class})
-  public static class GoogleApiContext {}
 }

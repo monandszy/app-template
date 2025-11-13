@@ -6,7 +6,7 @@ spring:
   application:
     name: app-template-preview
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://192.168.99.104:5432/postgres
   devtools:
     add-properties: true
     restart:
@@ -26,7 +26,7 @@ spring:
   security:
     enabled: true
   rabbitmq:
-    host: localhost
+    host: 192.168.99.104
 logging:
   level:
     org:

@@ -36,13 +36,13 @@
     height: 100vh;
     min-width: 0;
     overflow: hidden; }
-    .conversation-content #conversation-wrapper #window-wrapper {
+    .conversation-content #conversation-wrapper #window-content {
       display: flex;
       flex: 1;
       flex-direction: column;
       min-height: 0;
       overflow: hidden; }
-      .conversation-content #conversation-wrapper #window-wrapper #window-content {
+      .conversation-content #conversation-wrapper #window-content #window-content {
         display: flex;
         flex: 1;
         flex-direction: column;

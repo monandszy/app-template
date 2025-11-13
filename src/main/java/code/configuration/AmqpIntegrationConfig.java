@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AmqpIntegrationConfig {
-
+  
   public static final String Q = "experimental";
 
   @Bean

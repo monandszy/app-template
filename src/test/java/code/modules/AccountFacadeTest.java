@@ -5,8 +5,6 @@ import code.configuration.DataInitializer;
 import code.configuration.FacadeAbstract;
 import code.configuration.SecurityConfig;
 import code.modules.accounts.AccountCommandFacade;
-import static code.modules.accounts.AccountCommandFacade.AccountCreateDto;
-import static code.modules.accounts.AccountCommandFacade.AccountReadDto;
 import code.modules.accounts.data.AccountEntity;
 import code.modules.accounts.data.AccountJpaRepo;
 import code.modules.accounts.service.domain.AuthorityName;
@@ -14,14 +12,17 @@ import code.util.TestFixtures;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static code.modules.accounts.AccountCommandFacade.AccountCreateDto;
+import static code.modules.accounts.AccountCommandFacade.AccountReadDto;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Slf4j
 @Import({ContextConfig.AccountModuleContext.class, SecurityConfig.class, DataInitializer.class})
@@ -48,7 +49,7 @@ class AccountFacadeTest extends FacadeAbstract {
     AccountEntity entity = accountJpaRepo.findByEmail(accountCreateDto.email()).orElseThrow();
     assertThat(entity).isNotNull();
     AuthorityName name = entity.getAuthorities().stream().findFirst().orElseThrow().getName();
-    Assertions.assertEquals(name, AuthorityName.ROLE_USER);
+    Assertions.assertEquals(AuthorityName.ROLE_USER, name);
   }
 
   @Test

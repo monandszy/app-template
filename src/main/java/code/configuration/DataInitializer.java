@@ -36,7 +36,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         log.info("Initializing authority: [{}]", authoritiesToAdd.get(i));
         sql.append("(?)");
         if (i < authoritiesToAdd.size() - 1) {
-          sql.append(", "); // Add comma between values
+          sql.append(", ");
         }
       }
       jdbcTemplate.update(sql.toString(), authoritiesToAdd.toArray());
